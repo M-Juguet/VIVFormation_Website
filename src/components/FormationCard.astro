@@ -1,0 +1,33 @@
+---
+/* Carte catalogue d'une formation : ModuleCard du design system alimentée par le contenu. */
+import ModuleCard from './ds/ModuleCard.astro';
+import type { FormationResolue } from '../lib/formations';
+
+interface Props {
+  item: FormationResolue;
+  class?: string;
+}
+
+const { item, class: className } = Astro.props;
+const d = item.formation.data;
+---
+
+<ModuleCard
+  class={className}
+  image={d.visuel}
+  imageAlt={d.visuelAlt}
+  imagePlaceholder="Rendu ou capture d’un fichier d’exercice"
+  mark={item.mark}
+  overline={item.overline}
+  title={d.titre}
+  summary={d.resume}
+  meta={[
+    { label: 'Durée', value: item.duree },
+    { label: 'Niveau', value: d.niveau },
+  ]}
+  badges={item.badges}
+  price={item.tarif ?? 'Sur devis'}
+  priceNote={item.tarif ? 'net de taxe, par participant' : undefined}
+  href={item.url}
+  actionLabel="Voir la fiche"
+/>

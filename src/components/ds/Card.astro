@@ -1,0 +1,30 @@
+---
+/* Conteneur générique : bloc de modalités, encadré, résumé administratif.
+   Portage de docs/design-system/components/base/Card.jsx. */
+interface Props {
+  overline?: string;
+  title?: string;
+  flat?: boolean;
+  class?: string;
+}
+
+const { overline, title, flat, class: className } = Astro.props;
+const hasFooter = Astro.slots.has('footer');
+---
+
+<section class:list={['viv-card', flat && 'viv-card--flat', className]}>
+  {(overline || title) && (
+    <header class="viv-card__header">
+      {overline && <p class="viv-card__overline">{overline}</p>}
+      {title && <h3 class="viv-card__title">{title}</h3>}
+    </header>
+  )}
+  <div class="viv-card__body">
+    <slot />
+  </div>
+  {hasFooter && (
+    <footer class="viv-card__footer">
+      <slot name="footer" />
+    </footer>
+  )}
+</section>

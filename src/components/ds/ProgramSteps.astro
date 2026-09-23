@@ -1,0 +1,41 @@
+---
+/* Déroulé d'un parcours en étapes : cadrage, journées de formation, suivi.
+   Portage de docs/design-system/components/formation/ProgramSteps.jsx. */
+import Icon from './Icon.astro';
+
+export interface ProgramStep {
+  title: string;
+  meta?: string;
+  body?: string;
+  state?: 'done' | 'current';
+}
+
+interface Props {
+  steps: ProgramStep[];
+  class?: string;
+}
+
+const { steps, class: className } = Astro.props;
+---
+
+<ol class:list={['viv-steps', className]}>
+  {steps.map((s, i) => (
+    <li
+      class:list={[
+        'viv-steps__item',
+        s.state === 'done' && 'viv-steps__item--done',
+        s.state === 'current' && 'viv-steps__item--current',
+      ]}
+      aria-current={s.state === 'current' ? 'step' : undefined}
+    >
+      <span class="viv-steps__dot">
+        {s.state === 'done' ? <Icon name="check" size={16} /> : i + 1}
+      </span>
+      <div>
+        <h4 class="viv-steps__title">{s.title}</h4>
+        {s.meta && <p class="viv-steps__meta">{s.meta}</p>}
+        {s.body && <p class="viv-steps__body">{s.body}</p>}
+      </div>
+    </li>
+  ))}
+</ol>

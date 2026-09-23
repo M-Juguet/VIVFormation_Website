@@ -1,0 +1,24 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Button from '../components/ds/Button.astro';
+---
+
+<BaseLayout title="Page introuvable">
+  <section class="viv-section bg-surface-brand text-ink" data-theme="sombre">
+    <div class="viv-wrap">
+      <p class="overline text-ink-muted">Erreur 404</p>
+      <h1 class="display-lg mt-2 mb-4">Cette page n’existe pas</h1>
+      <p class="body-lg mb-8 max-w-[58ch] text-ink-muted">
+        Elle a peut-être été déplacée. Le catalogue recense toutes nos formations.
+      </p>
+      <div class="flex flex-wrap gap-4">
+        <Button href="/catalogue/" icon="arrow-right">
+          Voir le catalogue
+        </Button>
+        <Button href="/" variant="secondary">
+          Retour à l’accueil
+        </Button>
+      </div>
+    </div>
+  </section>
+</BaseLayout>

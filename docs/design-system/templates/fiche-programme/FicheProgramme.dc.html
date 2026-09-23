@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<!-- @template name="Fiche programme" description="Fiche programme d'un module : bandeau d'identité sombre, objectifs, déroulé, prérequis techniques, formateur." -->
+<helmet><script src="./ds-base.js"></script></helmet>
+<article style="background:var(--surface);color:var(--ink);font-family:var(--font-sans)">
+<header data-theme="sombre" style="background:var(--surface-brand);color:var(--ink);padding:40px 0 48px">
+<div class="viv-wrap" style="max-width:920px">
+<div style="display:flex;align-items:flex-start;justify-content:space-between;gap:24px;flex-wrap:wrap;margin-bottom:40px">
+<img src="../../assets/logos/viv-formation-blanc.svg" alt="VIV Formation" style="height:36px;width:auto;display:block;padding:11px">
+<p style="font:var(--text-caption);color:var(--ink-muted);margin:11px 0 0">Fiche mise à jour le 3 septembre 2026<br>Numéro de déclaration d'activité 00000000000</p>
+</div>
+<p style="font:var(--text-overline);letter-spacing:.08em;text-transform:uppercase;color:var(--ink-muted);margin:0">Module · 3D précalculée</p>
+<h1 style="font:var(--text-display-lg);margin:8px 0 20px">Blender : modélisation et rendu</h1>
+<div style="display:flex;flex-wrap:wrap;gap:8px;margin-bottom:24px">
+<span style="font:var(--text-label);background:var(--brand-rose);color:var(--ink-on-pastel);padding:4px 12px;border-radius:var(--radius-pill)">Blender</span>
+<span style="font:var(--text-label);background:var(--surface-sunken);color:var(--ink-muted);border:1px solid var(--border);padding:4px 12px;border-radius:var(--radius-pill)">Présentiel</span>
+<span style="font:var(--text-label);background:var(--info-surface);color:var(--info);padding:4px 12px;border-radius:var(--radius-pill)">Dates à convenir</span>
+</div>
+<p style="font:var(--text-body-lg);color:var(--ink-muted);max-width:64ch;margin:0 0 32px">Vous modélisez un objet complet dès le premier jour, puis vous le dépliez, le texturez et le rendez en rendu physiquement réaliste (PBR). Le module se tient sur vos postes, avec vos fichiers d'exercice installés la veille.</p>
+<div style="display:flex;flex-wrap:wrap;gap:16px 40px;font:var(--text-data)">
+<span><span style="color:var(--ink-muted)">Durée :</span> 21 heures — 3 jours</span>
+<span><span style="color:var(--ink-muted)">Groupe :</span> 3 à 6 participants</span>
+<span><span style="color:var(--ink-muted)">Niveau :</span> débutant</span>
+<span><span style="color:var(--ink-muted)">Tarif :</span> <span style="color:var(--accent-deep)">1 400 € net de taxe, par participant</span></span>
+</div>
+</div>
+</header>
+<hr style="height:4px;border:0;margin:0;background:var(--gradient-brand)">
+<div class="viv-wrap" style="max-width:920px;padding-top:48px;padding-bottom:64px">
+<x-import component-from-global-scope="{{ ns }}.ObjectivesPanel" intro="À l'issue du module, au poste de travail, vous êtes en mesure de :" items="{{ objectifs }}" hint-size="100%,280px"></x-import>
+<h2 style="font:var(--text-heading-lg);margin:48px 0 24px">Programme</h2>
+<x-import component-from-global-scope="{{ ns }}.ProgramSteps" steps="{{ etapes }}" hint-size="100%,420px"></x-import>
+<h2 style="font:var(--text-heading-lg);margin:48px 0 24px">Prérequis techniques</h2>
+<x-import component-from-global-scope="{{ ns }}.SoftwareRequirements" title="Prérequis techniques — Blender" version="Blender 5.2 LTS" items="{{ prerequis }}" note="Les droits d'installation sur les postes dépendent de votre service informatique : prévoyez la validation avant la première journée." hint-size="100%,380px"></x-import>
+<h2 style="font:var(--text-heading-lg);margin:48px 0 24px">Modalités et évaluation</h2>
+<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:24px">
+<div style="background:var(--surface-raised);border:1px solid var(--border);border-radius:var(--radius-lg);box-shadow:var(--shadow-sm);padding:20px">
+<p style="font:var(--text-heading-sm);margin:0 0 8px">Organisation</p>
+<p style="font:var(--text-body);color:var(--ink-muted);margin:0">Présentiel uniquement, dans vos locaux ou sur le site du client. Le cadrage préalable et le suivi sont des entretiens téléphoniques d'une heure : ce ne sont pas des heures de formation à distance.</p>
+</div>
+<div style="background:var(--surface-raised);border:1px solid var(--border);border-radius:var(--radius-lg);box-shadow:var(--shadow-sm);padding:20px">
+<p style="font:var(--text-heading-sm);margin:0 0 8px">Évaluation et accessibilité</p>
+<p style="font:var(--text-body);color:var(--ink-muted);margin:0">Quiz de fin de formation, corrigé en séance. Dites-nous ce qu'il faut adapter, nous organisons la session en conséquence.</p>
+</div>
+<div style="background:var(--surface-accent);border-radius:var(--radius-lg);padding:20px">
+<p style="font:var(--text-heading-sm);color:var(--accent-deep);margin:0 0 8px">Financement</p>
+<p style="font:var(--text-body);color:var(--ink);margin:0">Prise en charge OPCO et plan de développement des compétences de l'entreprise.</p>
+</div>
+</div>
+<h2 style="font:var(--text-heading-lg);margin:48px 0 24px">Qui anime</h2>
+<x-import component-from-global-scope="{{ ns }}.TrainerCard" name="Prénom Nom" role="Formateur 3D précalculée" bio="Douze ans en studio de design automobile, sur des chaînes Blender et VRED." tags="{{ tags }}" hint-size="100%,160px"></x-import>
+</div>
+<footer data-theme="sombre" style="background:var(--surface-sunken);color:var(--ink)">
+<div class="viv-wrap" style="max-width:920px;padding-top:24px;padding-bottom:24px;display:flex;flex-wrap:wrap;gap:16px;align-items:center;justify-content:space-between">
+<img src="../../assets/logos/viv-monogramme-blanc.svg" alt="VIV Formation" style="height:28px;width:auto;display:block;padding:8px">
+<p style="font:var(--text-caption);color:var(--ink-muted);margin:0;max-width:60ch">La version du logiciel est vérifiée avant chaque session. Les dates se fixent avec vous ; aucune session n'est ouverte au calendrier.</p>
+</div>
+</footer>
+</article>
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+class Component extends DCLogic {
+  renderVals() {
+    return {
+      ns: 'VivFormationDesignSystem_81f768',
+      objectifs: [
+        "Modéliser un objet à partir d'une référence cotée, en géométrie propre",
+        "Déplier les UV d'un modèle simple et y appliquer une texture sans étirement",
+        'Éclairer une scène en trois sources et contrôler son exposition',
+        'Lancer un rendu en PBR et corriger le bruit résiduel'
+      ],
+      etapes: [
+        { title: 'Cadrage préalable', meta: '1 heure — entretien téléphonique', body: 'Nous relevons vos postes, vos versions installées et le type d\'objet que vous produisez.' },
+        { title: 'Journée 1 — modélisation', meta: '7 heures — présentiel', body: 'Géométrie, modificateurs, contrôle de la topologie.' },
+        { title: 'Journée 2 — UV et texture', meta: '7 heures — présentiel', body: 'Dépliage, couture des arêtes, matériaux PBR.' },
+        { title: 'Journée 3 — éclairage et rendu', meta: '7 heures — présentiel', body: 'Trois sources, exposition, réduction du bruit, export.' },
+        { title: 'Suivi', meta: '1 heure — entretien téléphonique', body: 'Deux semaines après la session, sur vos premiers fichiers de production.' }
+      ],
+      prerequis: [
+        { label: 'Système', value: 'Windows 11 ou macOS 14' },
+        { label: 'Carte graphique', value: '8 Go de VRAM' },
+        { label: 'Mémoire vive', value: '16 Go' },
+        { label: 'Fichiers de travail', value: 'C:\\Viv\\exercices', mono: true },
+        { label: 'Licence', value: 'Aucune — Blender est libre' }
+      ],
+      tags: ['Blender', 'VRED', '3D précalculée']
+    };
+  }
+}
+</script>
+</body>
+</html>

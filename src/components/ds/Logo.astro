@@ -1,0 +1,42 @@
+---
+/* Affiche une marque VIV Formation à la bonne taille, avec sa zone de protection (0,29 × la hauteur).
+   Portage de docs/design-system/components/base/Logo.jsx. Les fichiers sont servis depuis
+   public/logos/ — jamais de reconstitution typographique du logo. */
+interface Props {
+  mark?: 'complet' | 'monogramme' | 'submark';
+  variant?: 'couleur' | 'noir' | 'blanc';
+  height?: number;
+  /** false supprime la zone de protection (quand le conteneur la réserve déjà). */
+  clearSpace?: boolean;
+  alt?: string;
+  class?: string;
+}
+
+const FILES = {
+  complet: 'viv-formation',
+  monogramme: 'viv-monogramme',
+  submark: 'viv-submark',
+};
+const RATIO = { complet: 4340 / 712, monogramme: 1250 / 699, submark: 707 / 699 };
+const CLEAR_SPACE = 0.29;
+
+const {
+  mark = 'complet',
+  variant = mark === 'submark' ? 'noir' : 'couleur',
+  height = mark === 'complet' ? 40 : 48,
+  clearSpace = true,
+  alt = 'VIV Formation',
+  class: className,
+} = Astro.props;
+const pad = clearSpace ? Math.round(height * CLEAR_SPACE) : 0;
+---
+
+<span class:list={['viv-logo', className]} style={`padding:${pad}px`}>
+  <img
+    src={`/logos/${FILES[mark]}-${variant}.svg`}
+    alt={alt}
+    height={height}
+    width={Math.round(height * RATIO[mark])}
+    style={`display:block;height:${height}px;width:auto`}
+  />
+</span>

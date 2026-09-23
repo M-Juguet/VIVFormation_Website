@@ -1,0 +1,10 @@
+# Types : la forme de la formation.
+- id: module
+  label: Module
+  ordre: 1
+- id: parcours-pipeline
+  label: Parcours pipeline
+  ordre: 2
+- id: sensibilisation
+  label: Sensibilisation
+  ordre: 3

@@ -1,0 +1,26 @@
+---
+/* Encart qui sort une information de son flux : prérequis, confirmation, échéance, report.
+   Portage de docs/design-system/components/base/Callout.jsx. */
+import type { HTMLAttributes } from 'astro/types';
+import Icon from './Icon.astro';
+
+type Props = HTMLAttributes<'aside'> & {
+  tone?: 'info' | 'success' | 'warning' | 'danger';
+  title?: string;
+};
+
+const MARK = { info: 'info', success: 'circle-check', warning: 'alert', danger: 'x' } as const;
+const LABEL = { info: 'Information', success: 'Réussite', warning: 'Attention', danger: 'Erreur' };
+
+const { tone = 'info', title, class: className, ...rest } = Astro.props;
+---
+
+<aside class:list={['viv-callout', `viv-callout--${tone}`, className]} {...rest}>
+  <span class="viv-callout__mark">
+    <Icon name={MARK[tone]} size={20} />
+  </span>
+  <div class="viv-callout__body">
+    <p class="viv-callout__title">{title ?? LABEL[tone]}</p>
+    <slot />
+  </div>
+</aside>

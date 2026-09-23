@@ -1,0 +1,56 @@
+---
+/* Déclenche l'action principale d'un écran. Un seul `primary` par bloc, les autres en `secondary`.
+   Portage de docs/design-system/components/base/Button.jsx. Rendu en <a> si `href` est fourni. */
+import type { HTMLAttributes } from 'astro/types';
+import Icon from './Icon.astro';
+import type { IconName } from './icons';
+
+type Props = HTMLAttributes<'button'> &
+  HTMLAttributes<'a'> & {
+    variant?: 'primary' | 'secondary' | 'ghost';
+    size?: 'sm';
+    pill?: boolean;
+    icon?: IconName;
+    iconSize?: number;
+    href?: string;
+  };
+
+const {
+  variant = 'primary',
+  size,
+  pill,
+  icon,
+  iconSize = size === 'sm' ? 16 : 18,
+  href,
+  class: className,
+  type = 'button',
+  ...rest
+} = Astro.props;
+const cls = [
+  'viv-btn',
+  `viv-btn--${variant}`,
+  size === 'sm' && 'viv-btn--sm',
+  pill && 'viv-btn--pill',
+  className,
+];
+---
+
+{href ? (
+  <a class:list={cls} href={href} {...rest}>
+    {icon && (
+      <span aria-hidden="true">
+        <Icon name={icon} size={iconSize} />
+      </span>
+    )}
+    <slot />
+  </a>
+) : (
+  <button class:list={cls} type={type} {...rest}>
+    {icon && (
+      <span aria-hidden="true">
+        <Icon name={icon} size={iconSize} />
+      </span>
+    )}
+    <slot />
+  </button>
+)}

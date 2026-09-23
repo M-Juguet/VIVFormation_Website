@@ -1,0 +1,77 @@
+<!-- @dsCard group="Components" viewport="700x980" name="Formation" subtitle="ModuleCard (avec et sans visuel), ObjectivesPanel, ProgramSteps, SoftwareRequirements, TrainerCard, Progress, Kbd" -->
+<!DOCTYPE html>
+<html lang="fr"><head><meta charset="utf-8"><title>VIV Formation — composants de formation</title>
+<link rel="stylesheet" href="../../styles.css">
+<style>body{margin:0;background:var(--surface);color:var(--ink);font-family:var(--font-sans);padding:var(--space-5)}#root{display:flex;flex-direction:column;gap:var(--space-5)}.grid{display:grid;grid-template-columns:1fr 1fr;gap:var(--space-5);align-items:start}</style>
+</head><body><div id="root"></div>
+<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+<script src="../../_ds_bundle.js"></script>
+<script type="text/babel">
+const { ModuleCard, ObjectivesPanel, ProgramSteps, SoftwareRequirements, TrainerCard, Progress, Kbd, Button, Icon } = window.VivFormationDesignSystem_81f768;
+function Demo() {
+  return (
+    <>
+      <div className="grid">
+        <ModuleCard
+          imagePlaceholder="Rendu d'un fichier d'exercice"
+          mark={<Icon name="outil-blender" size={24} tile="degrade" shape="carre" />}
+          href="#"
+          overline="Module · 3D précalculée"
+          title="Blender : modélisation et rendu"
+          summary="Modéliser un objet complet, le texturer et le rendre en PBR."
+          meta={[{ label: 'Durée', value: '21 heures — 3 jours' }]}
+          badges={[{ label: 'Blender', tone: 'rose' }, { label: 'Dates à convenir', tone: 'info' }]}
+          price="1 400 €" priceNote="net de taxe"
+          action={<Button size="sm" variant="ghost" href="#">Voir la fiche</Button>}
+        />
+        <ModuleCard
+          overline="Module · 3D précalculée"
+          title="Blender : modélisation et rendu"
+          summary="Modéliser un objet complet, le texturer et le rendre en PBR."
+          meta={[{ label: 'Durée', value: '21 heures — 3 jours' }, { label: 'Groupe', value: '3 à 6 participants' }]}
+          badges={[{ label: 'Blender', tone: 'rose' }, { label: 'Présentiel', tone: 'neutral' }, { label: 'Dates à convenir', tone: 'info' }]}
+          price="1 400 €" priceNote="net de taxe, par participant"
+          action={<Button size="sm">Demander des dates</Button>}
+        />
+        <ObjectivesPanel items={[
+          "Déplier les UV d'un modèle simple et y appliquer une texture sans étirement",
+          'Éclairer une scène en trois sources et contrôler son exposition',
+          'Lancer un rendu en PBR et corriger le bruit résiduel'
+        ]} />
+      </div>
+      <div className="grid">
+        <SoftwareRequirements
+          title="Prérequis techniques — Blender"
+          version="Blender 5.2 LTS"
+          items={[
+            { label: 'Système', value: 'Windows 11 ou macOS 14' },
+            { label: 'Carte graphique', value: '8 Go de VRAM' },
+            { label: 'Mémoire vive', value: '16 Go' },
+            { label: 'Fichiers de travail', value: 'C:\\Viv\\exercices', mono: true }
+          ]}
+          note="La licence et les droits d'installation dépendent de votre entreprise."
+        />
+        <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--space-5)' }}>
+          <ProgramSteps steps={[
+            { title: 'Cadrage préalable', meta: '1 heure — entretien téléphonique', state: 'done' },
+            { title: 'Journée 1 — modélisation', meta: '7 heures — présentiel', state: 'current' },
+            { title: 'Journée 2 — texture et rendu', meta: '7 heures — présentiel' }
+          ]} />
+          <Progress value={2} total={5} steps hint="Module 3 — texture" />
+          <p className="body" style={{ margin: 0 }}>Pressez <Kbd keys={['Shift', 'A']} /> pour ouvrir le menu d'ajout, puis <Kbd keys={['Tab']} /> pour basculer en mode édition.</p>
+        </div>
+      </div>
+      <TrainerCard
+        name="Prénom Nom"
+        role="Formateur 3D temps réel"
+        bio="Douze ans en studio de design automobile, sur des chaînes VRED et Unreal Engine."
+        tags={['Unreal Engine', 'VRED', 'Préparation de données 3D']}
+      />
+    </>
+  );
+}
+ReactDOM.createRoot(document.getElementById('root')).render(<Demo />);
+</script>
+</body></html>

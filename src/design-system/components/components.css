@@ -1,0 +1,180 @@
+/* VIV Formation — feuille de style des composants. Toutes les valeurs viennent des tokens. */
+
+/* ---------- Button ---------- */
+.viv-btn{display:inline-flex;align-items:center;justify-content:center;gap:var(--space-2);font-family:var(--font-sans);font-size:15px;line-height:20px;font-weight:400;padding:var(--space-3) var(--space-5);border-radius:var(--radius-md);border:1px solid transparent;cursor:pointer;text-decoration:none;transition:background-color var(--motion-micro) var(--motion-standard),color var(--motion-micro) var(--motion-standard),border-color var(--motion-micro) var(--motion-standard)}
+.viv-btn:focus-visible{outline:2px solid var(--focus);outline-offset:2px}
+.viv-btn--primary{background:var(--action);color:var(--on-action)}
+.viv-btn--primary:hover{background:var(--action-hover)}
+.viv-btn--secondary{background:transparent;color:var(--action);border-color:var(--border-strong)}
+.viv-btn--secondary:hover{background:var(--surface-brand);border-color:var(--action)}
+.viv-btn--ghost{background:transparent;color:var(--action)}
+.viv-btn--ghost:hover{background:var(--surface-brand)}
+.viv-btn--sm{padding:var(--space-2) var(--space-3);font-size:13px;line-height:18px}
+.viv-btn--pill{border-radius:var(--radius-pill)}
+.viv-btn[disabled],.viv-btn[aria-disabled="true"]{opacity:.45;cursor:not-allowed}
+
+/* ---------- Badge ---------- */
+.viv-badge{display:inline-flex;align-items:center;gap:var(--space-1);font-family:var(--font-sans);font-size:13px;line-height:18px;font-weight:400;padding:var(--space-1) var(--space-3);border-radius:var(--radius-pill);white-space:nowrap}
+.viv-badge--rose{background:var(--brand-rose);color:var(--ink-on-pastel)}
+.viv-badge--peach{background:var(--brand-peach);color:var(--ink-on-pastel)}
+.viv-badge--gold{background:var(--brand-gold);color:var(--ink-on-pastel)}
+.viv-badge--neutral{background:var(--surface-sunken);color:var(--ink-muted);border:1px solid var(--border)}
+.viv-badge--success{background:var(--success-surface);color:var(--success)}
+.viv-badge--warning{background:var(--warning-surface);color:var(--warning)}
+.viv-badge--danger{background:var(--danger-surface);color:var(--danger)}
+.viv-badge--info{background:var(--info-surface);color:var(--info)}
+
+/* ---------- Card ---------- */
+.viv-card{transition:box-shadow var(--motion-state) var(--motion-standard);background:var(--surface-raised);border:1px solid var(--border);border-radius:var(--radius-lg);box-shadow:var(--shadow-sm);overflow:hidden;font-family:var(--font-sans);color:var(--ink)}
+.viv-card:hover{box-shadow:var(--shadow-md)}
+.viv-card--flat{box-shadow:none}
+.viv-card__header{padding:var(--space-5) var(--space-5) 0}
+.viv-card__body{padding:var(--space-5);color:var(--ink-muted);font-size:15px;line-height:24px}
+.viv-card__body > :first-child{margin-top:0}
+.viv-card__body > :last-child{margin-bottom:0}
+.viv-card__footer{padding:var(--space-4) var(--space-5);border-top:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;gap:var(--space-4)}
+.viv-card__title{font-size:20px;line-height:28px;font-weight:700;font-style:italic;margin:0;color:var(--ink)}
+.viv-card__overline{font-size:12px;line-height:16px;font-weight:400;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-muted);margin:0 0 var(--space-2)}
+
+/* ---------- Field ---------- */
+.viv-field{font-family:var(--font-sans);display:flex;flex-direction:column;gap:var(--space-2)}
+.viv-field__label{font-size:13px;line-height:18px;font-weight:400;color:var(--ink)}
+.viv-field__required{color:var(--danger);margin-left:2px}
+.viv-field__control{font-family:inherit;font-size:15px;line-height:24px;color:var(--ink);background:var(--surface);border:1px solid var(--border-strong);border-radius:var(--radius-sm);padding:var(--space-2) var(--space-3);width:100%;box-sizing:border-box}
+.viv-field__control::placeholder{color:var(--ink-subtle)}
+.viv-field__control:focus-visible{outline:2px solid var(--focus);outline-offset:2px;border-color:var(--action)}
+.viv-field__hint{font-size:12px;line-height:18px;color:var(--ink-subtle)}
+.viv-field__error{font-size:13px;line-height:20px;color:var(--danger);font-weight:400}
+.viv-field--invalid .viv-field__control{border-color:var(--danger);border-width:2px}
+.viv-field--disabled{opacity:.45}
+
+/* ---------- Callout ---------- */
+.viv-callout{font-family:var(--font-sans);border-radius:var(--radius-md);padding:var(--space-4) var(--space-5);display:flex;gap:var(--space-3);color:var(--ink);font-size:15px;line-height:24px}
+.viv-callout__mark{flex:none;display:inline-flex;padding-top:2px}
+.viv-callout__title{font-size:17px;line-height:24px;font-weight:700;font-style:italic;margin:0 0 var(--space-1)}
+.viv-callout__body > :first-child{margin-top:0}
+.viv-callout__body > :last-child{margin-bottom:0}
+.viv-callout--info{background:var(--info-surface)}
+.viv-callout--info .viv-callout__mark{color:var(--info)}
+.viv-callout--success{background:var(--success-surface)}
+.viv-callout--success .viv-callout__mark{color:var(--success)}
+.viv-callout--warning{background:var(--warning-surface)}
+.viv-callout--warning .viv-callout__mark{color:var(--warning)}
+.viv-callout--danger{background:var(--danger-surface)}
+.viv-callout--danger .viv-callout__mark{color:var(--danger)}
+
+/* ---------- ModuleCard ---------- */
+.viv-module{transition:box-shadow var(--motion-state) var(--motion-standard);font-family:var(--font-sans);background:var(--surface-raised);border:1px solid var(--border);border-radius:var(--radius-lg);box-shadow:var(--shadow-sm);overflow:hidden;display:flex;flex-direction:column;color:var(--ink);position:relative}
+.viv-module:hover{box-shadow:var(--shadow-md)}
+.viv-module__media{position:relative;aspect-ratio:16 / 9;background:var(--surface-sunken);overflow:hidden}
+.viv-module__media img{display:block;width:100%;height:100%;object-fit:cover}
+.viv-module__media-placeholder{height:100%;display:flex;align-items:center;justify-content:center;text-align:center;padding:0 var(--space-5);font-size:13px;line-height:20px;color:var(--ink-subtle)}
+.viv-module__mark{position:absolute;left:var(--space-4);bottom:var(--space-4);display:inline-flex}
+.viv-module--media .viv-module__inner{gap:var(--space-2)}
+.viv-module--media .viv-module__summary{margin-bottom:var(--space-1)}
+.viv-module__title a{color:inherit;text-decoration:none}
+.viv-module--link:hover .viv-module__title a{color:var(--action)}
+.viv-module__title a::after{content:"";position:absolute;inset:0}
+.viv-module__title a:focus-visible{outline:none}
+.viv-module--link:focus-within{box-shadow:var(--shadow-md);outline:2px solid var(--focus);outline-offset:2px}
+.viv-module__strip{height:4px;background:var(--gradient-brand)}
+.viv-module__inner{padding:var(--space-5);display:flex;flex-direction:column;gap:var(--space-3);flex:1}
+.viv-module__overline{font-size:12px;line-height:16px;font-weight:400;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-muted);margin:0}
+.viv-module__title{font-size:20px;line-height:28px;font-weight:700;font-style:italic;margin:0}
+.viv-module__summary{font-size:15px;line-height:24px;color:var(--ink-muted);margin:0}
+.viv-module__meta{display:flex;flex-wrap:wrap;gap:var(--space-2) var(--space-4);font-size:15px;line-height:22px;letter-spacing:.01em;color:var(--ink);margin:0;padding:0;list-style:none}
+.viv-module__meta li{display:flex;align-items:center;gap:var(--space-1)}
+.viv-module__meta span{color:var(--ink-muted)}
+.viv-module__badges{display:flex;flex-wrap:wrap;gap:var(--space-2)}
+.viv-module__footer{margin-top:auto;padding-top:var(--space-4);border-top:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;gap:var(--space-3);position:relative;z-index:1}
+.viv-module__price{font-size:15px;line-height:22px;letter-spacing:.01em;color:var(--accent-deep)}
+.viv-module__price span{color:var(--ink-subtle);font-size:12px;letter-spacing:0}
+
+/* ---------- ObjectivesPanel ---------- */
+.viv-objectives{font-family:var(--font-sans);background:var(--surface-accent);border-radius:var(--radius-lg);padding:var(--space-6);color:var(--ink)}
+.viv-objectives__title{font-size:17px;line-height:24px;font-weight:700;font-style:italic;color:var(--accent-deep);margin:0 0 var(--space-4)}
+.viv-objectives__intro{font-size:15px;line-height:24px;color:var(--ink);margin:0 0 var(--space-4)}
+.viv-objectives__list{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:var(--space-3)}
+.viv-objectives__list li{display:flex;gap:var(--space-3);font-size:15px;line-height:24px}
+.viv-objectives__bullet{flex:none;width:22px;height:22px;margin-top:1px;border-radius:var(--radius-pill);background:var(--brand-gold);color:var(--ink-on-pastel);display:flex;align-items:center;justify-content:center;font-size:12px}
+
+/* ---------- TrainerCard ---------- */
+.viv-trainer{font-family:var(--font-sans);background:var(--surface-raised);border:1px solid var(--border);border-radius:var(--radius-lg);box-shadow:var(--shadow-sm);padding:var(--space-5);display:flex;gap:var(--space-4);color:var(--ink)}
+.viv-trainer__avatar{flex:none;width:64px;height:64px;border-radius:var(--radius-pill);display:flex;align-items:center;justify-content:center;font-family:var(--font-display);font-size:26px;font-weight:700;font-style:italic;color:var(--ink-on-pastel);background:var(--gradient-brand);overflow:hidden}
+.viv-trainer__avatar img{width:100%;height:100%;object-fit:cover}
+.viv-trainer__name{font-family:var(--font-display);font-size:20px;line-height:28px;font-weight:700;font-style:italic;margin:0}
+.viv-trainer__role{font-size:13px;line-height:20px;color:var(--ink-muted);margin:2px 0 var(--space-3)}
+.viv-trainer__bio{font-size:15px;line-height:24px;color:var(--ink-muted);margin:0 0 var(--space-3)}
+.viv-trainer__tags{display:flex;flex-wrap:wrap;gap:var(--space-2)}
+
+/* ---------- ProgramSteps ---------- */
+.viv-steps{font-family:var(--font-sans);list-style:none;margin:0;padding:0;color:var(--ink)}
+.viv-steps__item{display:flex;gap:var(--space-4);padding-bottom:var(--space-6);position:relative}
+.viv-steps__item:last-child{padding-bottom:0}
+.viv-steps__item::before{content:"";position:absolute;left:15px;top:34px;bottom:0;width:2px;background:var(--border)}
+.viv-steps__item:last-child::before{display:none}
+.viv-steps__dot{flex:none;width:32px;height:32px;border-radius:var(--radius-pill);display:flex;align-items:center;justify-content:center;font-size:13px;color:var(--ink-on-pastel);background:var(--brand-peach);position:relative;z-index:1}
+.viv-steps__item--done .viv-steps__dot{background:var(--success-surface);color:var(--success)}
+.viv-steps__item--current .viv-steps__dot{background:var(--action);color:var(--on-action)}
+.viv-steps__title{font-size:17px;line-height:24px;font-weight:700;font-style:italic;margin:4px 0 var(--space-1)}
+.viv-steps__meta{font-size:13px;line-height:20px;color:var(--ink-subtle);margin:0 0 var(--space-2)}
+.viv-steps__body{font-size:15px;line-height:24px;color:var(--ink-muted);margin:0}
+
+/* ---------- Kbd ---------- */
+.viv-kbd{font-family:var(--font-mono);font-size:13px;line-height:18px;color:var(--ink);background:var(--surface-code);border:1px solid var(--border-strong);border-radius:var(--radius-sm);padding:2px var(--space-2);white-space:nowrap}
+.viv-kbd__plus{color:var(--ink-subtle);margin:0 var(--space-1);font-weight:400}
+
+/* ---------- SoftwareRequirements ---------- */
+.viv-req{font-family:var(--font-sans);background:var(--surface-raised);border:1px solid var(--border);border-radius:var(--radius-lg);overflow:hidden;color:var(--ink)}
+.viv-req__header{display:flex;align-items:baseline;justify-content:space-between;gap:var(--space-4);padding:var(--space-5) var(--space-5) var(--space-4);background:var(--surface-sunken);border-bottom:1px solid var(--border)}
+.viv-req__title{font-size:17px;line-height:24px;font-weight:700;font-style:italic;margin:0}
+.viv-req__version{font-family:var(--font-mono);font-size:14px;line-height:22px;color:var(--ink-muted)}
+.viv-req__list{margin:0;padding:var(--space-2) var(--space-5) var(--space-4);display:grid;grid-template-columns:180px 1fr}
+.viv-req__list dt{font-size:13px;line-height:18px;color:var(--ink-muted);padding:var(--space-3) 0;border-top:1px solid var(--border)}
+.viv-req__list dd{font-size:15px;line-height:24px;margin:0;padding:var(--space-3) 0;border-top:1px solid var(--border)}
+.viv-req__list dt:first-of-type,.viv-req__list dd:first-of-type{border-top:0}
+.viv-req__list code{font-family:var(--font-mono);font-size:14px;background:var(--surface-code);border-radius:var(--radius-sm);padding:1px 6px}
+.viv-req__note{margin:0;padding:var(--space-4) var(--space-5);border-top:1px solid var(--border);background:var(--info-surface);font-size:13px;line-height:20px;color:var(--ink)}
+
+/* ---------- Logo ---------- */
+.viv-logo{display:inline-block}
+.viv-logo img{display:block;height:auto}
+.viv-logo--tile{display:inline-flex;align-items:center;justify-content:center;overflow:hidden;padding:0}
+
+/* ---------- Icon ---------- */
+.viv-icon{display:inline-flex;align-items:center;justify-content:center;vertical-align:-.15em}
+.viv-icon svg{display:block}
+.viv-icon--tile{flex:none;vertical-align:middle}
+
+/* ---------- Figure ---------- */
+.viv-figure{font-family:var(--font-sans);margin:0;display:flex;flex-direction:column;gap:var(--space-2)}
+.viv-figure__media{border:1px solid var(--border);border-radius:var(--radius-lg);overflow:hidden;background:var(--surface-sunken)}
+.viv-figure--bare .viv-figure__media{border:0;border-radius:0}
+.viv-figure--full{width:100%}
+.viv-figure__media img{display:block;width:100%;height:auto}
+.viv-figure__placeholder{aspect-ratio:16 / 9;display:flex;align-items:center;justify-content:center;color:var(--ink-subtle);font-size:13px;line-height:20px}
+.viv-figure__caption{display:flex;flex-wrap:wrap;gap:var(--space-1) var(--space-2);font-size:12px;line-height:18px;font-weight:300;color:var(--ink-muted)}
+.viv-figure__credit{color:var(--ink-subtle)}
+
+/* ---------- Progress ---------- */
+.viv-progress{font-family:var(--font-sans);display:flex;flex-direction:column;gap:var(--space-2)}
+.viv-progress__head{display:flex;justify-content:space-between;gap:var(--space-4)}
+.viv-progress__label{font-size:13px;line-height:18px;color:var(--ink)}
+.viv-progress__hint{font-size:13px;line-height:18px;color:var(--ink-subtle)}
+.viv-progress__track{height:8px;border-radius:var(--radius-pill);background:var(--surface-sunken);box-shadow:inset 0 0 0 1px var(--border);overflow:hidden}
+.viv-progress__bar{height:100%;border-radius:var(--radius-pill);background:var(--gradient-brand);transition:width var(--motion-state) var(--motion-standard)}
+
+/* ---------- Affichage mobile ---------- */
+@media (max-width: 600px){
+  /* La colonne d'étiquettes fixe de 180px ne tient pas : les prérequis s'empilent. */
+  .viv-req__list{grid-template-columns:minmax(0,1fr);padding-bottom:var(--space-2)}
+  .viv-req__list dt{padding:var(--space-3) 0 0;border-top:1px solid var(--border)}
+  .viv-req__list dd{padding:0 0 var(--space-3);border-top:0}
+  .viv-req__list dt:first-of-type{border-top:0;padding-top:0}
+  .viv-req__header{flex-direction:column;align-items:flex-start;gap:var(--space-1)}
+  .viv-module__footer,.viv-card__footer{flex-wrap:wrap;gap:var(--space-3)}
+  .viv-trainer{flex-direction:column}
+  .viv-objectives{padding:var(--space-5)}
+  .viv-callout{padding:var(--space-4)}
+  .viv-steps__item{gap:var(--space-3);padding-bottom:var(--space-5)}
+}

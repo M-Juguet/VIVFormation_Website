@@ -1,0 +1,28 @@
+---
+/* Encart des objectifs pédagogiques, obligatoire sur toute fiche programme.
+   Objectifs à l'infinitif, un verbe d'action par ligne, trois à six.
+   Portage de docs/design-system/components/formation/ObjectivesPanel.jsx. */
+interface Props {
+  title?: string;
+  intro?: string;
+  items: string[];
+  class?: string;
+}
+
+const { title = 'Objectifs pédagogiques', intro, items, class: className } = Astro.props;
+---
+
+<section class:list={['viv-objectives', className]}>
+  <h3 class="viv-objectives__title">{title}</h3>
+  {intro && <p class="viv-objectives__intro">{intro}</p>}
+  <ul class="viv-objectives__list">
+    {items.map((item, i) => (
+      <li>
+        <span class="viv-objectives__bullet" aria-hidden="true">
+          {i + 1}
+        </span>
+        <span>{item}</span>
+      </li>
+    ))}
+  </ul>
+</section>

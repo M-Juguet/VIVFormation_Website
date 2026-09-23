@@ -1,0 +1,19 @@
+/* VIV Formation — échelle de 4px, rayons. Padding de carte space-5, écart entre cartes space-6,
+   entre sections space-12. */
+:root {
+  --space-1: 4px; /* Écart entre une icône et son libellé, entre un badge et son texte. */
+  --space-2: 8px; /* Padding vertical des badges, écart entre un libellé et son champ. */
+  --space-3: 12px; /* Padding horizontal des petits boutons, écart dans une liste dense. */
+  --space-4: 16px; /* Padding interne par défaut des cartes et encarts, écart entre paragraphes. */
+  --space-5: 20px; /* Padding des cartes de module, écart entre un titre et son corps. */
+  --space-6: 24px; /* Écart entre cartes d'une grille, padding des panneaux. */
+  --space-8: 32px; /* Écart entre blocs d'une même section ; pas du motif de couverture. */
+  --space-10: 40px; /* Marge basse d'un titre de section, gouttière large. */
+  --space-12: 48px; /* Écart entre sections d'une page ou chapitres d'un livret. */
+  --space-16: 64px; /* Respiration de haut de page, marge de couverture de document. */
+  --radius-sm: 6px; /* Champs de saisie, cases à cocher, petites vignettes. */
+  --radius-md: 10px; /* Boutons, badges rectangulaires, encarts. */
+  --radius-lg: 18px; /* Cartes, panneaux, images de module. */
+  --radius-xl: 28px; /* Grands blocs de couverture, bandeaux de mise en avant. */
+  --radius-pill: 999px; /* Badges de statut, pastilles de durée, boutons pilule — l'écho du point sur le i du logo. */
+}

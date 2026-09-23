@@ -1,0 +1,30 @@
+<!-- @dsCard group="Brand" viewport="960x288" name="Motif de couverture" subtitle="Blocs au pas de space-8, unités découpées à la couleur du fond : disques et pilules" -->
+<!DOCTYPE html>
+<html lang="fr"><head><meta charset="utf-8"><title>Motif de couverture</title><link rel="stylesheet" href="../styles.css">
+<style>
+body{margin:0;font-family:var(--font-sans)}
+.viv-cover{position:relative;width:960px;height:288px;background:var(--surface);overflow:hidden}
+.viv-cover svg{position:absolute;inset:0}
+.viv-cover .rose{fill:var(--brand-rose)}.viv-cover .peach{fill:var(--brand-peach)}.viv-cover .gold{fill:var(--brand-gold)}.viv-cover .deep{fill:var(--action)}.viv-cover .cut{fill:var(--surface)}
+.viv-cover__text{position:absolute;left:64px;bottom:40px;width:440px}
+.viv-cover__name{font-family:var(--font-display);font-weight:700;font-style:italic;font-size:76px;line-height:.95;color:var(--ink);margin:0}
+.viv-cover__tagline{font-size:14px;line-height:20px;color:var(--ink-muted);margin:16px 0 0}
+</style>
+</head><body>
+<div class="viv-cover">
+  <svg viewBox="0 0 960 288" width="960" height="288" aria-hidden="true">
+    <rect class="rose" x="496" y="-24" width="152" height="336" rx="28" ry="28" />
+    <rect class="peach" x="680" y="32" width="160" height="104" rx="18" ry="18" />
+    <rect class="deep" x="872" y="32" width="120" height="104" rx="18" ry="18" />
+    <rect class="gold" x="680" y="168" width="312" height="104" rx="18" ry="18" />
+    <circle class="cut" cx="572" cy="48" r="14" /><circle class="cut" cx="572" cy="104" r="14" /><circle class="cut" cx="572" cy="160" r="14" /><circle class="cut" cx="572" cy="216" r="14" /><circle class="cut" cx="572" cy="272" r="14" />
+    <circle class="cut" cx="712" cy="84" r="14" /><circle class="cut" cx="760" cy="84" r="14" /><circle class="cut" cx="808" cy="84" r="14" />
+    <circle class="cut" cx="904" cy="84" r="14" /><circle class="cut" cx="952" cy="84" r="14" />
+    <rect class="cut" x="712" y="204" width="128" height="32" rx="16" ry="16" /><circle class="cut" cx="880" cy="220" r="16" /><circle class="cut" cx="936" cy="220" r="16" />
+  </svg>
+  <div class="viv-cover__text">
+    <p class="viv-cover__name">VIV<br>Formation</p>
+    <p class="viv-cover__tagline">Formations professionnelles à l'image 2D et 3D et à l'IA générative.</p>
+  </div>
+</div>
+</body></html>

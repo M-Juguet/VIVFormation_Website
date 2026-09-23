@@ -1,0 +1,25 @@
+# Outils : logiciels enseignés. Les repères (icone) ne sont jamais les logos des éditeurs.
+- id: blender
+  label: Blender
+  icone: outil-blender
+  ordre: 1
+- id: unreal-engine
+  label: Unreal Engine
+  icone: outil-unreal
+  ordre: 2
+- id: vred
+  label: VRED
+  icone: outil-vred
+  ordre: 3
+- id: unity
+  label: Unity
+  icone: outil-unity
+  ordre: 4
+- id: illustrator
+  label: Illustrator
+  icone: outil-illustrator
+  ordre: 5
+- id: comfyui
+  label: ComfyUI
+  icone: outil-comfyui
+  ordre: 6

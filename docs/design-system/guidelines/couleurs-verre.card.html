@@ -1,0 +1,15 @@
+<!-- @dsCard group="Colors" viewport="700x230" name="Verre dépoli" subtitle="Une carte posée sur le dégradé ou sur un aplat sombre — jamais sur un fond uni clair" -->
+<!DOCTYPE html>
+<html lang="fr"><head><meta charset="utf-8"><title>Verre dépoli</title><link rel="stylesheet" href="../styles.css">
+<style>body{margin:0;padding:0;background:var(--surface);color:var(--ink);font-family:var(--font-sans)}.band{padding:20px;display:flex;gap:16px}.g{background:var(--gradient-brand)}.d{background:var(--surface-brand)}.viv-glass{flex:1;padding:16px}.viv-glass p{margin:0}.t{font:var(--text-heading-sm)}.b{font:var(--text-body-sm);color:var(--ink-muted);margin-top:4px}</style>
+</head><body>
+<div class="band g">
+<div class="viv-glass"><p class="t">Intra-entreprise</p><p class="b">Dans vos locaux, autour des outils de vos équipes.</p></div>
+<div class="viv-glass"><p class="t">Sur mesure</p><p class="b">Le contenu s'ajuste après le cadrage préalable.</p></div>
+</div>
+<div class="band d" data-theme="sombre">
+<div class="viv-glass"><p class="t" style="color:var(--ink)">Intra-entreprise</p><p class="b">Dans vos locaux, autour des outils de vos équipes.</p></div>
+<div class="viv-glass"><p class="t" style="color:var(--ink)">Sur mesure</p><p class="b">Le contenu s'ajuste après le cadrage préalable.</p></div>
+</div>
+<p class="caption" style="color:var(--ink-muted);margin:14px 20px 0">--glass-surface, --glass-border, --glass-blur 14px. Classe <code>.viv-glass</code>. Repli sur <code>surface-raised</code> quand le navigateur ne sait pas flouter.</p>
+</body></html>

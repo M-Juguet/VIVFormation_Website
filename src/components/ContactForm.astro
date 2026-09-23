@@ -1,0 +1,183 @@
+---
+/* Formulaire de contact, posé dans un encart en verre dépoli (sur une bande sombre).
+   Envoi JSON au webhook n8n défini par PUBLIC_N8N_CONTACT_WEBHOOK_URL.
+   Les paramètres d'URL ?sujet= et ?formation= pré-remplissent le formulaire. */
+import Button from './ds/Button.astro';
+import Callout from './ds/Callout.astro';
+import Field from './ds/Field.astro';
+import { CONTACT_SUBJECTS, type ContactSubject } from '../config/site';
+
+interface Props {
+  /** Préfixe des identifiants de champs (unique dans la page). */
+  id?: string;
+  sujet?: ContactSubject;
+  /** Formation imposée (fiche formation) : le champ passe en lecture seule. */
+  formation?: string;
+  class?: string;
+}
+
+const { id = 'contact', sujet = 'dates', formation, class: className } = Astro.props;
+const endpoint = import.meta.env.PUBLIC_N8N_CONTACT_WEBHOOK_URL ?? '';
+const hints = Object.fromEntries(CONTACT_SUBJECTS.map((s) => [s.value, s.hint]));
+---
+
+<div class:list={['viv-glass p-6', className]}>
+  <form
+    class="viv-form-grid"
+    data-contact-form
+    data-endpoint={endpoint}
+    data-hints={JSON.stringify(hints)}
+    data-fixed-formation={formation ? 'true' : undefined}
+  >
+    <Field as="select" id={`${id}-sujet`} name="sujet" label="Motif" required class="viv-form-wide">
+      {CONTACT_SUBJECTS.map((s) => (
+        <option value={s.value} selected={s.value === sujet}>
+          {s.label}
+        </option>
+      ))}
+    </Field>
+    <Field
+      id={`${id}-entreprise`}
+      name="entreprise"
+      label="Entreprise"
+      placeholder="Raison sociale"
+      autocomplete="organization"
+      required
+    />
+    <Field
+      id={`${id}-nom`}
+      name="nom"
+      label="Nom et prénom"
+      placeholder="Votre nom"
+      autocomplete="name"
+      required
+    />
+    <Field
+      id={`${id}-email`}
+      name="email"
+      type="email"
+      label="Courriel professionnel"
+      placeholder="prenom.nom@entreprise.fr"
+      autocomplete="email"
+      required
+    />
+    <Field
+      id={`${id}-telephone`}
+      name="telephone"
+      type="tel"
+      label="Téléphone"
+      autocomplete="tel"
+    />
+    <Field
+      id={`${id}-formation`}
+      name="formation"
+      label="Formation visée"
+      placeholder="Intitulé ou domaine"
+      class="viv-form-wide"
+      value={formation}
+      readonly={formation ? true : undefined}
+    />
+    <Field
+      as="textarea"
+      id={`${id}-message`}
+      name="message"
+      label="Votre demande"
+      rows={4}
+      hint={hints[sujet]}
+      required
+      class="viv-form-wide"
+    />
+    <!-- Pot de miel anti-spam : doit rester vide. -->
+    <input
+      name="website"
+      tabindex="-1"
+      autocomplete="off"
+      aria-hidden="true"
+      class="absolute -left-[9999px]"
+    />
+    <div class="viv-form-wide">
+      <Button type="submit" class="w-full">
+        Envoyer la demande
+      </Button>
+    </div>
+  </form>
+
+  <Callout tone="success" title="Demande enregistrée" data-state="success" hidden>
+    <p data-success-text>Nous vous rappelons sous deux jours ouvrés pour le cadrage préalable.</p>
+  </Callout>
+  <Callout tone="danger" title="Envoi impossible" data-state="error" class="mt-5" hidden>
+    <p data-error-text>
+      Une erreur est survenue. Réessayez dans un instant ou écrivez-nous directement par courriel.
+    </p>
+  </Callout>
+</div>
+
+<script>
+  const SUCCESS: Record<string, [string, string]> = {
+    dysfonctionnement: [
+      'Signalement transmis',
+      'Merci. Nous revenons vers vous rapidement pour résoudre le problème.',
+    ],
+    information: ['Demande enregistrée', 'Nous vous répondons sous deux jours ouvrés.'],
+    default: [
+      'Demande enregistrée',
+      'Nous vous rappelons sous deux jours ouvrés pour le cadrage préalable.',
+    ],
+  };
+
+  document.querySelectorAll<HTMLFormElement>('[data-contact-form]').forEach((form) => {
+    const box = form.parentElement!;
+    const success = box.querySelector<HTMLElement>('[data-state="success"]')!;
+    const error = box.querySelector<HTMLElement>('[data-state="error"]')!;
+    const field = (name: string) =>
+      form.elements.namedItem(name) as HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement;
+    const hints: Record<string, string> = JSON.parse(form.dataset.hints ?? '{}');
+    const hint = document.getElementById(`${field('message').id}-hint`);
+
+    const syncHint = () => {
+      if (hint) hint.textContent = hints[field('sujet').value] ?? '';
+    };
+
+    // Pré-remplissage depuis l'URL (?sujet=devis&formation=…).
+    const params = new URLSearchParams(location.search);
+    const sujet = params.get('sujet');
+    if (sujet && sujet in hints) field('sujet').value = sujet;
+    const formation = params.get('formation');
+    if (formation && !form.dataset.fixedFormation) field('formation').value = formation;
+    syncHint();
+    field('sujet').addEventListener('change', syncHint);
+
+    form.addEventListener('submit', async (event) => {
+      event.preventDefault();
+      error.hidden = true;
+      const data = Object.fromEntries(new FormData(form)) as Record<string, string>;
+      if (data.website) return;
+      delete data.website;
+
+      const endpoint = form.dataset.endpoint;
+      const button = form.querySelector<HTMLButtonElement>('button[type=submit]')!;
+      button.disabled = true;
+      try {
+        if (!endpoint) throw new Error('PUBLIC_N8N_CONTACT_WEBHOOK_URL non configurée');
+        const response = await fetch(endpoint, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ ...data, page: location.href, sentAt: new Date().toISOString() }),
+        });
+        if (!response.ok) throw new Error(`HTTP ${response.status}`);
+        const [title, text] = SUCCESS[data.sujet] ?? SUCCESS.default;
+        success.querySelector('.viv-callout__title')!.textContent = title;
+        success.querySelector('[data-success-text]')!.textContent = text;
+        form.hidden = true;
+        success.hidden = false;
+        success.setAttribute('tabindex', '-1');
+        success.focus();
+      } catch (e) {
+        console.error('[contact]', e);
+        error.hidden = false;
+      } finally {
+        button.disabled = false;
+      }
+    });
+  });
+</script>

@@ -1,0 +1,194 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import ContactForm from '../components/ContactForm.astro';
+import CoverMotif from '../components/CoverMotif.astro';
+import FormationCard from '../components/FormationCard.astro';
+import Badge from '../components/ds/Badge.astro';
+import Button from '../components/ds/Button.astro';
+import Callout from '../components/ds/Callout.astro';
+import Icon from '../components/ds/Icon.astro';
+import { ETAPES_ORGANISATION, SECTEURS } from '../config/site';
+import { getFormations, getTaxonomies, resolveFormation } from '../lib/formations';
+
+const formations = await Promise.all((await getFormations()).map(resolveFormation));
+const { familles } = await getTaxonomies();
+const enAvant = formations.filter((f) => f.formation.data.enAvant).slice(0, 3);
+const compte = (n: number) => `${n} formation${n > 1 ? 's' : ''}`;
+const engagements = [
+  { icon: 'map-pin', texte: 'Sur vos postes, avec vos versions' },
+  { icon: 'clock', texte: 'De 7 à 35 heures selon le programme' },
+  { icon: 'target', texte: 'Objectifs évalués au poste de travail' },
+] as const;
+---
+
+<BaseLayout>
+  <!-- Hero : bande sombre -->
+  <section class="viv-section overflow-hidden bg-surface-brand text-ink" data-theme="sombre">
+    <div class="viv-wrap viv-split viv-split--hero">
+      <div class="flex flex-col items-start">
+        <Badge tone="gold" icon="map-pin">
+          Présentiel, dans vos locaux ou sur votre site
+        </Badge>
+        <h1 class="display-xl my-5 text-balance">
+          Formez vos équipes à la 3D, au graphisme 2D et à l’IA générative
+        </h1>
+        <p class="body-lg mb-8 max-w-[58ch] text-pretty text-ink-muted">
+          Blender, Unreal Engine, VRED, Unity, Illustrator et IA générative. Les sessions
+          s’organisent à la demande, sur vos postes et vos versions de logiciel ; le déroulé
+          s’ajuste après un cadrage d’une heure.
+        </p>
+        <div class="flex flex-wrap gap-4">
+          <Button href="/catalogue/" icon="arrow-right">
+            Voir le catalogue
+          </Button>
+          <Button href="#contact" variant="secondary" icon="calendar">
+            Demander un devis
+          </Button>
+        </div>
+      </div>
+      <div class="relative grid">
+        <CoverMotif class="col-start-1 row-start-1" />
+        <div class="viv-glass col-start-1 row-start-1 -mb-2 -ml-2 flex max-w-[320px] flex-col gap-3 self-end justify-self-start p-5">
+          <p class="overline text-ink-muted">Chaque formation</p>
+          {engagements.map((e) => (
+            <div class="flex items-center gap-3">
+              <span class="flex text-action">
+                <Icon name={e.icon} />
+              </span>
+              <span class="body">{e.texte}</span>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Familles -->
+  <section id="domaines" class="viv-section bg-surface">
+    <div class="viv-wrap">
+      <div class="mb-10 max-w-[720px]">
+        <p class="overline text-ink-muted">Domaines</p>
+        <h2 class="display-md mt-2">Trois familles de formations</h2>
+        <p class="body-lg mt-4 text-ink-muted">
+          Une formation porte sur ce que vous venez apprendre à faire, pas seulement sur le logiciel
+          que vous ouvrez.
+        </p>
+      </div>
+      <div class="grid grid-cols-[repeat(auto-fit,minmax(280px,1fr))] gap-6">
+        {familles.map((fam) => {
+          const n = formations.filter((f) => f.famille.id === fam.id).length;
+          return (
+            <a
+              href={`/catalogue/?famille=${fam.id}`}
+              class="viv-card flex flex-col gap-4 p-6 text-ink no-underline transition duration-(--motion-micro) ease-standard hover:-translate-y-0.5"
+            >
+              <div class="flex items-start justify-between gap-4">
+                <Icon name={fam.data.icone} size={24} tile="degrade" shape="carre" />
+                <span class="label text-ink-muted">{compte(n)}</span>
+              </div>
+              <h3 class="heading-lg">{fam.data.label}</h3>
+              <p class="body flex-1 text-ink-muted">{fam.data.description}</p>
+              <p class="caption border-t border-border pt-4 text-ink-muted">
+                {fam.data.outilsTexte}
+              </p>
+              <span class="body flex items-center gap-2 text-action">
+                Voir les formations <Icon name="arrow-right" size={16} />
+              </span>
+            </a>
+          );
+        })}
+      </div>
+    </div>
+  </section>
+
+  <!-- Formations mises en avant -->
+  <section id="catalogue" class="viv-section bg-surface-sunken">
+    <div class="viv-wrap">
+      <div class="mb-10 flex flex-wrap items-end justify-between gap-4">
+        <div class="max-w-[720px]">
+          <p class="overline text-ink-muted">Catalogue</p>
+          <h2 class="display-md mt-2">Formations souvent demandées</h2>
+        </div>
+        <Button variant="secondary" href="/catalogue/" icon="arrow-right">
+          Voir les {compte(formations.length)}
+        </Button>
+      </div>
+      <div class="viv-grid-cards">
+        {enAvant.map((item) => (
+          <FormationCard item={item} />
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Organisation : bande de dégradé -->
+  <section id="organisation" class="viv-section bg-(image:--gradient-brand)">
+    <div class="viv-wrap">
+      <div class="mb-10 max-w-[720px]">
+        <p class="overline text-ink-on-pastel">Organisation</p>
+        <h2 class="display-md mt-2 text-ink-on-pastel">Comment se déroule une formation</h2>
+      </div>
+      <div class="grid grid-cols-[repeat(auto-fit,minmax(230px,1fr))] gap-6">
+        {ETAPES_ORGANISATION.map((e, i) => (
+          <div class="viv-glass flex flex-col gap-3 p-6">
+            <p class="overline text-ink-muted">Étape {i + 1}</p>
+            <h3 class="heading-md">{e.titre}</h3>
+            <p class="caption text-ink-muted">{e.meta}</p>
+            <p class="body text-ink-muted">{e.texte}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Pour qui -->
+  <section id="clients" class="viv-section bg-surface">
+    <div class="viv-wrap viv-split viv-split--even">
+      <div>
+        <p class="overline text-ink-muted">Pour qui</p>
+        <h2 class="display-md mt-2 mb-5">
+          Des équipes de conception, sur des projets confidentiels
+        </h2>
+        <p class="body-lg mb-4 max-w-[60ch] text-ink-muted">
+          Nous formons des designers, des infographistes et des équipes projet, souvent dans leurs
+          propres locaux. Les sessions portent sur des fichiers d’exercice ; vos projets restent sur
+          vos postes.
+        </p>
+        <p class="body max-w-[60ch] text-ink-muted">
+          Rien de ce qui se passe en session ne sort de la salle : ni photo, ni capture, ni fichier.
+        </p>
+      </div>
+      <ul class="flex flex-col">
+        {SECTEURS.map((s) => (
+          <li class="flex items-baseline justify-between gap-4 border-b border-border py-5">
+            <span class="heading-md">{s.nom}</span>
+            <span class="body-sm text-right text-ink-muted">{s.detail}</span>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </section>
+
+  <!-- Contact : bande sombre -->
+  <section id="contact" class="viv-section bg-surface text-ink" data-theme="sombre">
+    <div class="viv-wrap viv-split viv-split--form">
+      <div class="flex flex-col gap-8">
+        <div>
+          <p class="overline text-ink-muted">Contact</p>
+          <h2 class="display-md mt-2 mb-4">Demander des dates ou un devis</h2>
+          <p class="body-lg text-ink-muted">
+            Nous vous rappelons pour un cadrage d’une heure : vos postes, vos versions installées,
+            ce que vous produisez. Les dates se fixent ensuite avec vous.
+          </p>
+        </div>
+        <Callout tone="info" title="Financement">
+          <p>
+            Prise en charge OPCO et plan de développement des compétences de votre entreprise. Nous
+            ne proposons pas de financement par le compte personnel de formation.
+          </p>
+        </Callout>
+      </div>
+      <ContactForm id="accueil" sujet="devis" />
+    </div>
+  </section>
+</BaseLayout>

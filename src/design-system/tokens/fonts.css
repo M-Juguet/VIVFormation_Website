@@ -1,0 +1,10 @@
+/* VIV Formation — les cinq fichiers de la charte, plus Noto Sans Mono (ajout du système).
+   N'en chargez aucun autre.
+   Il n'existe pas de gras droit : la hiérarchie vient de la taille et de la couleur. */
+@font-face{font-family:"Playfair Display";src:url("../fonts/PlayfairDisplay-BoldItalic.ttf") format("truetype");font-weight:700;font-style:italic;font-display:swap}
+@font-face{font-family:"Noto Sans";src:url("../fonts/NotoSans-Regular.ttf") format("truetype");font-weight:400;font-style:normal;font-display:swap}
+@font-face{font-family:"Noto Sans";src:url("../fonts/NotoSans-Light.ttf") format("truetype");font-weight:300;font-style:normal;font-display:swap}
+@font-face{font-family:"Noto Sans";src:url("../fonts/NotoSans-Italic.ttf") format("truetype");font-weight:400;font-style:italic;font-display:swap}
+@font-face{font-family:"Noto Sans";src:url("../fonts/NotoSans-BoldItalic.ttf") format("truetype");font-weight:700;font-style:italic;font-display:swap}
+/* Noto Sans Mono : ajout du système, absent de la charte — code, chemins, prompts, raccourcis. */
+@font-face{font-family:"Noto Sans Mono";src:url("../fonts/NotoSansMono-Regular.ttf") format("truetype");font-weight:400;font-style:normal;font-display:swap}

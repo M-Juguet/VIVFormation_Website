@@ -1,0 +1,31 @@
+<!-- @dsCard group="Motion" viewport="700x260" name="Mouvement" subtitle="Survolez chaque bloc : trois durées, trois courbes, huit pixels ; coupé sous prefers-reduced-motion" -->
+<!DOCTYPE html>
+<html lang="fr"><head><meta charset="utf-8"><title>Mouvement</title><link rel="stylesheet" href="../styles.css">
+<style>
+body{margin:0;padding:20px;background:var(--surface);color:var(--ink);font-family:var(--font-sans)}
+.r{display:flex;gap:16px}
+.c{flex:1;background:var(--surface-sunken);border-radius:var(--radius-md);padding:14px;cursor:default;overflow:hidden}
+.c b{display:block;font:var(--text-label)}
+.c em{display:block;font:var(--text-caption);color:var(--ink-muted);font-style:normal;margin:4px 0 12px}
+/* micro : l'état change sous le doigt */
+.chip{display:inline-flex;align-items:center;font:var(--text-button);padding:8px 16px;border-radius:var(--radius-md);background:var(--action);color:var(--on-action);transition:background-color var(--motion-micro) var(--motion-standard)}
+.c:hover .chip{background:var(--action-hover)}
+/* state : une transformation sur place, 200 ms */
+.track{height:8px;border-radius:var(--radius-pill);background:var(--surface);box-shadow:inset 0 0 0 1px var(--border);overflow:hidden}
+.bar{height:100%;width:22%;border-radius:var(--radius-pill);background:var(--gradient-brand);transition:width var(--motion-state) var(--motion-standard)}
+.c:hover .bar{width:88%}
+.tag{display:inline-block;margin-top:10px;font:var(--text-label);padding:2px 10px;border-radius:var(--radius-pill);background:var(--success-surface);color:var(--success);opacity:0;transition:opacity var(--motion-state) var(--motion-enter)}
+.c:hover .tag{opacity:1}
+/* panel : ce qui entre depuis un bord, 320 ms, 8 px */
+.panel{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-sm);padding:10px 12px;font:var(--text-body-sm);color:var(--ink-muted);opacity:0;transform:translateX(var(--motion-shift));transition:opacity var(--motion-panel) var(--motion-enter),transform var(--motion-panel) var(--motion-enter)}
+.c:hover .panel{opacity:1;transform:none}
+.n{font:var(--text-caption);color:var(--ink-muted);margin:14px 0 0}
+</style>
+</head><body>
+<div class="r">
+<div class="c"><b>--motion-micro 120 ms</b><em>Survol, focus, pression</em><span class="chip">Demander des dates</span></div>
+<div class="c"><b>--motion-state 200 ms</b><em>Encart, onglet, correction de quiz</em><div class="track"><div class="bar"></div></div><span class="tag">Module validé</span></div>
+<div class="c"><b>--motion-panel 320 ms</b><em>Modale, menu, tiroir</em><div class="panel">Le panneau entre depuis le bord, huit pixels et un fondu.</div></div>
+</div>
+<p class="n">Courbes : --motion-enter (arrivée), --motion-exit (départ), --motion-standard (sur place). Amplitude --motion-shift 8 px avec gain d'opacité ; échelle ≤ 1,02. Pas de rebond. Sous prefers-reduced-motion, tout retombe à 1 ms — et rien de ce qui est écrit ici ne dépend du mouvement.</p>
+</body></html>

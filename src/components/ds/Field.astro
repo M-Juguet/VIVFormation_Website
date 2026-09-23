@@ -1,0 +1,84 @@
+---
+/* Champ de formulaire complet : libellé, saisie, aide et message d'erreur reliés par aria-describedby.
+   Portage de docs/design-system/components/base/Field.jsx. Pour une liste de choix, passer
+   `as="select"` et les <option> en contenu. */
+import type { HTMLAttributes } from 'astro/types';
+
+type Props = Omit<HTMLAttributes<'input'>, 'id'> & {
+  id: string;
+  label: string;
+  hint?: string;
+  error?: string;
+  as?: 'input' | 'textarea' | 'select';
+  rows?: number;
+};
+
+const {
+  id,
+  label,
+  hint,
+  error,
+  as = 'input',
+  rows = 3,
+  required,
+  disabled,
+  class: className,
+  ...rest
+} = Astro.props;
+const hintId = `${id}-hint`;
+const errId = `${id}-error`;
+const describedBy = [hint && hintId, error && errId].filter(Boolean).join(' ') || undefined;
+const Control = as;
+---
+
+<div
+  class:list={[
+    'viv-field',
+    error && 'viv-field--invalid',
+    disabled && 'viv-field--disabled',
+    className,
+  ]}
+>
+  <label class="viv-field__label" for={id}>
+    {label}
+    {required && (
+      <span class="viv-field__required" aria-hidden="true">
+        *
+      </span>
+    )}
+  </label>
+  {Control === 'input' ? (
+    <input
+      id={id}
+      class="viv-field__control"
+      aria-invalid={error ? 'true' : undefined}
+      aria-describedby={describedBy}
+      disabled={disabled || undefined}
+      required={required}
+      {...rest}
+    />
+  ) : (
+    <Control
+      id={id}
+      class="viv-field__control"
+      aria-invalid={error ? 'true' : undefined}
+      aria-describedby={describedBy}
+      disabled={disabled || undefined}
+      required={required}
+      rows={Control === 'textarea' ? rows : undefined}
+      {...rest}
+    >
+      <slot />
+    </Control>
+  )}
+  {hint && (
+    <p class="viv-field__hint" id={hintId}>
+      {hint}
+    </p>
+  )}
+  {error && (
+    <p class="viv-field__error" id={errId}>
+      {error}
+    </p>
+  )}
+</div>

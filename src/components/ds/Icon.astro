@@ -1,0 +1,64 @@
+---
+/* Icône Lucide au format du système : grille 24, trait 2, encre héritée du texte (currentColor).
+   Portage de docs/design-system/components/base/Icon.jsx. */
+import { ICON_PATHS, type IconName } from './icons';
+
+interface Props {
+  name?: IconName;
+  /** Tracé SVG brut, pour une icône Lucide absente de ICON_PATHS. */
+  path?: string;
+  size?: number;
+  strokeWidth?: number;
+  /** Pastille pleine (1,6 × l'icône) : actions et zones à forte visibilité, jamais en liste. */
+  tile?: 'degrade' | 'rose' | 'gold' | 'action' | 'ink';
+  shape?: 'rond' | 'carre';
+  /** Libellé accessible ; sans lui l'icône est décorative. */
+  label?: string;
+  class?: string;
+}
+
+const TILES = {
+  degrade: { background: 'var(--gradient-brand)', color: 'var(--ink-on-pastel)' },
+  rose: { background: 'var(--brand-rose)', color: 'var(--ink-on-pastel)' },
+  gold: { background: 'var(--brand-gold)', color: 'var(--ink-on-pastel)' },
+  action: { background: 'var(--action)', color: 'var(--on-action)' },
+  ink: { background: 'var(--ink)', color: 'var(--ink-inverse)' },
+};
+const TILE_SCALE = 1.6;
+
+const {
+  name,
+  path,
+  size = 20,
+  strokeWidth = 2,
+  tile,
+  shape,
+  label,
+  class: className,
+} = Astro.props;
+const inner = path ?? (name ? ICON_PATHS[name] : '');
+const t = tile ? TILES[tile] : null;
+const box = Math.round(size * TILE_SCALE);
+const tileStyle = t
+  ? `width:${box}px;height:${box}px;border-radius:${shape === 'carre' ? 'var(--radius-md)' : '999px'};background:${t.background};color:${t.color}`
+  : undefined;
+---
+
+<span class:list={['viv-icon', t && 'viv-icon--tile', className]} style={tileStyle}>
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    width={size}
+    height={size}
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    stroke-width={strokeWidth}
+    stroke-linecap="round"
+    stroke-linejoin="round"
+    aria-hidden={label ? undefined : 'true'}
+    role={label ? 'img' : undefined}
+    aria-label={label}
+    focusable="false"
+    set:html={inner}
+  />
+</span>

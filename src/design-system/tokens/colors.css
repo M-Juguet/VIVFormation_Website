@@ -1,0 +1,76 @@
+/* VIV Formation — couleur. :root porte le thème clair (défaut) ; [data-theme="sombre"] le remplace.
+   Chaque token porte sa note d'usage et le contraste qu'il tient. */
+:root {
+  --brand-rose: #daa5bc; /* Premier arrêt du dégradé du logo, valeur exacte du SVG. Aplat décoratif, fond de vignette, filet graphique. Jamais en texte : 2,08:1 sur surface. Texte posé dessus : ink-on-pastel. */
+  --brand-peach: #edc6a6; /* Milieu du dégradé : couleur dérivée, absente des fichiers de marque. Aplats de transition et vignettes secondaires — pour un vrai dégradé, utilisez les deux arrêts. Texte posé dessus : ink-on-pastel. */
+  --brand-gold: #fbde96; /* Second arrêt du dégradé du logo, valeur exacte du SVG. Aplat de mise en avant, surlignage, puce de liste. Texte posé dessus : ink-on-pastel. */
+  --surface: #ffffff; /* Fond de page par défaut, web comme document. Porte ink, ink-muted, ink-subtle et action. */
+  --surface-sunken: #faf6f7; /* Fond en retrait : bandeaux, colonnes latérales, zones de formulaire. */
+  --surface-raised: #ffffff; /* Fond des cartes et panneaux ; en thème clair il se distingue par border et shadow-sm, pas par la teinte. */
+  --surface-brand: #fbf1f5; /* Rose très pâle des encarts de marque et des en-têtes de module. Porte ink et action. */
+  --surface-accent: #fdf6e8; /* Doré pâle des encarts d'objectifs pédagogiques. Porte ink et accent-deep. */
+  --ink: #1c161b; /* Texte courant et titres sur toutes les surfaces nommées (min. 13,9:1). */
+  --ink-muted: #5a4e56; /* Texte secondaire : chapô, légende, métadonnées de session (min. 7,3:1). */
+  --ink-subtle: #736570; /* Texte tertiaire : mentions légales, aide de champ, horodatage (min. 5,1:1). Ne pas éclaircir. */
+  --ink-on-pastel: #1c161b; /* Texte posé sur brand-rose, brand-peach, brand-gold : reste sombre dans les deux thèmes (min. 8,5:1). */
+  --ink-inverse: #ffffff; /* Texte sur un aplat ink : pied de page inversé, bloc de citation plein. */
+  --action: #9c3f68; /* Rose foncé dérivé de brand-rose : liens, bouton primaire, onglet actif, icône interactive (min. 5,7:1). */
+  --action-hover: #7f3253; /* État survol et pressé de action. */
+  --on-action: #ffffff; /* Texte et icône sur un aplat action : 6,3:1 en clair, 10,4:1 en sombre. */
+  --accent-deep: #8f5c0e; /* Or foncé dérivé de brand-gold : titre d'encart objectifs, chiffre clé, picto de certification (min. 5,2:1). */
+  --border: #ece3e6; /* Filet décoratif : contour de carte, ligne de tableau, séparateur. Ne porte aucune information. */
+  --border-strong: #9a8490; /* Bordure porteuse de sens : champ de saisie, bouton secondaire, limite cliquable (min. 3:1). */
+  --focus: #9c3f68; /* Anneau de focus clavier, 2px plein avec 2px d'écart : au moins 6,3:1 sur toutes les surfaces. */
+  --success: #1f7a5c; /* Module validé, session confirmée, quiz réussi (min. 5,2:1). Toujours accompagné d'un mot. */
+  --success-surface: #eef7f3; /* Fond des encarts de réussite ; porte ink et success. */
+  --warning: #8f5c0e; /* Dossier incomplet, échéance proche (min. 5,6:1). Accompagné d'un mot. */
+  --warning-surface: #fdf6e8; /* Fond des encarts d'attention ; porte ink et warning. */
+  --danger: #b3261e; /* Erreur de formulaire, session annulée, prérequis manquant (min. 6,5:1). Accompagné d'un message. */
+  --danger-surface: #fdf0ef; /* Fond des encarts d'erreur ; porte ink et danger. */
+  --info: #2f5f8f; /* Information pratique, mention administrative, renvoi réglementaire (min. 6,6:1). */
+  --info-surface: #eef3f9; /* Fond des encarts d'information ; porte ink et info. */
+  --surface-code: #f4f0f2; /* Fond des blocs techniques : commande, chemin, nom de nœud, prompt, touche. Neutre, jamais teinté de marque. */
+  --shadow-sm: 0 1px 2px rgba(28, 22, 27, 0.08); /* Carte au repos, champ de saisie surélevé. */
+  --shadow-md: 0 4px 16px rgba(28, 22, 27, 0.10); /* Carte au survol, panneau flottant, en-tête collant. */
+  --shadow-lg: 0 16px 40px rgba(28, 22, 27, 0.14); /* Modale, menu déroulant, aperçu de document. */
+  --gradient-brand: linear-gradient(90deg, var(--brand-rose) 15%, var(--brand-gold) 76%); /* Le dégradé du logo, repris tel quel : deux arrêts, horizontal, plateaux à chaque extrémité. Jamais en diagonale ni en vertical. Peut porter du texte : l'encre est alors ink-on-pastel. */
+  --glass-surface: rgba(255, 255, 255, 0.72); /* Fond des surfaces en verre dépoli, posées sur une image, un aplat sombre ou le dégradé de marque. Porte ink et action. */
+  --glass-border: rgba(28, 22, 27, 0.12); /* Filet d'une surface en verre dépoli : il détache la carte de ce qui passe dessous. */
+  --glass-blur: 14px; /* @kind other */ /* Rayon de flou d'arrière-plan d'une surface en verre dépoli. Une seule valeur dans tout le système. */
+}
+[data-theme="sombre"] {
+  --brand-rose: #daa5bc;
+  --brand-peach: #edc6a6;
+  --brand-gold: #fbde96;
+  --surface: #171216;
+  --surface-sunken: #110d10;
+  --surface-raised: #221b21;
+  --surface-brand: #2b1f28;
+  --surface-accent: #2a2418;
+  --ink: #f7f2f4;
+  --ink-muted: #c6b8c0;
+  --ink-subtle: #a2939c;
+  --ink-on-pastel: #1c161b;
+  --ink-inverse: #171216;
+  --action: #f0b8ce;
+  --action-hover: #f8cfdf;
+  --on-action: #2b1119;
+  --accent-deep: #f3c86a;
+  --border: #332a31;
+  --border-strong: #75636d;
+  --focus: #f0b8ce;
+  --success: #6fd3ab;
+  --success-surface: #14221d;
+  --warning: #f1c15e;
+  --warning-surface: #2a2418;
+  --danger: #ff9d94;
+  --danger-surface: #2a1614;
+  --info: #9dc4ea;
+  --info-surface: #141c25;
+  --surface-code: #0d0a0c;
+  --glass-surface: rgba(34, 27, 33, 0.58);
+  --glass-border: rgba(247, 242, 244, 0.18);
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.5);
+  --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.55);
+  --shadow-lg: 0 16px 40px rgba(0, 0, 0, 0.6);
+}

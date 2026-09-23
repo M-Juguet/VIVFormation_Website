@@ -1,0 +1,68 @@
+---
+import Logo from './ds/Logo.astro';
+import { FINANCEMENTS, SITE } from '../config/site';
+import { getTaxonomies } from '../lib/formations';
+
+const { familles } = await getTaxonomies();
+const lien = 'text-ink-muted no-underline hover:text-ink';
+---
+
+<footer data-theme="sombre" class="bg-surface-sunken text-ink">
+  <div class="viv-wrap viv-footer-grid py-12">
+    <div class="flex flex-col items-start gap-3">
+      <Logo mark="monogramme" variant="blanc" height={40} />
+      <p class="body-sm m-0 max-w-[300px] text-ink-muted">
+        Formations professionnelles à la conception 3D, au graphisme 2D et à l’IA générative
+        appliquée au travail quotidien.
+      </p>
+    </div>
+    <div>
+      <p class="overline mb-3 text-ink-muted">Formations</p>
+      <ul class="flex flex-col gap-2">
+        <li class="body-sm">
+          <a href="/catalogue/" class={lien}>
+            Catalogue complet
+          </a>
+        </li>
+        {familles.map((f) => (
+          <li class="body-sm">
+            <a href={`/catalogue/?famille=${f.id}`} class={lien}>
+              {f.data.label}
+            </a>
+          </li>
+        ))}
+      </ul>
+    </div>
+    <div>
+      <p class="overline mb-3 text-ink-muted">Financement</p>
+      <ul class="flex flex-col gap-2">
+        {FINANCEMENTS.map((f) => (
+          <li class="body-sm text-ink-muted">{f}</li>
+        ))}
+      </ul>
+    </div>
+    <div>
+      <p class="overline mb-3 text-ink-muted">Contact</p>
+      <ul class="flex flex-col gap-2">
+        <li class="body-sm">
+          <a href={`mailto:${SITE.email}`} class={lien}>
+            {SITE.email}
+          </a>
+        </li>
+        <li class="body-sm">
+          <a href="/contact/" class={lien}>
+            Formulaire de contact
+          </a>
+        </li>
+        <li class="body-sm text-ink-muted">{SITE.ville}</li>
+      </ul>
+    </div>
+  </div>
+  <div class="border-t border-border">
+    <p class="caption viv-wrap py-5 text-ink-subtle">
+      {SITE.name} — numéro de déclaration d’activité {SITE.declarationActivite}. Accessibilité :
+      dites-nous ce qu’il faut adapter, nous organisons la session en conséquence. Toutes les
+      formations se tiennent en présentiel ; les dates se fixent avec vous.
+    </p>
+  </div>
+</footer>

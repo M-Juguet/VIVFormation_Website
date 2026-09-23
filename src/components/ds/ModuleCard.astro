@@ -1,0 +1,126 @@
+---
+/* Carte d'une formation dans le catalogue. Ordre d'affichage invariable : type et domaine en overline,
+   outil principal en tête du titre, puis badges outil, modalité, statut.
+   Portage de docs/design-system/components/formation/ModuleCard.jsx (variante avec visuel 16:9). */
+import type { ImageMetadata } from 'astro';
+import { Image } from 'astro:assets';
+import Badge, { type BadgeTone } from './Badge.astro';
+import Icon from './Icon.astro';
+import type { IconName } from './icons';
+
+interface Props {
+  overline?: string;
+  title: string;
+  summary?: string;
+  meta?: { label: string; value: string }[];
+  badges?: { label: string; tone?: BadgeTone }[];
+  price?: string;
+  priceNote?: string;
+  image?: ImageMetadata;
+  imageAlt?: string;
+  imagePlaceholder?: string;
+  /** Repère d'outil posé en pastille sur l'angle du visuel. */
+  mark?: IconName;
+  href?: string;
+  /** Libellé du lien d'action en pied de carte (doublon visuel du lien du titre). */
+  actionLabel?: string;
+  class?: string;
+}
+
+const {
+  overline,
+  title,
+  summary,
+  meta = [],
+  badges = [],
+  price,
+  priceNote,
+  image,
+  imageAlt = '',
+  imagePlaceholder,
+  mark,
+  href,
+  actionLabel,
+  class: className,
+} = Astro.props;
+const hasMedia = Boolean(image || imagePlaceholder);
+---
+
+<article
+  class:list={[
+    'viv-module',
+    hasMedia && 'viv-module--media',
+    href && 'viv-module--link',
+    className,
+  ]}
+>
+  {hasMedia && (
+    <div class="viv-module__media">
+      {image ? (
+        <Image
+          src={image}
+          alt={imageAlt}
+          widths={[400, 800]}
+          sizes="(max-width: 600px) 100vw, 400px"
+        />
+      ) : (
+        <div class="viv-module__media-placeholder" aria-hidden="true">
+          {imagePlaceholder}
+        </div>
+      )}
+      {mark && (
+        <span class="viv-module__mark">
+          <Icon name={mark} size={24} tile="degrade" shape="carre" />
+        </span>
+      )}
+    </div>
+  )}
+  <div class="viv-module__strip" aria-hidden="true"></div>
+  <div class="viv-module__inner">
+    {overline && <p class="viv-module__overline">{overline}</p>}
+    <h3 class="viv-module__title">{href ? <a href={href}>{title}</a> : title}</h3>
+    {summary && <p class="viv-module__summary">{summary}</p>}
+    {meta.length > 0 && (
+      <ul class="viv-module__meta">
+        {meta.map((m) => (
+          <li>
+            <span>{m.label} :</span> {m.value}
+          </li>
+        ))}
+      </ul>
+    )}
+    {badges.length > 0 && (
+      <div class="viv-module__badges">
+        {badges.map((b) => (
+          <Badge tone={b.tone ?? 'rose'}>{b.label}</Badge>
+        ))}
+      </div>
+    )}
+    <slot />
+    {(price || (href && actionLabel)) && (
+      <div class="viv-module__footer">
+        {price ? (
+          <p class="viv-module__price">
+            {price}
+            {priceNote && <span> {priceNote}</span>}
+          </p>
+        ) : (
+          <span />
+        )}
+        {href && actionLabel && (
+          <a
+            class="viv-btn viv-btn--ghost viv-btn--sm"
+            href={href}
+            tabindex="-1"
+            aria-hidden="true"
+          >
+            <span>
+              <Icon name="arrow-right" size={16} />
+            </span>
+            {actionLabel}
+          </a>
+        )}
+      </div>
+    )}
+  </div>
+</article>

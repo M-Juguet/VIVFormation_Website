@@ -1,0 +1,9 @@
+dist/
+.astro/
+node_modules/
+package-lock.json
+# Design system : copies non modifiées
+docs/design-system/
+src/design-system/
+public/logos/
+public/favicon.svg

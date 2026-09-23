@@ -1,0 +1,42 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import ContactForm from '../components/ContactForm.astro';
+import Callout from '../components/ds/Callout.astro';
+import { SITE } from '../config/site';
+---
+
+<BaseLayout
+  title="Contact"
+  description="Demander des dates, un devis ou des informations, ou signaler un problème pendant une session de formation VIV Formation."
+>
+  <section class="viv-section bg-surface-brand text-ink" data-theme="sombre">
+    <div class="viv-wrap viv-split viv-split--form">
+      <div class="flex flex-col gap-8">
+        <div>
+          <p class="overline text-ink-muted">Contact</p>
+          <h1 class="display-lg mt-2 mb-4">Nous écrire</h1>
+          <p class="body-lg text-ink-muted">
+            Demande de dates, de devis ou d’informations : nous vous rappelons pour un cadrage d’une
+            heure, puis les dates se fixent avec vous.
+          </p>
+        </div>
+        <Callout tone="warning" title="Un problème pendant une session ?">
+          <p>
+            Choisissez le motif « Signaler un problème en session » et précisez la formation, la
+            date et le lieu : nous revenons vers vous rapidement.
+          </p>
+        </Callout>
+        <Callout tone="info" title="Financement">
+          <p>
+            Prise en charge OPCO et plan de développement des compétences de votre entreprise. Nous
+            ne proposons pas de financement par le compte personnel de formation.
+          </p>
+        </Callout>
+        <p class="body text-ink-muted">
+          Vous pouvez aussi nous écrire à <a href={`mailto:${SITE.email}`}>{SITE.email}</a>.
+        </p>
+      </div>
+      <ContactForm id="contact" sujet="dates" />
+    </div>
+  </section>
+</BaseLayout>

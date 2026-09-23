@@ -1,0 +1,37 @@
+/* VIV Formation — classes utilitaires de la hiérarchie typographique.
+   Même valeurs que les tokens --text-*, applicables directement en HTML. */
+.display-xl{font-family:var(--font-display);font-size:56px;line-height:58px;font-weight:700;letter-spacing:-.01em;font-style:italic}
+.display-lg{font-family:var(--font-display);font-size:40px;line-height:46px;font-weight:700;font-style:italic}
+.display-md{font-family:var(--font-display);font-size:32px;line-height:38px;font-weight:700;font-style:italic}
+.identity{font-family:var(--font-display);font-size:20px;line-height:28px;font-weight:700;font-style:italic}
+.heading-lg{font-family:var(--font-sans);font-size:24px;line-height:32px;font-weight:700;font-style:italic}
+.heading-md{font-family:var(--font-sans);font-size:20px;line-height:28px;font-weight:700;font-style:italic}
+.heading-sm{font-family:var(--font-sans);font-size:17px;line-height:24px;font-weight:700;font-style:italic}
+.overline{font-family:var(--font-sans);font-size:12px;line-height:16px;font-weight:400;letter-spacing:.08em;text-transform:uppercase}
+.body-lg{font-family:var(--font-sans);font-size:17px;line-height:28px;font-weight:400}
+.body{font-family:var(--font-sans);font-size:15px;line-height:24px;font-weight:400}
+.body-sm{font-family:var(--font-sans);font-size:13px;line-height:20px;font-weight:400}
+.quote{font-family:var(--font-sans);font-size:20px;line-height:32px;font-weight:400;font-style:italic}
+.caption{font-family:var(--font-sans);font-size:12px;line-height:18px;font-weight:300}
+.label{font-family:var(--font-sans);font-size:13px;line-height:18px;font-weight:400}
+.button{font-family:var(--font-sans);font-size:15px;line-height:20px;font-weight:400}
+.data{font-family:var(--font-sans);font-size:15px;line-height:22px;font-weight:400;letter-spacing:.01em}
+.code{font-family:var(--font-mono);font-size:14px;line-height:22px;font-weight:400}
+.kbd{font-family:var(--font-mono);font-size:13px;line-height:18px;font-weight:400}
+/* Filet de marque : 4px sous un en-tête, sous une section, en tête d'un bloc. */
+.viv-gradient-line{height:4px;border:0;margin:0;background:var(--gradient-brand)}
+/* Verre dépoli : une carte posée sur une image, un aplat sombre ou le dégradé de marque.
+   Jamais sur un fond uni clair — sans rien derrière, l'effet n'existe pas. */
+.viv-glass{background:var(--glass-surface);border:1px solid var(--glass-border);border-radius:var(--radius-lg);-webkit-backdrop-filter:blur(var(--glass-blur));backdrop-filter:blur(var(--glass-blur))}
+@supports not (backdrop-filter: blur(1px)){.viv-glass{background:var(--surface-raised)}}
+/* Échelle mobile : la hiérarchie tient à la taille, pas à la graisse — on la comprime sans l'écraser.
+   Le corps ne bouge pas : 15px reste le minimum lisible. */
+@media (max-width: 600px){
+.display-xl{font-size:34px;line-height:38px}
+.display-lg{font-size:28px;line-height:34px}
+.display-md{font-size:24px;line-height:30px}
+.identity{font-size:19px;line-height:26px}
+.heading-lg{font-size:20px;line-height:28px}
+.heading-md{font-size:18px;line-height:26px}
+.quote{font-size:18px;line-height:28px}
+}

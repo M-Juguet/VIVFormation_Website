@@ -1,0 +1,142 @@
+/*
+ * Feuille globale du site.
+ *
+ * 1. Tailwind CSS (preflight + utilitaires).
+ * 2. Le design system VIV Formation (src/design-system/), importé tel quel dans la couche
+ *    `components` : ses tokens, classes typographiques (display-xl, body…), classes de mise en page
+ *    (viv-wrap, viv-split…) et composants (viv-btn, viv-card…). Placé dans une couche, il reste
+ *    surchargeable par les utilitaires Tailwind.
+ * 3. Le pont @theme : les utilitaires Tailwind ne proposent QUE les valeurs du design system
+ *    (couleurs, rayons, polices, ruptures). La palette, les tailles de texte et les graisses par
+ *    défaut de Tailwind sont retirées : la typographie passe par les classes du design system.
+ */
+@import 'tailwindcss';
+@import '../design-system/styles.css' layer(components);
+
+/* Utilitaires Tailwind dont le nom entre en collision avec une classe du design system :
+   `overline` est ici le sur-titre typographique, pas text-decoration: overline. */
+@source not inline('overline');
+
+@theme {
+  /* Ruptures du design system (tokens/layout.css) : 600 / 900 / 1180 px. */
+  --breakpoint-*: initial;
+  --breakpoint-sm: 37.5rem;
+  --breakpoint-md: 56.25rem;
+  --breakpoint-lg: 73.75rem;
+
+  /* Mêmes valeurs que tokens/typography.css (qui fait foi). */
+  --font-*: initial;
+  --font-display: 'Playfair Display', Georgia, serif;
+  --font-sans: 'Noto Sans', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --font-mono: 'Noto Sans Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
+
+  /* Pas de tailles ni de graisses Tailwind : utiliser display-xl, heading-md, body, caption… */
+  --text-*: initial;
+  --font-weight-*: initial;
+
+  /* Mêmes valeurs que tokens/space.css. L'échelle d'espacement Tailwind (pas de 4 px) correspond
+     déjà à celle du design system : p-5 = space-5 = 20 px. */
+  --radius-*: initial;
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --radius-lg: 18px;
+  --radius-xl: 28px;
+  --radius-pill: 999px;
+
+  /* Les ombres passent par les composants du design system (viv-card…) ou par shadow-(--shadow-md). */
+  --shadow-*: initial;
+}
+
+/* Couleurs : `inline` pour que les utilitaires lisent la variable au niveau de l'élément,
+   et suivent donc le thème sombre posé par data-theme="sombre". */
+@theme inline {
+  --color-*: initial;
+  --color-transparent: transparent;
+  --color-current: currentColor;
+  --color-brand-rose: var(--brand-rose);
+  --color-brand-peach: var(--brand-peach);
+  --color-brand-gold: var(--brand-gold);
+  --color-surface: var(--surface);
+  --color-surface-sunken: var(--surface-sunken);
+  --color-surface-raised: var(--surface-raised);
+  --color-surface-brand: var(--surface-brand);
+  --color-surface-accent: var(--surface-accent);
+  --color-surface-code: var(--surface-code);
+  --color-ink: var(--ink);
+  --color-ink-muted: var(--ink-muted);
+  --color-ink-subtle: var(--ink-subtle);
+  --color-ink-on-pastel: var(--ink-on-pastel);
+  --color-ink-inverse: var(--ink-inverse);
+  --color-action: var(--action);
+  --color-action-hover: var(--action-hover);
+  --color-on-action: var(--on-action);
+  --color-accent-deep: var(--accent-deep);
+  --color-border: var(--border);
+  --color-border-strong: var(--border-strong);
+  --color-focus: var(--focus);
+  --color-success: var(--success);
+  --color-success-surface: var(--success-surface);
+  --color-warning: var(--warning);
+  --color-warning-surface: var(--warning-surface);
+  --color-danger: var(--danger);
+  --color-danger-surface: var(--danger-surface);
+  --color-info: var(--info);
+  --color-info-surface: var(--info-surface);
+
+  --ease-standard: var(--motion-standard);
+  --ease-enter: var(--motion-enter);
+  --ease-exit: var(--motion-exit);
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    scroll-padding-top: 110px;
+  }
+  body {
+    @apply bg-surface text-ink font-sans antialiased;
+  }
+  /* Liens de texte courant (sans classe) : couleur d'action du design system. */
+  a:not([class]) {
+    color: var(--action);
+    text-decoration: underline;
+    text-underline-offset: 2px;
+  }
+  a:not([class]):hover {
+    color: var(--action-hover);
+  }
+  :focus-visible {
+    outline: 2px solid var(--focus);
+    outline-offset: 2px;
+  }
+}
+
+@layer components {
+  /* Le style des liens du tiroir (.viv-drawer a) ne doit pas s'appliquer au bouton d'action. */
+  .viv-drawer a.viv-btn {
+    font: var(--text-button);
+    color: var(--on-action);
+    border-bottom: 0;
+    margin-top: var(--space-2);
+  }
+}
+
+/* Texte rédigé en Markdown (chapô des fiches) : corps du design system. Pas de gras droit dans la
+   charte — `strong` prend le gras italique de Noto Sans. */
+@utility viv-prose {
+  & > * + * {
+    margin-top: var(--space-4);
+  }
+  & strong {
+    font-weight: 700;
+    font-style: italic;
+  }
+  & ul {
+    list-style: disc;
+    padding-left: var(--space-5);
+  }
+  & ol {
+    list-style: decimal;
+    padding-left: var(--space-5);
+  }
+}

@@ -1,0 +1,87 @@
+---
+/* En-tête collant, en thème sombre, avec filet de dégradé. Sous 900 px, la navigation passe dans
+   un tiroir plein écran ouvert depuis le haut (.viv-drawer). */
+import Button from './ds/Button.astro';
+import Logo from './ds/Logo.astro';
+import { NAV } from '../config/site';
+
+const path = Astro.url.pathname;
+const isActive = (href: string) => {
+  if (href.includes('#')) return false;
+  if (href === '/') return path === '/';
+  return path.startsWith(href) || (href === '/catalogue/' && path.startsWith('/formations/'));
+};
+const devis = '/contact/?sujet=devis';
+---
+
+<header data-theme="sombre" class="sticky top-0 z-20 bg-surface-brand shadow-(--shadow-md)">
+  <div class="viv-wrap viv-header-bar">
+    <a href="/" aria-label="VIV Formation — accueil" class="flex items-center">
+      <Logo mark="complet" variant="blanc" height={32} alt="" />
+    </a>
+    <nav class="viv-nav" aria-label="Navigation principale">
+      {NAV.map(({ href, label }) => (
+        <a
+          href={href}
+          aria-current={isActive(href) ? 'page' : undefined}
+          class="body border-b-2 border-transparent py-1.5 text-ink-muted no-underline transition-colors duration-(--motion-micro) ease-standard hover:text-ink aria-[current=page]:border-brand-rose aria-[current=page]:text-ink"
+        >
+          {label}
+        </a>
+      ))}
+      <Button size="sm" href={devis} icon="calendar">
+        Demander un devis
+      </Button>
+    </nav>
+    <Button
+      variant="ghost"
+      class="viv-nav-toggle"
+      icon="menu"
+      iconSize={20}
+      aria-expanded="false"
+      aria-controls="menu-mobile"
+      data-menu-open
+    >
+      Menu
+    </Button>
+  </div>
+  <hr class="viv-gradient-line" />
+
+  <div id="menu-mobile" class="viv-drawer" data-theme="sombre" hidden>
+    <div class="viv-drawer__head">
+      <Logo mark="monogramme" variant="blanc" height={32} />
+      <Button variant="ghost" icon="x" iconSize={20} data-menu-close>
+        Fermer
+      </Button>
+    </div>
+    <nav aria-label="Navigation mobile" class="contents">
+      {NAV.map(({ href, label }) => (
+        <a href={href}>{label}</a>
+      ))}
+    </nav>
+    <Button href={devis} icon="calendar">
+      Demander un devis
+    </Button>
+  </div>
+</header>
+
+<script>
+  const drawer = document.querySelector<HTMLElement>('#menu-mobile')!;
+  const openBtn = document.querySelector<HTMLButtonElement>('[data-menu-open]')!;
+  const closeBtn = drawer.querySelector<HTMLButtonElement>('[data-menu-close]')!;
+
+  function setOpen(open: boolean) {
+    drawer.hidden = !open;
+    openBtn.setAttribute('aria-expanded', String(open));
+    document.documentElement.style.overflow = open ? 'hidden' : '';
+    (open ? closeBtn : openBtn).focus();
+  }
+
+  openBtn.addEventListener('click', () => setOpen(true));
+  closeBtn.addEventListener('click', () => setOpen(false));
+  // Un lien du tiroir (y compris une ancre de la page courante) referme le menu.
+  drawer.querySelectorAll('a').forEach((a) => a.addEventListener('click', () => setOpen(false)));
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && !drawer.hidden) setOpen(false);
+  });
+</script>

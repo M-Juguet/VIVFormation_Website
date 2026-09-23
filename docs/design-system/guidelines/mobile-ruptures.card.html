@@ -1,0 +1,27 @@
+<!-- @dsCard group="Mobile" viewport="700x250" name="Points de rupture" subtitle="Trois ruptures, pas plus : 600, 900 et 1180 px — la mise en page en classes adaptatives" -->
+<!DOCTYPE html>
+<html lang="fr"><head><meta charset="utf-8"><title>Points de rupture</title><link rel="stylesheet" href="../styles.css">
+<style>body{margin:0;padding:20px;background:var(--surface);color:var(--ink);font-family:var(--font-sans)}
+.r{display:flex;gap:14px;align-items:flex-end;margin-bottom:16px}
+.c{background:var(--surface-sunken);border-radius:var(--radius-md);padding:12px 14px}
+.c b{display:block;font:var(--text-label)}.c em{display:block;font:var(--text-caption);color:var(--ink-muted);font-style:normal;margin-top:2px}
+table{border-collapse:collapse;width:100%}
+th,td{text-align:left;font:var(--text-body-sm);padding:8px 0;border-top:1px solid var(--border);vertical-align:top}
+th{color:var(--ink-muted);font-weight:400}
+code{font:var(--text-kbd);background:var(--surface-code);border-radius:var(--radius-sm);padding:1px 6px}
+</style>
+</head><body>
+<div class="r">
+<div class="c" style="width:120px"><b>--bp-sm 600px</b><em>Téléphone : une colonne</em></div>
+<div class="c" style="width:200px"><b>--bp-md 900px</b><em>Tablette : les deux colonnes s'empilent</em></div>
+<div class="c" style="flex:1"><b>--bp-lg 1180px</b><em>Largeur maximale du contenu, page centrée au-delà</em></div>
+</div>
+<table>
+<tr><th style="width:190px">Classe</th><th>Ce qu'elle fait, et ce qu'elle devient</th></tr>
+<tr><td><code>.viv-wrap</code></td><td>Contenu centré à 1180 px, gouttière <code>space-8</code> — <code>space-5</code> sous 600 px.</td></tr>
+<tr><td><code>.viv-section</code></td><td>Respiration verticale <code>space-16</code> — <code>space-10</code> sous 600 px.</td></tr>
+<tr><td><code>.viv-split--hero</code> / <code>--aside</code> / <code>--even</code> / <code>--form</code></td><td>Deux colonnes, empilées sous 900 px ; la colonne latérale collante redevient statique.</td></tr>
+<tr><td><code>.viv-grid-cards</code> / <code>.viv-grid-tiles</code></td><td>Grille auto, une seule colonne sous 600 px.</td></tr>
+<tr><td><code>.viv-form-grid</code> / <code>.viv-form-wide</code></td><td>Formulaire sur deux colonnes, une seule sous 600 px.</td></tr>
+</table>
+</body></html>

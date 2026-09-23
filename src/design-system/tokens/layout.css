@@ -1,0 +1,55 @@
+/* VIV Formation — mise en page et affichage mobile.
+   Trois ruptures, pas plus. Les valeurs des media queries répètent ces tokens : le CSS
+   n'accepte pas var() dans une media query, mais les deux doivent rester d'accord. */
+:root {
+  --bp-sm: 600px; /* @kind other */ /* Téléphone : une seule colonne, en dessous de cette largeur. */
+  --bp-md: 900px; /* @kind other */ /* Tablette et petit portable : les mises en page à deux colonnes s'empilent. */
+  --bp-lg: 1180px; /* @kind other */ /* Largeur maximale du contenu ; au-delà, la page reste centrée. */
+  --touch-min: 44px; /* @kind spacing */ /* Hauteur minimale d'une cible au doigt. Aucune action principale en dessous. */
+}
+.viv-wrap{width:100%;max-width:var(--bp-lg);margin:0 auto;padding:0 var(--space-8);box-sizing:border-box}
+.viv-section{padding:var(--space-16) 0}
+.viv-section--tight{padding:var(--space-12) 0}
+.viv-grid-cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:var(--space-6)}
+.viv-grid-tiles{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:var(--space-6)}
+.viv-split{display:grid;gap:var(--space-12);align-items:start}
+.viv-split--hero{grid-template-columns:1.15fr .85fr;align-items:center}
+.viv-split--aside{grid-template-columns:minmax(0,1fr) 340px}
+.viv-split--aside-lg{grid-template-columns:minmax(0,1fr) 360px}
+.viv-split--even{grid-template-columns:1fr 1fr}
+.viv-split--form{grid-template-columns:minmax(0,1fr) 1.15fr}
+.viv-form-grid{display:grid;grid-template-columns:1fr 1fr;gap:var(--space-5)}
+.viv-form-wide{grid-column:1 / -1}
+.viv-footer-grid{display:grid;grid-template-columns:1.6fr 1fr 1fr 1.2fr;gap:var(--space-10)}
+.viv-header-bar{height:84px;display:flex;align-items:center;justify-content:space-between;gap:var(--space-6)}
+.viv-nav{display:flex;align-items:center;gap:var(--space-6)}
+/* Navigation mobile : tiroir plein écran depuis le haut.
+   Le double sélecteur l'emporte sur .viv-btn, déclaré plus loin dans la cascade. */
+.viv-nav-toggle,.viv-btn.viv-nav-toggle{display:none}
+.viv-drawer{position:fixed;inset:0;z-index:30;background:var(--surface-brand);display:flex;flex-direction:column;gap:var(--space-5);padding:var(--space-6) var(--space-5);overflow:auto;animation:viv-drawer var(--motion-panel) var(--motion-enter) both}
+.viv-drawer__head{display:flex;align-items:center;justify-content:space-between;gap:var(--space-4);min-height:var(--touch-min)}
+.viv-drawer a{display:flex;align-items:center;min-height:var(--touch-min);font:var(--text-heading-md);text-decoration:none;color:var(--ink);border-bottom:1px solid var(--border)}
+[hidden]{display:none !important}
+@keyframes viv-drawer{from{opacity:0;transform:translateY(calc(-1 * var(--motion-shift)))}to{opacity:1;transform:none}}
+/* Au doigt, aucune cible sous 44 px — la règle vaut sur toutes les largeurs. */
+@media (pointer: coarse){
+  .viv-btn{min-height:var(--touch-min)}
+  .viv-btn--sm{min-height:var(--touch-min);padding-left:var(--space-4);padding-right:var(--space-4)}
+  .viv-field__control{min-height:var(--touch-min)}
+}
+@media (max-width: 900px){
+  .viv-split--hero,.viv-split--aside,.viv-split--aside-lg,.viv-split--even,.viv-split--form{grid-template-columns:minmax(0,1fr);gap:var(--space-8)}
+  .viv-footer-grid{grid-template-columns:1fr 1fr;gap:var(--space-8)}
+  .viv-nav{display:none}
+  .viv-nav-toggle,.viv-btn.viv-nav-toggle{display:inline-flex}
+  .viv-sticky-aside{position:static !important}
+}
+@media (max-width: 600px){
+  .viv-wrap{padding:0 var(--space-5)}
+  .viv-section{padding:var(--space-10) 0}
+  .viv-section--tight{padding:var(--space-8) 0}
+  .viv-grid-cards,.viv-grid-tiles,.viv-form-grid,.viv-footer-grid{grid-template-columns:minmax(0,1fr)}
+  .viv-header-bar{height:64px}
+  /* Le flou coûte cher sur un téléphone d'entrée de gamme : repli sur une surface pleine. */
+  .viv-glass{-webkit-backdrop-filter:none;backdrop-filter:none;background:var(--surface-raised)}
+}

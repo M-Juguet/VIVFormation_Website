@@ -1,0 +1,30 @@
+---
+/* Tableau des prérequis techniques : version du logiciel, système, machine, licence.
+   La version porte son canal exact : « Blender 5.2 LTS », jamais « dernière version ».
+   Portage de docs/design-system/components/formation/SoftwareRequirements.jsx. */
+interface Props {
+  title?: string;
+  version?: string;
+  items: { label: string; value: string; mono?: boolean }[];
+  note?: string;
+  class?: string;
+}
+
+const { title = 'Prérequis techniques', version, items, note, class: className } = Astro.props;
+---
+
+<section class:list={['viv-req', className]}>
+  <header class="viv-req__header">
+    <h3 class="viv-req__title">{title}</h3>
+    {version && <span class="viv-req__version">{version}</span>}
+  </header>
+  <dl class="viv-req__list">
+    {items.map((item) => (
+      <>
+        <dt>{item.label}</dt>
+        <dd>{item.mono ? <code>{item.value}</code> : item.value}</dd>
+      </>
+    ))}
+  </dl>
+  {note && <p class="viv-req__note">{note}</p>}
+</section>

@@ -1,0 +1,242 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import FormationCard from '../../components/FormationCard.astro';
+import Button from '../../components/ds/Button.astro';
+import Callout from '../../components/ds/Callout.astro';
+import Field from '../../components/ds/Field.astro';
+import { getFormations, getTaxonomies, resolveFormation } from '../../lib/formations';
+
+const formations = await Promise.all((await getFormations()).map(resolveFormation));
+const { familles, domaines, outils, types } = await getTaxonomies();
+
+/* Lignes de filtres. La ligne « Domaine » n'apparaît que pour une famille qui en compte plusieurs. */
+type Row = {
+  key: string;
+  label: string;
+  options: { id: string; label: string }[];
+  famille?: string;
+};
+const opt = (e: { id: string; data: { label: string } }) => ({ id: e.id, label: e.data.label });
+const rows: Row[] = [
+  { key: 'famille', label: 'Famille', options: familles.map(opt) },
+  ...familles
+    .map((fam) => ({ fam, doms: domaines.filter((d) => d.data.famille.id === fam.id) }))
+    .filter(({ doms }) => doms.length > 1)
+    .map(({ fam, doms }) => ({
+      key: 'domaine',
+      label: 'Domaine',
+      options: doms.map(opt),
+      famille: fam.id,
+    })),
+  { key: 'outil', label: 'Outil', options: outils.map(opt) },
+  { key: 'type', label: 'Type', options: types.map(opt) },
+];
+
+const texteRecherche = (f: (typeof formations)[number]) =>
+  [
+    f.formation.data.titre,
+    f.formation.data.resume,
+    f.domaine.data.label,
+    f.type.data.label,
+    ...f.outils.map((o) => o.data.label),
+    ...f.formation.data.objectifs,
+  ]
+    .join(' ')
+    .toLowerCase();
+---
+
+<BaseLayout
+  title="Catalogue des formations"
+  description="Toutes les formations VIV Formation — conception 3D, graphisme 2D, IA générative — filtrables par famille, domaine, outil et type."
+>
+  <section class="viv-section bg-surface-brand text-ink" data-theme="sombre">
+    <div class="viv-wrap">
+      <p class="overline text-ink-muted">Catalogue</p>
+      <h1 class="display-lg mt-2 mb-4 max-w-[760px] text-balance">
+        Toutes nos formations, organisées à la demande
+      </h1>
+      <p class="body-lg mb-10 max-w-[62ch] text-ink-muted">
+        Conception 3D, graphisme 2D et IA générative. Les dates se fixent avec vous ; toutes les
+        sessions se tiennent en présentiel, dans vos locaux ou dans notre salle.
+      </p>
+
+      <div id="filtres" class="viv-glass flex flex-col gap-4 p-5">
+        <div class="max-w-[480px]">
+          <Field
+            id="recherche"
+            name="q"
+            type="search"
+            label="Rechercher"
+            placeholder="Intitulé, logiciel, objectif…"
+            autocomplete="off"
+          />
+        </div>
+        {rows.map((row) => (
+          <div
+            class="flex flex-wrap items-center gap-3"
+            role="group"
+            aria-label={row.label}
+            data-row={row.key}
+            data-row-famille={row.famille}
+            hidden={row.famille ? true : undefined}
+          >
+            <span class="label w-20 text-ink-muted">{row.label}</span>
+            {[{ id: '', label: 'Tous' }, ...row.options].map((o) => (
+              <Button
+                size="sm"
+                pill
+                variant={o.id ? 'secondary' : 'primary'}
+                aria-pressed={o.id ? 'false' : 'true'}
+                data-filter={row.key}
+                data-value={o.id}
+              >
+                {o.label}
+              </Button>
+            ))}
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="viv-section viv-section--tight bg-surface">
+    <div class="viv-wrap">
+      <div class="mb-6 flex flex-wrap items-center justify-between gap-4">
+        <p id="compteur" class="body-sm text-ink-muted" aria-live="polite">
+          {formations.length} formation{formations.length > 1 ? 's' : ''} sur {formations.length}
+        </p>
+        <Button size="sm" variant="ghost" icon="x" id="effacer" hidden>
+          Effacer les filtres
+        </Button>
+      </div>
+      <div id="resultats" class="viv-grid-cards">
+        {formations.map((f) => (
+          <div
+            class="grid"
+            data-famille={f.famille.id}
+            data-domaine={f.domaine.id}
+            data-outil={f.outils.map((o) => o.id).join(' ')}
+            data-type={f.type.id}
+            data-texte={texteRecherche(f)}
+          >
+            <FormationCard item={f} />
+          </div>
+        ))}
+      </div>
+      <div id="aucun-resultat" class="max-w-[560px]" hidden>
+        <Callout tone="info" title="Aucune formation ne correspond">
+          <p>
+            Élargissez les filtres, ou{' '}
+            <a href="/contact/?sujet=information">décrivez-nous votre besoin</a> : le programme
+            s’ajuste après le cadrage.
+          </p>
+        </Callout>
+      </div>
+    </div>
+  </section>
+
+  <section class="viv-section bg-(image:--gradient-brand)">
+    <div class="viv-wrap viv-split viv-split--even items-center">
+      <div>
+        <p class="overline text-ink-on-pastel">Sur mesure</p>
+        <h2 class="display-md mt-2 mb-4 text-ink-on-pastel">
+          Chaque programme s’ajuste après le cadrage
+        </h2>
+        <p class="body-lg max-w-[56ch] text-ink-on-pastel">
+          Un entretien d’une heure avant la session : vos postes, vos versions, ce que vous
+          produisez. Nous adaptons le déroulé et les fichiers d’exercice en conséquence.
+        </p>
+      </div>
+      <div class="viv-glass flex flex-col items-start gap-4 p-6">
+        <p class="heading-md">Demander des dates ou un devis</p>
+        <p class="body text-ink-muted">
+          Réponse sous deux jours ouvrés. Financement possible par votre OPCO ou votre plan de
+          développement des compétences.
+        </p>
+        <Button href="/contact/?sujet=devis" icon="calendar">
+          Demander un devis
+        </Button>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<script>
+  // Filtrage côté client, synchronisé avec l'URL (?famille=…&domaine=…&outil=…&type=…&q=…)
+  // pour permettre les liens directs (accueil, pied de page, fil d'Ariane des fiches).
+  const KEYS = ['famille', 'domaine', 'outil', 'type'] as const;
+  type Key = (typeof KEYS)[number];
+  const state: Record<Key, string> & { q: string } = {
+    famille: '',
+    domaine: '',
+    outil: '',
+    type: '',
+    q: '',
+  };
+
+  const panel = document.querySelector<HTMLElement>('#filtres')!;
+  const search = document.querySelector<HTMLInputElement>('#recherche')!;
+  const items = [...document.querySelectorAll<HTMLElement>('#resultats > [data-famille]')];
+  const counter = document.querySelector('#compteur')!;
+  const reset = document.querySelector<HTMLButtonElement>('#effacer')!;
+  const empty = document.querySelector<HTMLElement>('#aucun-resultat')!;
+  const buttons = [...panel.querySelectorAll<HTMLButtonElement>('[data-filter]')];
+
+  function render() {
+    // Ligne « Domaine » de la famille choisie uniquement.
+    panel.querySelectorAll<HTMLElement>('[data-row-famille]').forEach((row) => {
+      row.hidden = row.dataset.rowFamille !== state.famille;
+    });
+    for (const btn of buttons) {
+      const on = state[btn.dataset.filter as Key] === btn.dataset.value;
+      btn.classList.toggle('viv-btn--primary', on);
+      btn.classList.toggle('viv-btn--secondary', !on);
+      btn.setAttribute('aria-pressed', String(on));
+    }
+
+    const q = state.q.trim().toLowerCase();
+    let visible = 0;
+    for (const item of items) {
+      const d = item.dataset;
+      const match =
+        (!state.famille || d.famille === state.famille) &&
+        (!state.domaine || d.domaine === state.domaine) &&
+        (!state.outil || (d.outil ?? '').split(' ').includes(state.outil)) &&
+        (!state.type || d.type === state.type) &&
+        (!q || (d.texte ?? '').includes(q));
+      item.hidden = !match;
+      if (match) visible++;
+    }
+    counter.textContent = `${visible} formation${visible > 1 ? 's' : ''} sur ${items.length}`;
+    empty.hidden = visible > 0;
+    reset.hidden = !KEYS.some((k) => state[k]) && !q;
+
+    const url = new URL(location.href);
+    [...KEYS, 'q'].forEach((k) => url.searchParams.delete(k));
+    [...KEYS, 'q' as const].forEach((k) => state[k] && url.searchParams.set(k, state[k]));
+    history.replaceState(null, '', url);
+  }
+
+  panel.addEventListener('click', (e) => {
+    const btn = (e.target as HTMLElement).closest<HTMLButtonElement>('[data-filter]');
+    if (!btn) return;
+    const key = btn.dataset.filter as Key;
+    state[key] = btn.dataset.value ?? '';
+    if (key === 'famille') state.domaine = '';
+    render();
+  });
+  search.addEventListener('input', () => {
+    state.q = search.value;
+    render();
+  });
+  reset.addEventListener('click', () => {
+    KEYS.forEach((k) => (state[k] = ''));
+    state.q = search.value = '';
+    render();
+  });
+
+  const params = new URLSearchParams(location.search);
+  KEYS.forEach((k) => (state[k] = params.get(k) ?? ''));
+  state.q = search.value = params.get('q') ?? '';
+  render();
+</script>

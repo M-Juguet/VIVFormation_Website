@@ -1,0 +1,19 @@
+# Familles : regroupement des domaines (accueil, pied de page, premier filtre du catalogue).
+- id: 3d
+  label: Conception 3D
+  icone: box
+  description: 'De la donnée CAO à l’image calculée et à l’application temps réel : préparer, modéliser, éclairer, rendre, rendre interactif.'
+  outilsTexte: Blender, Unreal Engine, VRED, Unity
+  ordre: 1
+- id: 2d
+  label: Graphisme 2D
+  icone: domaine-graphisme-2d
+  description: Tracer, mettre au net, composer et décliner une image vectorielle pour l’écran et l’impression.
+  outilsTexte: Illustrator
+  ordre: 2
+- id: ia
+  label: IA générative
+  icone: sparkles
+  description: Faire produire un modèle, vérifier ce qu’il produit et savoir ce qu’il ne faut pas lui confier.
+  outilsTexte: ComfyUI, assistants conversationnels
+  ordre: 3

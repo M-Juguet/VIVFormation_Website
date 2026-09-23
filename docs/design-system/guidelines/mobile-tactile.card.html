@@ -1,0 +1,35 @@
+<!-- @dsCard group="Mobile" viewport="700x300" name="Cible tactile et échelle mobile" subtitle="44 px au doigt, titres comprimés sans écraser la hiérarchie, corps inchangé" -->
+<!DOCTYPE html>
+<html lang="fr"><head><meta charset="utf-8"><title>Cible tactile et échelle mobile</title><link rel="stylesheet" href="../styles.css">
+<style>body{margin:0;padding:20px;background:var(--surface);color:var(--ink);font-family:var(--font-sans)}
+.cols{display:flex;gap:24px}
+.col{flex:1}
+.h{font:var(--text-overline);letter-spacing:.08em;text-transform:uppercase;color:var(--ink-subtle);margin:0 0 10px}
+.line{display:flex;align-items:baseline;justify-content:space-between;gap:12px;padding:6px 0;border-top:1px solid var(--border)}
+.line span{font:var(--text-caption);color:var(--ink-muted);white-space:nowrap}
+.t{display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.touch{display:flex;align-items:center;gap:12px;margin-top:10px}
+.zone{height:44px;display:inline-flex;align-items:center;padding:0 20px;border-radius:var(--radius-md);background:var(--action);color:var(--on-action);font:var(--text-button)}
+.small{height:34px;display:inline-flex;align-items:center;padding:0 12px;border-radius:var(--radius-md);border:1px solid var(--border-strong);color:var(--ink-subtle);font:var(--text-body-sm)}
+.n{font:var(--text-caption);color:var(--ink-muted);margin:12px 0 0}
+</style>
+</head><body>
+<div class="cols">
+<div class="col">
+<p class="h">Échelle mobile (sous 600 px)</p>
+<div class="line"><span class="t" style="font:var(--text-display-xl);font-size:34px;line-height:38px">Titre</span><span>display-xl 56 → 34</span></div>
+<div class="line"><span class="t" style="font:var(--text-display-lg);font-size:28px;line-height:34px">Titre</span><span>display-lg 40 → 28</span></div>
+<div class="line"><span class="t" style="font:var(--text-display-md);font-size:24px;line-height:30px">Titre</span><span>display-md 32 → 24</span></div>
+<div class="line"><span class="t" style="font:var(--text-heading-lg);font-size:20px;line-height:28px">Sous-titre</span><span>heading-lg 24 → 20</span></div>
+<div class="line"><span class="t body">Texte courant</span><span>body 15 — inchangé</span></div>
+</div>
+<div class="col">
+<p class="h">Cible tactile</p>
+<p class="body-sm" style="color:var(--ink-muted);margin:0">Au doigt (<code class="kbd" style="background:var(--surface-code);border-radius:var(--radius-sm);padding:1px 5px">pointer: coarse</code>), aucune cible sous <strong style="font-weight:400;color:var(--ink)">--touch-min 44 px</strong> : boutons et champs sont rehaussés, quelle que soit la largeur.</p>
+<div class="touch"><span class="zone">Demander des dates</span><span class="body-sm" style="color:var(--ink-subtle)">44 px</span></div>
+<div class="touch"><span class="small">Badge, puce de filtre</span><span class="body-sm" style="color:var(--ink-subtle)">34 px — jamais une action principale</span></div>
+<p class="n">Le verre dépoli retombe sur <strong style="font-weight:400;color:var(--ink)">surface-raised</strong> sous 600 px : le flou coûte cher sur un téléphone d'entrée de gamme, et la lisibilité n'en dépend pas.</p>
+<p class="n">Navigation : sous 900 px, la barre passe en tiroir plein écran ouvert depuis le haut, entrées à 44 px, fermeture explicite.</p>
+</div>
+</div>
+</body></html>
