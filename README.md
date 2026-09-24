@@ -6,7 +6,7 @@ Site vitrine statique de l'organisme de formation professionnelle **VIV Formatio
 
 ## Démarrage
 
-Prérequis : Node.js ≥ 22.12 (voir `.nvmrc`).
+Prérequis : Node.js 24, la version de la CI (`.nvmrc`) ; 22.12 au minimum (`engines` de `package.json`).
 
 ```bash
 npm install
