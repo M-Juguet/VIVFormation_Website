@@ -37,12 +37,13 @@ src/
 │   ├── ContactForm.astro    # Formulaire → webhook n8n
 │   └── CoverMotif.astro     # Motif de couverture de la marque
 ├── config/site.ts           # Coordonnées, navigation, motifs de contact, textes partagés
-├── content.config.ts        # Schémas : formations + classements
+├── content.config.ts        # Schémas : formations, classements, pages juridiques
 ├── content/formations/      # 1 fichier .md = 1 formation
-├── data/                    # Classements : familles, domaines, outils, types (YAML)
+├── content/legal/           # Mentions légales, CGV (1 fichier .md = 1 page)
+├── data/                    # Classements : domaines, outils, types (YAML)
 ├── lib/formations.ts        # Accès au contenu, mise en forme (durée, tarif…), déroulé
 ├── layouts/BaseLayout.astro
-└── pages/                   # index, catalogue/, formations/[id], contact, 404
+└── pages/                   # index, catalogue/, formations/[id], [legal], contact, 404
 ```
 
 ## Design system
@@ -65,12 +66,11 @@ La référence est `docs/design-system/readme.md` (charte complète : couleurs, 
 
 ### Classements (`src/data/`)
 
-- **Famille** (`familles.yaml`) : Conception 3D, Graphisme 2D, IA générative. Elles regroupent les domaines et structurent l'accueil, le pied de page et le premier filtre du catalogue.
-- **Domaine** (`domaines.yaml`) : rattaché à une famille.
+- **Domaine** (`domaines.yaml`) : le domaine d'expertise — Préparation de données 3D, 3D précalculée, 3D temps réel, Graphisme 2D, IA générative. Chaque domaine a sa carte sur l'accueil (`description`, `outilsTexte`) et structure le premier filtre du catalogue et la colonne « Formations » du pied de page.
 - **Outil** (`outils.yaml`) : Blender, Unreal Engine, VRED, Unity, Illustrator, ComfyUI.
 - **Type** (`types.yaml`) : Module, Parcours pipeline, Sensibilisation.
 
-L'`id` de chaque entrée sert de slug dans les URLs et les filtres (`/catalogue/?famille=3d&outil=blender`). Le champ `icone` désigne un repère du composant Icon (`src/components/ds/icons.ts`) ; jamais le logo d'un éditeur.
+L'`id` de chaque entrée sert de slug dans les URLs et les filtres (`/catalogue/?domaine=3d-temps-reel&outil=unreal-engine`). Le champ `icone` désigne un repère du composant Icon (`src/components/ds/icons.ts`) ; jamais le logo d'un éditeur.
 
 ### Ajouter une formation
 

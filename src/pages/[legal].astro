@@ -1,0 +1,35 @@
+---
+/* Pages juridiques (src/content/legal/*.md) : titre sur bande sombre, texte sur bande claire. */
+import type { GetStaticPaths } from 'astro';
+import { getCollection, render, type CollectionEntry } from 'astro:content';
+import BaseLayout from '../layouts/BaseLayout.astro';
+
+export const getStaticPaths = (async () => {
+  const pages = await getCollection('legal');
+  return pages.map((page) => ({ params: { legal: page.id }, props: { page } }));
+}) satisfies GetStaticPaths;
+
+interface Props {
+  page: CollectionEntry<'legal'>;
+}
+
+const { page } = Astro.props;
+const { titre, description } = page.data;
+const { Content } = await render(page);
+---
+
+<BaseLayout title={titre} description={description}>
+  <section class="viv-section bg-surface-brand text-ink" data-theme="sombre">
+    <div class="viv-wrap">
+      <p class="overline text-ink-muted">À propos</p>
+      <h1 class="display-lg mt-2">{titre}</h1>
+    </div>
+  </section>
+  <section class="viv-section bg-surface">
+    <div class="viv-wrap">
+      <div class="viv-prose body max-w-[72ch] text-pretty">
+        <Content />
+      </div>
+    </div>
+  </section>
+</BaseLayout>

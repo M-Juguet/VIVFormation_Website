@@ -10,7 +10,9 @@ export const SITE = {
   locale: 'fr-FR',
   lang: 'fr',
   email: 'contact@viv-formation.com',
-  ville: 'Colombes (92)',
+  adresse: { rue: '14 rue de Mantes', codePostal: '92700', ville: 'Colombes' },
+  // TODO : adresse réelle de la page LinkedIn de l'organisme.
+  linkedin: '#',
   // TODO : numéro de déclaration d'activité réel.
   declarationActivite: '00000000000',
   // Compte du widget d'accessibilité UserWay (identifiant public, visible dans le HTML).
@@ -20,13 +22,6 @@ export const SITE = {
 export const NAV = [
   { href: '/', label: 'Accueil' },
   { href: '/catalogue/', label: 'Catalogue' },
-  { href: '/#organisation', label: 'Organisation' },
-  { href: '/contact/', label: 'Contact' },
-] as const;
-
-export const FINANCEMENTS = [
-  'Prise en charge OPCO',
-  'Plan de développement des compétences',
 ] as const;
 
 /** Motifs du formulaire de contact, transmis tels quels (`sujet`) au webhook n8n. */

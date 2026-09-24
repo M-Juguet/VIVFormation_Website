@@ -1,10 +1,17 @@
 ---
 import Logo from './ds/Logo.astro';
-import { FINANCEMENTS, SITE } from '../config/site';
+import { SITE } from '../config/site';
 import { getTaxonomies } from '../lib/formations';
 
-const { familles } = await getTaxonomies();
+const { domaines } = await getTaxonomies();
 const lien = 'text-ink-muted no-underline hover:text-ink';
+const aPropos = [
+  { href: '/mentions-legales/', label: 'Mentions légales' },
+  { href: '/conditions-generales-de-vente/', label: 'Conditions générales de vente' },
+];
+const { rue, codePostal, ville } = SITE.adresse;
+// Recherche Google Maps par adresse : format d'URL public, sans clé d'API.
+const plan = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(`${rue}, ${codePostal} ${ville}`)}`;
 ---
 
 <footer data-theme="sombre" class="bg-surface-sunken text-ink">
@@ -24,38 +31,51 @@ const lien = 'text-ink-muted no-underline hover:text-ink';
             Catalogue complet
           </a>
         </li>
-        {familles.map((f) => (
+        {domaines.map((d) => (
           <li class="body-sm">
-            <a href={`/catalogue/?famille=${f.id}`} class={lien}>
-              {f.data.label}
+            <a href={`/catalogue/?domaine=${d.id}`} class={lien}>
+              {d.data.label}
             </a>
           </li>
         ))}
       </ul>
     </div>
     <div>
-      <p class="overline mb-3 text-ink-muted">Financement</p>
+      <p class="overline mb-3 text-ink-muted">À propos</p>
       <ul class="flex flex-col gap-2">
-        {FINANCEMENTS.map((f) => (
-          <li class="body-sm text-ink-muted">{f}</li>
+        {aPropos.map(({ href, label }) => (
+          <li class="body-sm">
+            <a href={href} class={lien}>
+              {label}
+            </a>
+          </li>
         ))}
       </ul>
     </div>
     <div>
       <p class="overline mb-3 text-ink-muted">Contact</p>
-      <ul class="flex flex-col gap-2">
-        <li class="body-sm">
-          <a href={`mailto:${SITE.email}`} class={lien}>
-            {SITE.email}
-          </a>
-        </li>
-        <li class="body-sm">
-          <a href="/contact/" class={lien}>
-            Formulaire de contact
-          </a>
-        </li>
-        <li class="body-sm text-ink-muted">{SITE.ville}</li>
-      </ul>
+      <address class="not-italic">
+        <ul class="flex flex-col gap-2">
+          <li class="body-sm">
+            <a href={plan} target="_blank" rel="noopener noreferrer" class={lien}>
+              {rue}
+              <br />
+              {codePostal} {ville}
+              <span class="sr-only"> (voir le plan, nouvel onglet)</span>
+            </a>
+          </li>
+          <li class="body-sm">
+            <a href={`mailto:${SITE.email}`} class={lien}>
+              {SITE.email}
+            </a>
+          </li>
+          <li class="body-sm">
+            <a href="/contact/" class={lien}>
+              Formulaire de contact
+            </a>
+          </li>
+        </ul>
+      </address>
     </div>
   </div>
   <div class="border-t border-border">

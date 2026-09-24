@@ -1,26 +1,32 @@
-# Domaines : ce que la formation apprend à faire. Chaque domaine appartient à une famille.
+# Domaines d'expertise : ce que la formation apprend à faire. Ils structurent l'accueil (cartes),
+# le premier filtre du catalogue et le pied de page (colonne « Formations »), dans l'ordre de `ordre`.
 - id: preparation-donnees-3d
   label: Préparation de données 3D
-  famille: 3d
   icone: domaine-dataprep
+  description: Importer une donnée CAO, la nettoyer et l’alléger pour l’exploiter en rendu comme en temps réel.
+  outilsTexte: Blender, Unreal Engine, VRED
   ordre: 1
 - id: 3d-precalculee
   label: 3D précalculée
-  famille: 3d
   icone: domaine-precalcule
+  description: Modéliser, texturer, éclairer et calculer une image ou une animation de qualité finale.
+  outilsTexte: Blender, Unreal Engine, VRED
   ordre: 2
 - id: 3d-temps-reel
   label: 3D temps réel
-  famille: 3d
   icone: domaine-temps-reel
+  description: Rendre une scène interactive, de la revue de design au configurateur produit.
+  outilsTexte: Unreal Engine, Unity, VRED
   ordre: 3
 - id: graphisme-2d
   label: Graphisme 2D
-  famille: 2d
   icone: domaine-graphisme-2d
+  description: Tracer, mettre au net, composer et décliner une image vectorielle pour l’écran et l’impression.
+  outilsTexte: Illustrator
   ordre: 4
 - id: ia-generative
   label: IA générative
-  famille: ia
   icone: sparkles
+  description: Faire produire un modèle, vérifier ce qu’il produit et savoir ce qu’il ne faut pas lui confier.
+  outilsTexte: ComfyUI, assistants conversationnels
   ordre: 5

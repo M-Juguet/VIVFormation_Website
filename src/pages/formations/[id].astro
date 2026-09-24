@@ -40,7 +40,7 @@ const f = item.formation.data;
 const { Content } = await render(item.formation);
 
 // Le fil d'Ariane renvoie au catalogue filtré sur le domaine de la formation.
-const catalogueDomaine = `/catalogue/?famille=${item.famille.id}&domaine=${item.domaine.id}`;
+const catalogueDomaine = `/catalogue/?domaine=${item.domaine.id}`;
 
 const faits = [
   { icon: 'clock', label: item.duree },

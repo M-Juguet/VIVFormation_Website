@@ -11,7 +11,7 @@ import { ETAPES_ORGANISATION, SECTEURS } from '../config/site';
 import { getFormations, getTaxonomies, resolveFormation } from '../lib/formations';
 
 const formations = await Promise.all((await getFormations()).map(resolveFormation));
-const { familles } = await getTaxonomies();
+const { domaines } = await getTaxonomies();
 const enAvant = formations.filter((f) => f.formation.data.enAvant).slice(0, 3);
 const compte = (n: number) => `${n} formation${n > 1 ? 's' : ''}`;
 const engagements = [
@@ -63,33 +63,33 @@ const engagements = [
     </div>
   </section>
 
-  <!-- Familles -->
+  <!-- Domaines d'expertise -->
   <section id="domaines" class="viv-section bg-surface">
     <div class="viv-wrap">
       <div class="mb-10 max-w-[720px]">
         <p class="overline text-ink-muted">Domaines</p>
-        <h2 class="display-md mt-2">Trois familles de formations</h2>
+        <h2 class="display-md mt-2">Nos domaines d’expertise</h2>
         <p class="body-lg mt-4 text-ink-muted">
           Une formation porte sur ce que vous venez apprendre à faire, pas seulement sur le logiciel
           que vous ouvrez.
         </p>
       </div>
       <div class="grid grid-cols-[repeat(auto-fit,minmax(280px,1fr))] gap-6">
-        {familles.map((fam) => {
-          const n = formations.filter((f) => f.famille.id === fam.id).length;
+        {domaines.map((dom) => {
+          const n = formations.filter((f) => f.domaine.id === dom.id).length;
           return (
             <a
-              href={`/catalogue/?famille=${fam.id}`}
+              href={`/catalogue/?domaine=${dom.id}`}
               class="viv-card flex flex-col gap-4 p-6 text-ink no-underline transition duration-(--motion-micro) ease-standard hover:-translate-y-0.5"
             >
               <div class="flex items-start justify-between gap-4">
-                <Icon name={fam.data.icone} size={24} tile="degrade" shape="carre" />
+                <Icon name={dom.data.icone} size={24} tile="degrade" shape="carre" />
                 <span class="label text-ink-muted">{compte(n)}</span>
               </div>
-              <h3 class="heading-lg">{fam.data.label}</h3>
-              <p class="body flex-1 text-ink-muted">{fam.data.description}</p>
+              <h3 class="heading-lg">{dom.data.label}</h3>
+              <p class="body flex-1 text-ink-muted">{dom.data.description}</p>
               <p class="caption border-t border-border pt-4 text-ink-muted">
-                {fam.data.outilsTexte}
+                {dom.data.outilsTexte}
               </p>
               <span class="body flex items-center gap-2 text-action">
                 Voir les formations <Icon name="arrow-right" size={16} />

@@ -112,20 +112,58 @@
 }
 
 @layer components {
-  /* Le style des liens du tiroir (.viv-drawer a) ne doit pas s'appliquer au bouton d'action. */
+  /* Le style des liens du tiroir (.viv-drawer a) ne doit pas s'appliquer aux boutons. */
   .viv-drawer a.viv-btn {
     font: var(--text-button);
-    color: var(--on-action);
-    border-bottom: 0;
+    border: 1px solid transparent;
     margin-top: var(--space-2);
+  }
+  .viv-drawer a.viv-btn--primary {
+    color: var(--on-action);
+  }
+  .viv-drawer a.viv-btn--secondary {
+    color: var(--action);
+    border-color: var(--border-strong);
+    margin-top: 0;
+  }
+  .viv-drawer a.viv-btn--secondary:hover {
+    border-color: var(--action);
   }
 }
 
-/* Texte rédigé en Markdown (chapô des fiches) : corps du design system. Pas de gras droit dans la
-   charte — `strong` prend le gras italique de Noto Sans. */
+/* Texte rédigé en Markdown (chapô des fiches, pages juridiques) : corps du design system. Pas de
+   gras droit dans la charte — `strong` prend le gras italique de Noto Sans. Titres : h2 en
+   heading-lg, h3 en heading-md, avec l'échelle mobile de tokens/type-classes.css. */
 @utility viv-prose {
   & > * + * {
     margin-top: var(--space-4);
+  }
+  & h2 {
+    font: var(--text-heading-lg);
+    margin-top: var(--space-12);
+  }
+  & h3 {
+    font: var(--text-heading-md);
+    margin-top: var(--space-8);
+  }
+  & > :first-child {
+    margin-top: 0;
+  }
+  & :is(h2, h3) + * {
+    margin-top: var(--space-3);
+  }
+  @media (max-width: 600px) {
+    & h2 {
+      font-size: 20px;
+      line-height: 28px;
+    }
+    & h3 {
+      font-size: 18px;
+      line-height: 26px;
+    }
+  }
+  & li + li {
+    margin-top: var(--space-2);
   }
   & strong {
     font-weight: 700;

@@ -7,11 +7,10 @@ const icone = z.enum(Object.keys(ICON_PATHS) as [IconName, ...IconName[]]);
 
 /**
  * Classements du catalogue (src/data/*.yaml) :
- *   - domaine : ce que la formation apprend à faire (ex. « 3D temps réel ») ;
+ *   - domaine : le domaine d'expertise, ce que la formation apprend à faire (ex. « 3D temps réel ») ;
  *   - outil   : le ou les logiciels utilisés (ex. « Blender ») ;
  *   - type    : la forme de la formation (ex. « Module », « Sensibilisation »).
- * Les domaines sont regroupés en familles (Conception 3D, Graphisme 2D, IA générative), qui
- * structurent l'accueil, le pied de page et le premier filtre du catalogue.
+ * Les domaines structurent l'accueil, le premier filtre du catalogue et le pied de page.
  * Les `id` servent de slugs dans les URLs et les filtres.
  */
 const taxonomie = {
@@ -20,20 +19,16 @@ const taxonomie = {
   ordre: z.number().default(0),
 };
 
-const familles = defineCollection({
-  loader: file('src/data/familles.yaml'),
+const domaines = defineCollection({
+  loader: file('src/data/domaines.yaml'),
   schema: z.object({
     ...taxonomie,
     icone,
+    /** Texte de la carte du domaine sur l'accueil. */
     description: z.string(),
-    /** Légende libre sous la carte de famille de l'accueil (outils couverts). */
+    /** Légende libre sous la carte du domaine (outils couverts). */
     outilsTexte: z.string(),
   }),
-});
-
-const domaines = defineCollection({
-  loader: file('src/data/domaines.yaml'),
-  schema: z.object({ ...taxonomie, famille: reference('familles'), icone }),
 });
 
 const outils = defineCollection({
@@ -116,4 +111,16 @@ const formations = defineCollection({
       }),
 });
 
-export const collections = { familles, domaines, outils, types, formations };
+/**
+ * Pages juridiques (mentions légales, CGV) : un fichier Markdown dans src/content/legal/ = une page
+ * à la racine du site (/<nom>/), rendue par src/pages/[legal].astro. Le corps est le texte intégral.
+ */
+const legal = defineCollection({
+  loader: glob({ pattern: '**/[^_]*.md', base: './src/content/legal' }),
+  schema: z.object({
+    titre: z.string(),
+    description: z.string(),
+  }),
+});
+
+export const collections = { domaines, outils, types, formations, legal };

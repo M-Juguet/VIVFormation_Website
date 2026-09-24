@@ -7,27 +7,17 @@ import Field from '../../components/ds/Field.astro';
 import { getFormations, getTaxonomies, resolveFormation } from '../../lib/formations';
 
 const formations = await Promise.all((await getFormations()).map(resolveFormation));
-const { familles, domaines, outils, types } = await getTaxonomies();
+const { domaines, outils, types } = await getTaxonomies();
 
-/* Lignes de filtres. La ligne « Domaine » n'apparaît que pour une famille qui en compte plusieurs. */
+/* Lignes de filtres. */
 type Row = {
   key: string;
   label: string;
   options: { id: string; label: string }[];
-  famille?: string;
 };
 const opt = (e: { id: string; data: { label: string } }) => ({ id: e.id, label: e.data.label });
 const rows: Row[] = [
-  { key: 'famille', label: 'Famille', options: familles.map(opt) },
-  ...familles
-    .map((fam) => ({ fam, doms: domaines.filter((d) => d.data.famille.id === fam.id) }))
-    .filter(({ doms }) => doms.length > 1)
-    .map(({ fam, doms }) => ({
-      key: 'domaine',
-      label: 'Domaine',
-      options: doms.map(opt),
-      famille: fam.id,
-    })),
+  { key: 'domaine', label: 'Domaine', options: domaines.map(opt) },
   { key: 'outil', label: 'Outil', options: outils.map(opt) },
   { key: 'type', label: 'Type', options: types.map(opt) },
 ];
@@ -47,7 +37,7 @@ const texteRecherche = (f: (typeof formations)[number]) =>
 
 <BaseLayout
   title="Catalogue des formations"
-  description="Toutes les formations VIV Formation — conception 3D, graphisme 2D, IA générative — filtrables par famille, domaine, outil et type."
+  description="Toutes les formations VIV Formation — conception 3D, graphisme 2D, IA générative — filtrables par domaine, outil et type."
 >
   <section class="viv-section bg-surface-brand text-ink" data-theme="sombre">
     <div class="viv-wrap">
@@ -77,8 +67,6 @@ const texteRecherche = (f: (typeof formations)[number]) =>
             role="group"
             aria-label={row.label}
             data-row={row.key}
-            data-row-famille={row.famille}
-            hidden={row.famille ? true : undefined}
           >
             <span class="label w-20 text-ink-muted">{row.label}</span>
             {[{ id: '', label: 'Tous' }, ...row.options].map((o) => (
@@ -113,7 +101,6 @@ const texteRecherche = (f: (typeof formations)[number]) =>
         {formations.map((f) => (
           <div
             class="grid"
-            data-famille={f.famille.id}
             data-domaine={f.domaine.id}
             data-outil={f.outils.map((o) => o.id).join(' ')}
             data-type={f.type.id}
@@ -162,12 +149,11 @@ const texteRecherche = (f: (typeof formations)[number]) =>
 </BaseLayout>
 
 <script>
-  // Filtrage côté client, synchronisé avec l'URL (?famille=…&domaine=…&outil=…&type=…&q=…)
+  // Filtrage côté client, synchronisé avec l'URL (?domaine=…&outil=…&type=…&q=…)
   // pour permettre les liens directs (accueil, pied de page, fil d'Ariane des fiches).
-  const KEYS = ['famille', 'domaine', 'outil', 'type'] as const;
+  const KEYS = ['domaine', 'outil', 'type'] as const;
   type Key = (typeof KEYS)[number];
   const state: Record<Key, string> & { q: string } = {
-    famille: '',
     domaine: '',
     outil: '',
     type: '',
@@ -176,17 +162,13 @@ const texteRecherche = (f: (typeof formations)[number]) =>
 
   const panel = document.querySelector<HTMLElement>('#filtres')!;
   const search = document.querySelector<HTMLInputElement>('#recherche')!;
-  const items = [...document.querySelectorAll<HTMLElement>('#resultats > [data-famille]')];
+  const items = [...document.querySelectorAll<HTMLElement>('#resultats > [data-domaine]')];
   const counter = document.querySelector('#compteur')!;
   const reset = document.querySelector<HTMLButtonElement>('#effacer')!;
   const empty = document.querySelector<HTMLElement>('#aucun-resultat')!;
   const buttons = [...panel.querySelectorAll<HTMLButtonElement>('[data-filter]')];
 
   function render() {
-    // Ligne « Domaine » de la famille choisie uniquement.
-    panel.querySelectorAll<HTMLElement>('[data-row-famille]').forEach((row) => {
-      row.hidden = row.dataset.rowFamille !== state.famille;
-    });
     for (const btn of buttons) {
       const on = state[btn.dataset.filter as Key] === btn.dataset.value;
       btn.classList.toggle('viv-btn--primary', on);
@@ -199,7 +181,6 @@ const texteRecherche = (f: (typeof formations)[number]) =>
     for (const item of items) {
       const d = item.dataset;
       const match =
-        (!state.famille || d.famille === state.famille) &&
         (!state.domaine || d.domaine === state.domaine) &&
         (!state.outil || (d.outil ?? '').split(' ').includes(state.outil)) &&
         (!state.type || d.type === state.type) &&
@@ -222,7 +203,6 @@ const texteRecherche = (f: (typeof formations)[number]) =>
     if (!btn) return;
     const key = btn.dataset.filter as Key;
     state[key] = btn.dataset.value ?? '';
-    if (key === 'famille') state.domaine = '';
     render();
   });
   search.addEventListener('input', () => {

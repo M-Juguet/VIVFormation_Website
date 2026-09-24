@@ -2,8 +2,9 @@
 /* En-tête collant, en thème sombre, avec filet de dégradé. Sous 900 px, la navigation passe dans
    un tiroir plein écran ouvert depuis le haut (.viv-drawer). */
 import Button from './ds/Button.astro';
+import Icon from './ds/Icon.astro';
 import Logo from './ds/Logo.astro';
-import { NAV } from '../config/site';
+import { NAV, SITE } from '../config/site';
 
 const path = Astro.url.pathname;
 const isActive = (href: string) => {
@@ -11,12 +12,16 @@ const isActive = (href: string) => {
   if (href === '/') return path === '/';
   return path.startsWith(href) || (href === '/catalogue/' && path.startsWith('/formations/'));
 };
-const devis = '/contact/?sujet=devis';
+const contact = '/contact/';
+// Lettres « in » pleines du logo LinkedIn (Simple Icons, CC0), sans le carré : c'est le bouton qui
+// sert de cadre. Hors de ICON_PATHS, puisque c'est une marque et non une icône Lucide.
+const linkedin =
+  '<path fill="currentColor" stroke="none" d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452z" />';
 ---
 
 <header data-theme="sombre" class="sticky top-0 z-20 bg-surface-brand shadow-(--shadow-md)">
   <div class="viv-wrap viv-header-bar">
-    <a href="/" aria-label="VIV Formation — accueil" class="flex items-center">
+    <a href="/" aria-label="VIV Formation — accueil" class="flex shrink-0 items-center">
       <Logo mark="complet" variant="blanc" height={32} alt="" />
     </a>
     <nav class="viv-nav" aria-label="Navigation principale">
@@ -29,8 +34,19 @@ const devis = '/contact/?sujet=devis';
           {label}
         </a>
       ))}
-      <Button size="sm" href={devis} icon="calendar">
-        Demander un devis
+      <Button size="sm" href={contact} icon="calendar">
+        Contactez-nous
+      </Button>
+      <Button
+        size="sm"
+        variant="secondary"
+        href={SITE.linkedin}
+        target="_blank"
+        rel="noopener noreferrer"
+        class="size-9 p-0 pointer-coarse:size-11"
+      >
+        <Icon path={linkedin} size={20} />
+        <span class="sr-only">LinkedIn (nouvel onglet)</span>
       </Button>
     </nav>
     <Button
@@ -59,8 +75,18 @@ const devis = '/contact/?sujet=devis';
         <a href={href}>{label}</a>
       ))}
     </nav>
-    <Button href={devis} icon="calendar">
-      Demander un devis
+    <Button href={contact} icon="calendar">
+      Contactez-nous
+    </Button>
+    <Button
+      variant="secondary"
+      href={SITE.linkedin}
+      target="_blank"
+      rel="noopener noreferrer"
+      class="size-11 self-start p-0"
+    >
+      <Icon path={linkedin} size={24} />
+      <span class="sr-only">LinkedIn (nouvel onglet)</span>
     </Button>
   </div>
 </header>

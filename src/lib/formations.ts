@@ -21,14 +21,12 @@ export async function getFormations() {
 
 /** Les classements, triés. */
 export async function getTaxonomies() {
-  const [familles, domaines, outils, types] = await Promise.all([
-    getCollection('familles'),
+  const [domaines, outils, types] = await Promise.all([
     getCollection('domaines'),
     getCollection('outils'),
     getCollection('types'),
   ]);
   return {
-    familles: familles.sort(parOrdre),
     domaines: domaines.sort(parOrdre),
     outils: outils.sort(parOrdre),
     types: types.sort(parOrdre),
@@ -74,7 +72,6 @@ export async function resolveFormation(formation: Formation) {
     getEntry(d.domaine),
     getEntries(d.outils),
   ]);
-  const famille = await getEntry(domaine.data.famille);
 
   const badges: { label: string; tone: BadgeTone }[] = [
     ...(outils.length
@@ -90,7 +87,6 @@ export async function resolveFormation(formation: Formation) {
     url: formationUrl(formation),
     type,
     domaine,
-    famille,
     outils,
     /** Repère de la carte : outil principal, sinon domaine (règle de la charte). */
     mark: outils[0]?.data.icone ?? domaine.data.icone,
@@ -116,12 +112,13 @@ export function programmeSteps(formation: Formation): ProgramStep[] {
   return [DEROULE.cadrage, ...journees, DEROULE.suivi];
 }
 
-/** Formations proches : même domaine d'abord, puis même famille. */
+/** Formations proches : même domaine d'abord, puis un outil en commun. */
 export function formationsProches(cible: FormationResolue, toutes: FormationResolue[], n = 3) {
   const autres = toutes.filter((f) => f.formation.id !== cible.formation.id);
   const memeDomaine = autres.filter((f) => f.domaine.id === cible.domaine.id);
-  const memeFamille = autres.filter(
-    (f) => f.famille.id === cible.famille.id && f.domaine.id !== cible.domaine.id,
+  const outilsCible = new Set(cible.outils.map((o) => o.id));
+  const memeOutil = autres.filter(
+    (f) => f.domaine.id !== cible.domaine.id && f.outils.some((o) => outilsCible.has(o.id)),
   );
-  return [...memeDomaine, ...memeFamille].slice(0, n);
+  return [...memeDomaine, ...memeOutil].slice(0, n);
 }
