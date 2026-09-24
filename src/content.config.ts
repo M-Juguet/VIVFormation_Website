@@ -1,7 +1,8 @@
 import { defineCollection, reference } from 'astro:content';
-import { file, glob } from 'astro/loaders';
+import { glob } from 'astro/loaders';
 import { z } from 'astro/zod';
 import { ICON_PATHS, type IconName } from './components/ds/icons';
+import { donneesYaml } from './lib/donnees-yaml';
 
 const icone = z.enum(Object.keys(ICON_PATHS) as [IconName, ...IconName[]]);
 
@@ -20,7 +21,7 @@ const taxonomie = {
 };
 
 const domaines = defineCollection({
-  loader: file('src/data/domaines.yaml'),
+  loader: donneesYaml('src/data/domaines.yaml'),
   schema: z.object({
     ...taxonomie,
     icone,
@@ -32,12 +33,12 @@ const domaines = defineCollection({
 });
 
 const outils = defineCollection({
-  loader: file('src/data/outils.yaml'),
+  loader: donneesYaml('src/data/outils.yaml'),
   schema: z.object({ ...taxonomie, icone }),
 });
 
 const types = defineCollection({
-  loader: file('src/data/types.yaml'),
+  loader: donneesYaml('src/data/types.yaml'),
   schema: z.object(taxonomie),
 });
 
@@ -113,7 +114,8 @@ const formations = defineCollection({
 
 /**
  * Pages juridiques (mentions légales, CGV) : un fichier Markdown dans src/content/legal/ = une page
- * à la racine du site (/<nom>/), rendue par src/pages/[legal].astro. Le corps est le texte intégral.
+ * à la racine du site (/<nom>/), rendue par src/components/PageJuridique.astro depuis la page
+ * src/pages/<nom>.astro. Le corps est le texte intégral.
  */
 const legal = defineCollection({
   loader: glob({ pattern: '**/[^_]*.md', base: './src/content/legal' }),

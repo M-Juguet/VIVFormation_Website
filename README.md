@@ -35,15 +35,17 @@ src/
 │   ├── SiteFooter.astro
 │   ├── FormationCard.astro  # ModuleCard alimentée par une formation
 │   ├── ContactForm.astro    # Formulaire → webhook n8n
+│   ├── PageJuridique.astro  # Gabarit des mentions légales et des CGV
 │   └── CoverMotif.astro     # Motif de couverture de la marque
 ├── config/site.ts           # Coordonnées, navigation, motifs de contact, textes partagés
 ├── content.config.ts        # Schémas : formations, classements, pages juridiques
 ├── content/formations/      # 1 fichier .md = 1 formation
-├── content/legal/           # Mentions légales, CGV (1 fichier .md = 1 page)
+├── content/legal/           # Textes des mentions légales et des CGV (PageJuridique.astro)
 ├── data/                    # Classements : domaines, outils, types (YAML)
 ├── lib/formations.ts        # Accès au contenu, mise en forme (durée, tarif…), déroulé
+├── lib/donnees-yaml.ts      # Chargeur strict des classements (le build échoue sur un YAML invalide)
 ├── layouts/BaseLayout.astro
-└── pages/                   # index, catalogue/, formations/[id], [legal], contact, 404
+└── pages/                   # index, catalogue/, formations/[id], contact, mentions légales, CGV, 404
 ```
 
 ## Design system
@@ -71,6 +73,8 @@ La référence est `docs/design-system/readme.md` (charte complète : couleurs, 
 - **Type** (`types.yaml`) : Module, Parcours pipeline, Sensibilisation.
 
 L'`id` de chaque entrée sert de slug dans les URLs et les filtres (`/catalogue/?domaine=3d-temps-reel&outil=unreal-engine`). Le champ `icone` désigne un repère du composant Icon (`src/components/ds/icons.ts`) ; jamais le logo d'un éditeur.
+
+Ces fichiers sont lus par `src/lib/donnees-yaml.ts` : une erreur de syntaxe, un fichier vide, une entrée sans `id` ou un `id` en double font échouer `npm run build` (et donc la CI) avec la ligne en cause. Le chargeur `file` d'Astro, lui, se contentait d'un message dans le journal et publiait le site avec un classement vide.
 
 ### Ajouter une formation
 

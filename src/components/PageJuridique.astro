@@ -1,19 +1,16 @@
 ---
-/* Pages juridiques (src/content/legal/*.md) : titre sur bande sombre, texte sur bande claire. */
-import type { GetStaticPaths } from 'astro';
-import { getCollection, render, type CollectionEntry } from 'astro:content';
+/* Page juridique (src/content/legal/<id>.md) : titre sur bande sombre, texte sur bande claire.
+   Chaque page a son fichier dans src/pages/ (pas de route dynamique à la racine du site). */
+import { getEntry, render } from 'astro:content';
 import BaseLayout from '../layouts/BaseLayout.astro';
 
-export const getStaticPaths = (async () => {
-  const pages = await getCollection('legal');
-  return pages.map((page) => ({ params: { legal: page.id }, props: { page } }));
-}) satisfies GetStaticPaths;
-
 interface Props {
-  page: CollectionEntry<'legal'>;
+  /** Nom du fichier dans src/content/legal/, sans extension. */
+  id: string;
 }
 
-const { page } = Astro.props;
+const page = await getEntry('legal', Astro.props.id);
+if (!page) throw new Error(`src/content/legal/${Astro.props.id}.md est introuvable.`);
 const { titre, description } = page.data;
 const { Content } = await render(page);
 ---
