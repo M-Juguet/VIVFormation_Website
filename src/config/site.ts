@@ -13,6 +13,8 @@ export const SITE = {
   ville: 'Colombes (92)',
   // TODO : numéro de déclaration d'activité réel.
   declarationActivite: '00000000000',
+  // Compte du widget d'accessibilité UserWay (identifiant public, visible dans le HTML).
+  userwayAccount: 'g7kYGRubh4',
 } as const;
 
 export const NAV = [

@@ -21,6 +21,16 @@ const canonical = new URL(Astro.url.pathname, Astro.site);
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <!--
+      Widget d'accessibilité UserWay : au plus haut du <head>, comme le demande l'éditeur.
+      data-position 3 = en bas à droite (par défaut en haut à droite, il masque l'en-tête).
+    -->
+    <script
+      is:inline
+      src="https://cdn.userway.org/widget.js"
+      data-account={SITE.userwayAccount}
+      data-position="3"
+    ></script>
     <meta name="generator" content={Astro.generator} />
     <title>{pageTitle}</title>
     <meta name="description" content={description} />
