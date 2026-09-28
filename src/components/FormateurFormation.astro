@@ -1,0 +1,65 @@
+---
+/* Qui anime : section dédiée au formateur, affichée seulement quand la formation en désigne un.
+   À gauche, le motif de couverture de la marque et un médaillon (portrait fourni, sinon initiales
+   sur le dégradé). À droite, la fiche recopiée de formateurs.md : nom (Playfair, réservé aux noms
+   de personnes), fonction, parcours, expertises du domaine de la formation, langues. */
+import type { CollectionEntry } from 'astro:content';
+import CoverMotif from './CoverMotif.astro';
+
+interface Props {
+  formateur: CollectionEntry<'formateurs'>;
+  /** id du domaine de la formation : choisit le groupe d'expertises affiché. */
+  domaine: string;
+  /** Couleur de fond de la section, pour les découpes du motif et le liseré du médaillon. */
+  fond?: string;
+}
+
+const { formateur, domaine, fond = 'var(--surface)' } = Astro.props;
+const { nom, fonction, parcours, expertises, langues, portrait } = formateur.data;
+const expertisesDuDomaine = expertises.find((g) => g.domaines.some((d) => d.id === domaine));
+const initiales = nom
+  .split(/\s+/)
+  .filter(Boolean)
+  .slice(0, 2)
+  .map((w) => w.charAt(0).toUpperCase())
+  .join('');
+---
+
+<div class="viv-split viv-split--even items-center">
+  <div class="grid max-w-[440px]">
+    <CoverMotif cutout={fond} class="col-start-1 row-start-1" />
+    <div
+      class="col-start-1 row-start-1 -mb-4 -ml-2 flex size-40 items-center justify-center self-end justify-self-start overflow-hidden rounded-pill bg-(image:--gradient-brand) text-ink-on-pastel sm:size-44"
+      style={`box-shadow: 0 0 0 8px ${fond}`}
+      aria-hidden={portrait ? undefined : 'true'}
+    >
+      {portrait ? (
+        <img src={portrait} alt={nom} class="size-full object-cover" />
+      ) : (
+        <span class="display-lg">{initiales}</span>
+      )}
+    </div>
+  </div>
+
+  <div>
+    <p class="overline text-ink-muted">Qui anime</p>
+    <h2 class="display-md mt-2">{nom}</h2>
+    <p class="body-lg mt-2 text-ink-muted">{fonction}</p>
+    <ul class="body mt-6 flex list-disc flex-col gap-2 pl-5 marker:text-brand-rose">
+      {parcours.map((p) => (
+        <li>{p}</li>
+      ))}
+    </ul>
+    {expertisesDuDomaine && (
+      <div class="mt-8">
+        <h3 class="heading-sm text-accent-deep">Expertises</h3>
+        <ul class="mt-3 flex flex-wrap gap-3">
+          {expertisesDuDomaine.items.map((e) => (
+            <li class="body rounded-pill bg-surface-brand px-4 py-2 text-ink">{e}</li>
+          ))}
+        </ul>
+      </div>
+    )}
+    {langues && <p class="body-sm mt-6 text-ink-muted">{langues}</p>}
+  </div>
+</div>

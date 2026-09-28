@@ -1,23 +1,29 @@
 ---
-/* Page type : fiche détaillée d'une formation (reprise de la version 0, Formation.dc.html). */
+/* Page type : fiche d'une formation. Mêmes informations que la fiche programme imprimable
+   (docs/design-system/templates/fiche-programme/), organisées pour le web comme un parcours de
+   décision : est-ce pour nous, que saurons-nous faire, que contient la formation, comment est-elle
+   validée, comment se déroule-t-elle, comment l'organiser. Une barre collante porte la navigation,
+   le tarif et l'action ; tout ce qui sert à organiser (tarifs, délais, équipement, demande) est
+   regroupé dans la bande sombre finale. */
 import type { GetStaticPaths } from 'astro';
-import { render } from 'astro:content';
 import BaseLayout from '../../layouts/BaseLayout.astro';
+import BarreFormation from '../../components/BarreFormation.astro';
 import ContactForm from '../../components/ContactForm.astro';
+import EvaluationFormation from '../../components/EvaluationFormation.astro';
+import FormateurFormation from '../../components/FormateurFormation.astro';
 import FormationCard from '../../components/FormationCard.astro';
+import ModalitesFormation from '../../components/ModalitesFormation.astro';
+import ObjectifsFormation from '../../components/ObjectifsFormation.astro';
+import OrganiserFormation from '../../components/OrganiserFormation.astro';
+import ProgrammeFormation from '../../components/ProgrammeFormation.astro';
 import Badge from '../../components/ds/Badge.astro';
 import Button from '../../components/ds/Button.astro';
-import Callout from '../../components/ds/Callout.astro';
-import Card from '../../components/ds/Card.astro';
 import Icon from '../../components/ds/Icon.astro';
-import ObjectivesPanel from '../../components/ds/ObjectivesPanel.astro';
-import ProgramSteps from '../../components/ds/ProgramSteps.astro';
-import SoftwareRequirements from '../../components/ds/SoftwareRequirements.astro';
+import { Image } from 'astro:assets';
 import {
   formatDate,
   formationsProches,
   getFormations,
-  programmeSteps,
   resolveFormation,
   type FormationResolue,
 } from '../../lib/formations';
@@ -37,29 +43,72 @@ interface Props {
 
 const { item, proches } = Astro.props;
 const f = item.formation.data;
-const { Content } = await render(item.formation);
 
 // Le fil d'Ariane renvoie au catalogue filtré sur le domaine de la formation.
 const catalogueDomaine = `/catalogue/?domaine=${item.domaine.id}`;
+// TODO : adresse de la fiche programme PDF, quand les fiches générées seront publiées.
+const fichePdf = '#';
 
 const faits = [
   { icon: 'clock', label: item.duree },
-  { icon: 'niveau', label: `Niveau : ${f.niveau}` },
-  { icon: 'users', label: item.participants },
-  { icon: 'map-pin', label: 'Présentiel — vos locaux ou notre salle' },
-  { icon: 'diploma', label: 'Attestation de fin de formation' },
+  { icon: 'niveau', label: `Niveau : ${f.niveau.toLowerCase()}` },
 ] as const;
+// « Dates à convenir » est le cas général : seul un statut de session mérite sa pastille ici.
+const badges = item.badges.filter((b) => b.label !== 'Dates à convenir');
 
-const prerequis = f.prerequis.elements.map((e) => ({
-  label: e.libelle,
-  value: e.valeur,
-  mono: e.code,
-}));
+const sections = [
+  { id: 'public', label: 'Public' },
+  { id: 'objectifs', label: 'Objectifs' },
+  { id: 'programme', label: 'Programme' },
+  { id: 'evaluation', label: 'Évaluation' },
+  { id: 'deroulement', label: 'Déroulement' },
+  ...(item.formateur ? [{ id: 'formateur', label: 'Formateur' }] : []),
+  { id: 'organiser', label: 'Tarifs et accès' },
+];
+
+// Mention du visuel de couverture : crédit et, pour un visuel d'IA, « Image générée avec <outil> ».
+const mentionVisuel = [f.visuelCredit, f.visuelIA && `Image générée avec ${f.visuelIA}`]
+  .filter(Boolean)
+  .join(' · ');
+
+const modules = f.programme.length;
+const reference = `Référence ${f.reference} · version ${f.version} · programme révisé le ${formatDate(f.revision)}.`;
 ---
 
-<BaseLayout title={f.titre} description={f.resume}>
-  <section class="viv-section bg-surface-brand text-ink" data-theme="sombre">
-    <div class="viv-wrap">
+<BaseLayout title={f.titre} description={f.sousTitre} image={f.visuel} imageAlt={f.visuelAlt}>
+  <BarreFormation
+    titreCourt={f.titreCourt}
+    tarif={item.tarif}
+    sections={sections}
+    apres="presentation"
+    avant="organiser"
+  />
+
+  <section
+    id="presentation"
+    class:list={[
+      'viv-section relative overflow-hidden bg-surface-brand text-ink',
+      mentionVisuel && 'max-md:pb-16',
+    ]}
+    data-theme="sombre"
+  >
+    {f.visuel && (
+      <div
+        aria-hidden="true"
+        class="viv-entete-visuel pointer-events-none absolute inset-y-0 right-0 w-full max-md:opacity-40 md:w-[70%]"
+      >
+        <Image
+          src={f.visuel}
+          alt=""
+          widths={[800, 1280, 1920]}
+          sizes="(max-width: 900px) 100vw, 70vw"
+          loading="eager"
+          fetchpriority="high"
+          class="size-full object-cover"
+        />
+      </div>
+    )}
+    <div class="viv-wrap relative">
       <nav aria-label="Fil d’Ariane" class="body-sm">
         <ol class="flex flex-wrap items-center gap-2">
           <li>
@@ -91,13 +140,11 @@ const prerequis = f.prerequis.elements.map((e) => ({
           <p class="overline text-ink-muted">{item.overline}</p>
           <h1 class="display-lg mt-2 mb-5 text-balance">{f.titre}</h1>
           <div class="mb-6 flex flex-wrap gap-2">
-            {item.badges.map((b) => (
+            {badges.map((b) => (
               <Badge tone={b.tone}>{b.label}</Badge>
             ))}
           </div>
-          <div class="viv-prose body-lg max-w-[64ch] text-pretty text-ink-muted">
-            <Content />
-          </div>
+          <p class="body-lg max-w-[64ch] text-pretty text-ink-muted">{f.sousTitre}</p>
         </div>
 
         <div class="viv-glass p-6">
@@ -115,9 +162,7 @@ const prerequis = f.prerequis.elements.map((e) => ({
             {item.tarif ? (
               <>
                 <span class="display-md">{item.tarif}</span>
-                <span class="caption text-ink-muted">
-                  net de taxe, par participant, inter-entreprises
-                </span>
+                <span class="caption text-ink-muted">HT/pers., inter-entreprises</span>
               </>
             ) : (
               <span class="display-md">Sur devis</span>
@@ -126,60 +171,116 @@ const prerequis = f.prerequis.elements.map((e) => ({
           <Button href="#demande" icon="calendar" class="w-full">
             Demander des dates
           </Button>
+          <Button variant="secondary" size="sm" href={fichePdf} icon="download" class="mt-3 w-full">
+            Télécharger le programme
+          </Button>
+        </div>
+      </div>
+    </div>
+    {mentionVisuel && (
+      <p class="viv-glass caption absolute right-4 bottom-3 rounded-pill px-3 py-1 text-ink-muted">
+        {mentionVisuel}
+      </p>
+    )}
+  </section>
+
+  <!-- Est-ce pour nous ? -->
+  <section id="public" class="viv-section bg-surface">
+    <div class="viv-wrap">
+      <div class="mb-10 max-w-[720px]">
+        <p class="overline text-ink-muted">Public et prérequis</p>
+        <h2 class="display-md mt-2">À qui s’adresse cette formation</h2>
+      </div>
+      <div class="viv-split viv-split--even">
+        <div>
+          <h3 class="heading-sm flex items-center gap-2 text-accent-deep">
+            <Icon name="users" />
+            Pour qui
+          </h3>
+          <ul class="mt-5 flex flex-wrap gap-3">
+            {f.public.map((p) => (
+              <li class="body rounded-pill bg-surface-brand px-4 py-2 text-ink">{p}</li>
+            ))}
+          </ul>
+        </div>
+        <div>
+          <h3 class="heading-sm flex items-center gap-2 text-accent-deep">
+            <Icon name="circle-check" />
+            Prérequis
+          </h3>
+          <ul class="mt-5 flex flex-col gap-3">
+            {f.prerequis.map((p) => (
+              <li class="body flex items-start gap-3">
+                <span class="flex pt-0.5 text-action">
+                  <Icon name="check" />
+                </span>
+                {p}
+              </li>
+            ))}
+          </ul>
         </div>
       </div>
     </div>
   </section>
 
-  <section class="viv-section bg-surface">
-    <div class="viv-wrap viv-split viv-split--aside">
-      <div class="min-w-0">
-        <ObjectivesPanel
-          intro="À l’issue de la formation, au poste de travail, vous êtes en mesure de :"
-          items={f.objectifs}
-        />
-
-        <h2 class="heading-lg mt-12 mb-6">Programme</h2>
-        <ProgramSteps steps={programmeSteps(item.formation)} />
-
-        <h2 class="heading-lg mt-12 mb-6">Prérequis techniques</h2>
-        <SoftwareRequirements
-          title={`Prérequis techniques — ${item.outils[0]?.data.label ?? 'poste de travail'}`}
-          version={f.prerequis.version}
-          items={prerequis}
-          note="Les droits d’installation sur les postes dépendent de votre service informatique : prévoyez la validation avant la première journée."
-        />
-
-        {f.misAJour && (
-          <p class="caption mt-12 text-ink-muted">
-            Fiche mise à jour le {formatDate(f.misAJour)} — la version du logiciel est vérifiée
-            avant chaque session.
-          </p>
-        )}
+  <!-- Que saurons-nous faire ? -->
+  <section id="objectifs" class="viv-section bg-surface-sunken">
+    <div class="viv-wrap">
+      <div class="mb-10 max-w-[720px]">
+        <p class="overline text-ink-muted">Objectifs</p>
+        <h2 class="display-md mt-2">Objectifs et compétences visées</h2>
       </div>
-
-      <aside class="viv-sticky-aside sticky top-[116px] flex flex-col gap-5 self-start">
-        <Card overline="Tarifs" title="Inter-entreprises">
-          <p>{item.tarif ? `${item.tarif} net de taxe par participant` : 'Sur devis'}</p>
-          <p class="caption mt-1 text-ink-muted">Tarif établi à partir d’un effectif minimum.</p>
-          <h3 class="viv-card__title mt-5">Intra-entreprise</h3>
-          <p class="mt-2">Sur devis, dans vos locaux.</p>
-        </Card>
-        <Card overline="Modalités" title="Évaluation et suivi">
-          <p>
-            Quiz et exercice pratique en fin de formation, attestation remise à chaque participant.
-            Un entretien de suivi deux semaines après la session.
-          </p>
-        </Card>
-        <Callout tone="info" title="Financement">
-          <p>Prise en charge OPCO et plan de développement des compétences de votre entreprise.</p>
-        </Callout>
-      </aside>
+      <ObjectifsFormation objectifs={f.objectifs} competences={f.competences} />
     </div>
   </section>
 
+  <!-- Que contient la formation ? -->
+  <section id="programme" class="viv-section bg-surface">
+    <div class="viv-wrap">
+      <div class="mb-12 max-w-[720px]">
+        <p class="overline text-ink-muted">Programme</p>
+        <h2 class="display-md mt-2">Programme détaillé</h2>
+        <p class="body-lg mt-4 text-ink-muted">
+          {modules} module{modules > 1 ? 's' : ''}, {item.duree}, en présentiel dans vos locaux.
+        </p>
+      </div>
+      <ProgrammeFormation programme={f.programme} />
+    </div>
+  </section>
+
+  <!-- Comment est-elle validée ? -->
+  <section id="evaluation" class="viv-section bg-(image:--gradient-brand)">
+    <div class="viv-wrap">
+      <div class="mb-10 max-w-[720px]">
+        <p class="overline text-ink-on-pastel">Évaluation</p>
+        <h2 class="display-md mt-2 text-ink-on-pastel">Évaluation et validation</h2>
+      </div>
+      <EvaluationFormation objectifs={f.objectifs.length} />
+    </div>
+  </section>
+
+  <!-- Comment se déroule-t-elle ? -->
+  <section id="deroulement" class="viv-section bg-surface-sunken">
+    <div class="viv-wrap">
+      <div class="mb-10 max-w-[720px]">
+        <p class="overline text-ink-muted">Déroulement</p>
+        <h2 class="display-md mt-2">Comment se déroule la formation</h2>
+      </div>
+      <ModalitesFormation materielFourni={f.materielFourni} />
+    </div>
+  </section>
+
+  <!-- Qui anime ? Section facultative : seulement si la formation désigne un formateur. -->
+  {item.formateur && (
+    <section id="formateur" class="viv-section bg-surface">
+      <div class="viv-wrap">
+        <FormateurFormation formateur={item.formateur} domaine={item.domaine.id} />
+      </div>
+    </section>
+  )}
+
   {proches.length > 0 && (
-    <section class="viv-section bg-surface-sunken">
+    <section class:list={['viv-section', item.formateur ? 'bg-surface-sunken' : 'bg-surface']}>
       <div class="viv-wrap">
         <div class="mb-10 flex flex-wrap items-end justify-between gap-4">
           <div>
@@ -199,16 +300,26 @@ const prerequis = f.prerequis.elements.map((e) => ({
     </section>
   )}
 
-  <section id="demande" class="viv-section bg-surface text-ink" data-theme="sombre">
-    <div class="viv-wrap viv-split viv-split--form">
-      <div>
-        <p class="overline text-ink-muted">Demande</p>
-        <h2 class="display-md mt-2 mb-4">Demander des dates pour cette formation</h2>
-        <p class="body-lg text-ink-muted">
-          Nous vous rappelons pour le cadrage d’une heure, puis nous fixons les dates avec vous.
-        </p>
+  <!-- Comment l'organiser ? Tarifs, délais, équipement, puis la demande -->
+  <section id="organiser" class="viv-section bg-surface text-ink" data-theme="sombre">
+    <div class="viv-wrap">
+      <div class="mb-10 max-w-[720px]">
+        <p class="overline text-ink-muted">Tarifs et accès</p>
+        <h2 class="display-md mt-2">Organiser votre session</h2>
       </div>
-      <ContactForm id="demande" sujet="dates" formation={f.titre} />
+      <OrganiserFormation tarif={item.tarif} equipement={f.equipement} />
+
+      <div id="demande" class="viv-split viv-split--form mt-16 border-t border-border pt-16">
+        <div>
+          <p class="overline text-ink-muted">Demande</p>
+          <h2 class="display-md mt-2 mb-4">Demander des dates pour cette formation</h2>
+          <p class="body-lg text-ink-muted">
+            Nous vous rappelons pour le cadrage d’une heure, puis nous fixons les dates avec vous.
+          </p>
+          <p class="caption mt-8 text-ink-muted">{reference}</p>
+        </div>
+        <ContactForm id="demande" sujet="dates" formation={f.titre} />
+      </div>
     </div>
   </section>
 </BaseLayout>

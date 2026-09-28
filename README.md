@@ -24,7 +24,8 @@ npm run dev            # http://localhost:4321
 ## Structure
 
 ```
-docs/design-system/          # Référence du design system (charte, cartes, composants React d'origine, UI kits)
+docs/design-system/          # Référence du design system (charte, cartes, composants React d'origine, UI kits, gabarits)
+docs/format-formation.md     # Format du fichier formation (champs, règles, correspondance avec les documents)
 public/logos/                # Les 8 logos SVG de la marque (favicon = submark noir)
 src/
 ├── design-system/           # Design system « runtime », copié tel quel : tokens, composants CSS, fontes
@@ -35,14 +36,21 @@ src/
 │   ├── SiteFooter.astro
 │   ├── FormationCard.astro  # ModuleCard alimentée par une formation
 │   ├── ContactForm.astro    # Formulaire → webhook n8n
+│   ├── BarreFormation.astro      # Fiche formation : barre collante (sections, tarif, action)
+│   ├── ObjectifsFormation.astro  #   objectifs reliés aux compétences visées
+│   ├── ProgrammeFormation.astro  #   programme détaillé en frise
+│   ├── EvaluationFormation.astro #   évaluation et validation (textes fixes)
+│   ├── ModalitesFormation.astro  #   déroulement : méthodes, animation, accessibilité (textes fixes)
+│   ├── FormateurFormation.astro  #   qui anime (section affichée si la formation désigne un formateur)
+│   ├── OrganiserFormation.astro  #   tarifs, délais d'accès, équipement à prévoir (textes fixes)
 │   ├── PageJuridique.astro  # Gabarit des mentions légales et des CGV
 │   └── CoverMotif.astro     # Motif de couverture de la marque
 ├── config/site.ts           # Coordonnées, navigation, motifs de contact, textes partagés
 ├── content.config.ts        # Schémas : formations, classements, pages juridiques
-├── content/formations/      # 1 fichier .md = 1 formation
+├── content/formations/      # 1 fichier .md = 1 formation (_modele.md : modèle à copier), visuels/ : visuels de couverture
 ├── content/legal/           # Textes des mentions légales et des CGV (PageJuridique.astro)
-├── data/                    # Classements : domaines, outils, types (YAML)
-├── lib/formations.ts        # Accès au contenu, mise en forme (durée, tarif…), déroulé
+├── data/                    # Classements (domaines, outils, types) et formateurs (YAML)
+├── lib/formations.ts        # Accès au contenu, contrôles croisés, mise en forme (durée, tarif…)
 ├── lib/donnees-yaml.ts      # Chargeur strict des classements (le build échoue sur un YAML invalide)
 ├── layouts/BaseLayout.astro
 └── pages/                   # index, catalogue/, formations/[id], contact, mentions légales, CGV, 404
@@ -68,9 +76,10 @@ La référence est `docs/design-system/readme.md` (charte complète : couleurs, 
 
 ### Classements (`src/data/`)
 
-- **Domaine** (`domaines.yaml`) : le domaine d'expertise — Préparation de données 3D, 3D précalculée, 3D temps réel, Graphisme 2D, IA générative. Chaque domaine a sa carte sur l'accueil (`description`, `outilsTexte`) et structure le premier filtre du catalogue et la colonne « Formations » du pied de page.
+- **Domaine** (`domaines.yaml`) : le domaine d'expertise — Préparation de données 3D, 3D précalculée, 3D temps réel, Graphisme 2D, IA générative. Chaque domaine a sa carte sur l'accueil (`description`, `outilsTexte`) et structure le premier filtre du catalogue et la colonne « Formations » du pied de page. Son `code` préfixe la référence des formations (`IAG` → `IAG01`) ; codes établis : `IAG` (IA générative) et `TRL` (3D temps réel).
 - **Outil** (`outils.yaml`) : Blender, Unreal Engine, VRED, Unity, Illustrator, ComfyUI.
 - **Type** (`types.yaml`) : Module, Parcours pipeline, Sensibilisation.
+- **Formateur** (`formateurs.yaml`) : copie des fiches de `docs/design-system/templates/support-formation/formateurs.md`, qui fait foi (fonction, parcours, expertises par groupe de domaines, langues, portrait facultatif). La page d'une formation affiche les expertises du groupe de son domaine.
 
 L'`id` de chaque entrée sert de slug dans les URLs et les filtres (`/catalogue/?domaine=3d-temps-reel&outil=unreal-engine`). Le champ `icone` désigne un repère du composant Icon (`src/components/ds/icons.ts`) ; jamais le logo d'un éditeur.
 
@@ -78,38 +87,15 @@ Ces fichiers sont lus par `src/lib/donnees-yaml.ts` : une erreur de syntaxe, un 
 
 ### Ajouter une formation
 
-Créer `src/content/formations/<slug>.md` : le nom du fichier devient l'URL `/formations/<slug>/`. Le frontmatter porte les champs de la fiche, validés au build par `src/content.config.ts` ; le corps du fichier est le **chapô**.
+Un fichier par formation, `src/content/formations/<slug>.md`, source unique de la page du site et de la fiche programme imprimable, et base du déroulé pédagogique et du support. Le nom du fichier devient l'URL `/formations/<slug>/` et ne change plus une fois publié.
 
-```yaml
-titre: 'Blender : modélisation et rendu'
-resume: Une phrase pour la carte du catalogue.
-type: module # id de types.yaml
-domaine: 3d-precalculee # id de domaines.yaml
-outils: [blender] # ids de outils.yaml, outil principal en premier ; [] = sans outil imposé
-duree: { heures: 21, jours: 3 } # affiché « 21 heures — 3 jours »
-niveau: Débutant # Débutant | Intermédiaire | Confirmé | Tous profils
-participants: { min: 3, max: 6 }
-tarif: 1400 # € net de taxe par participant (inter) ; absent = « Sur devis »
-statut: Dates à convenir # | Session confirmée | Session reportée
-objectifs: [...] # 3 à 6, à l'infinitif
-programme: # une entrée par journée (autant que duree.jours)
-  - { titre: modélisation, contenu: Géométrie, modificateurs, topologie. }
-prerequis:
-  version: Blender 5.2 LTS
-  elements:
-    - { libelle: Système, valeur: Windows 11 ou macOS 14 }
-    - { libelle: Fichiers de travail, valeur: 'C:\Viv\exercices', code: true }
-enAvant: true # affichée dans « Formations souvent demandées »
-misAJour: 2026-09-03
-```
+Copier `src/content/formations/_modele.md`, puis remplir le frontmatter ; le corps reste vide. Les champs, leurs règles et les documents qui les utilisent sont décrits dans **`docs/format-formation.md`**. Le schéma de `src/content.config.ts` les valide : un champ manquant ou inconnu, un objectif ouvert par un verbe non observable (« maîtriser », « comprendre »…), une référence qui ne suit pas le code du domaine font échouer `npm run build`.
 
-Le **déroulé** affiché sur la fiche ajoute automatiquement le cadrage téléphonique avant les journées et le suivi après (textes dans `src/config/site.ts` → `DEROULE`). Champs facultatifs : `visuel` / `visuelAlt` (rendu ou capture d'un fichier d'exercice, remplace le cadre vide de la carte), `brouillon: true` (masquée en production), `ordre`.
-
-> Les 4 formations actuelles sont des **exemples provisoires** (`provisoire: true`, badge « Exemple provisoire » à l'écran) repris de la maquette : à remplacer par les fiches réelles.
+Les textes communs à toutes les formations (méthodes pédagogiques, évaluation, modalités d'animation, délais d'accès, accessibilité, sanction) ne sont pas dans le fichier : ils sont repris mot pour mot de la fiche programme dans les composants `src/components/ModalitesFormation.astro`, `EvaluationFormation.astro` et `OrganiserFormation.astro`.
 
 ### Règles d'écriture (extrait de la charte)
 
-Vouvoiement ; casse phrase ; versions exactes ; durées écrites en toutes lettres ; aucun emoji. **Jamais** : CPF, sessions au calendrier ou « S'inscrire » (on écrit « Demander des dates » / « Demander un devis »), distanciel, mention Qualiopi.
+Vouvoiement ; casse phrase ; versions exactes ; durées écrites en toutes lettres ; aucun emoji. **Jamais** : CPF, sessions au calendrier ou « S'inscrire » (on écrit « Demander des dates » / « Demander un devis »), distanciel, « notre salle » (les formations se tiennent uniquement chez le client : « dans vos locaux »), mention Qualiopi. Tarifs au format « 1 900 € HT/pers. ».
 
 ## Formulaire de contact / n8n
 

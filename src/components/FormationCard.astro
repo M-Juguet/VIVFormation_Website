@@ -20,14 +20,14 @@ const d = item.formation.data;
   mark={item.mark}
   overline={item.overline}
   title={d.titre}
-  summary={d.resume}
+  summary={d.sousTitre}
   meta={[
     { label: 'Durée', value: item.duree },
     { label: 'Niveau', value: d.niveau },
   ]}
   badges={item.badges}
   price={item.tarif ?? 'Sur devis'}
-  priceNote={item.tarif ? 'net de taxe, par participant' : undefined}
+  priceNote={item.tarif ? 'HT/pers., inter-entreprises' : undefined}
   href={item.url}
   actionLabel="Voir la fiche"
 />

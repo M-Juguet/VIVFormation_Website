@@ -1,0 +1,100 @@
+---
+/* Barre de fiche : apparaît sous l'en-tête du site dès que l'en-tête de la formation sort de
+   l'écran, disparaît quand arrive la zone qui porte les tarifs et le formulaire (un seul bouton
+   principal visible à la fois). Grand écran : titre court, onglets des sections avec suivi de
+   lecture, tarif, action. Mobile : tarif et action. Verre dépoli, puisque la page défile dessous ;
+   repli surface-raised sous 600 px, comme le veut la charte. */
+import Button from './ds/Button.astro';
+
+interface Props {
+  titreCourt: string;
+  /** Tarif inter-entreprises mis en forme (« 1 900 € »), absent s'il est sur devis. */
+  tarif?: string;
+  sections: { id: string; label: string }[];
+  /** id de l'en-tête de la formation : la barre apparaît quand il sort de l'écran. */
+  apres: string;
+  /** id de la zone tarifs et formulaire : la barre disparaît quand elle arrive. */
+  avant: string;
+}
+
+const { titreCourt, tarif, sections, apres, avant } = Astro.props;
+---
+
+<div
+  data-barre
+  data-apres={apres}
+  data-avant={avant}
+  inert
+  class="pointer-events-none fixed inset-x-0 top-(--barre-top,88px) z-10 -translate-y-2 border-b border-(--glass-border) bg-(--glass-surface) opacity-0 shadow-(--shadow-sm) backdrop-blur-(--glass-blur) transition duration-(--motion-panel) ease-enter data-visible:pointer-events-auto data-visible:translate-y-0 data-visible:opacity-100 max-sm:bg-surface-raised max-sm:backdrop-blur-none"
+>
+  <div class="viv-wrap flex h-14 items-center gap-6">
+    <p class="heading-sm hidden shrink-0 lg:block">{titreCourt}</p>
+    <nav aria-label="Sections de la formation" class="hidden min-w-0 flex-1 md:block">
+      <ul class="body-sm flex gap-5">
+        {sections.map((s) => (
+          <li>
+            <a
+              href={`#${s.id}`}
+              data-onglet={s.id}
+              class="block border-b-2 border-transparent py-1 whitespace-nowrap text-ink-muted no-underline transition-colors duration-(--motion-micro) ease-standard hover:text-ink aria-[current=location]:border-action aria-[current=location]:text-ink"
+            >
+              {s.label}
+            </a>
+          </li>
+        ))}
+      </ul>
+    </nav>
+    <p class="min-w-0 flex-1 md:flex-none">
+      <span class="heading-sm whitespace-nowrap">{tarif ?? 'Sur devis'}</span>
+      {tarif && <span class="caption whitespace-nowrap text-ink-muted"> HT/pers.</span>}
+    </p>
+    <Button size="sm" href="#demande" icon="calendar">
+      Demander des dates
+    </Button>
+  </div>
+</div>
+
+<script>
+  const barre = document.querySelector<HTMLElement>('[data-barre]');
+  if (barre) {
+    const entete = document.getElementById(barre.dataset.apres ?? '');
+    const fin = document.getElementById(barre.dataset.avant ?? '');
+    const siteHeader = document.querySelector('[data-site-header]');
+    const onglets = [...barre.querySelectorAll<HTMLAnchorElement>('[data-onglet]')];
+    const sections = onglets
+      .map((o) => document.getElementById(o.dataset.onglet ?? ''))
+      .filter((s): s is HTMLElement => s !== null);
+
+    let enAttente = false;
+    const suivre = () => {
+      enAttente = false;
+      const haut = siteHeader?.getBoundingClientRect().bottom ?? 0;
+      barre.style.setProperty('--barre-top', `${haut}px`);
+
+      const visible =
+        !!entete &&
+        !!fin &&
+        entete.getBoundingClientRect().bottom < haut &&
+        fin.getBoundingClientRect().top > innerHeight * 0.85;
+      barre.toggleAttribute('data-visible', visible);
+      barre.inert = !visible;
+
+      // Onglet de la section en cours de lecture.
+      const repere = haut + barre.offsetHeight + 32;
+      let courante: HTMLElement | undefined;
+      for (const s of sections) if (s.getBoundingClientRect().top <= repere) courante = s;
+      for (const o of onglets) {
+        if (o.dataset.onglet === courante?.id) o.setAttribute('aria-current', 'location');
+        else o.removeAttribute('aria-current');
+      }
+    };
+    const planifier = () => {
+      if (enAttente) return;
+      enAttente = true;
+      requestAnimationFrame(suivre);
+    };
+    addEventListener('scroll', planifier, { passive: true });
+    addEventListener('resize', planifier);
+    suivre();
+  }
+</script>

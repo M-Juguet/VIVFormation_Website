@@ -1,0 +1,66 @@
+---
+/* Objectifs pédagogiques et compétences visées, reliés : choisir une compétence met en évidence
+   les objectifs qui y mènent (changement de couleur, sans mouvement : les objectifs ne bougent
+   jamais). Sans JavaScript, les pastilles « Objectif N » portent déjà le lien. */
+import Badge from './ds/Badge.astro';
+import ObjectivesPanel from './ds/ObjectivesPanel.astro';
+
+interface Props {
+  objectifs: string[];
+  competences: { libelle: string; objectifs: number[] }[];
+}
+
+const { objectifs, competences } = Astro.props;
+---
+
+<div class="viv-split viv-split--even" data-objectifs-competences>
+  <ObjectivesPanel intro="À l’issue de la formation, vous serez capable de :" items={objectifs} />
+  <div>
+    <h3 class="heading-sm text-accent-deep">Compétences visées</h3>
+    <p class="body-sm mt-2 text-ink-muted">
+      Chaque compétence renvoie aux objectifs qui y mènent.{' '}
+      <span data-aide hidden>
+        Choisissez-en une pour les repérer dans la liste.
+      </span>
+    </p>
+    <ul class="mt-5 flex flex-col gap-3">
+      {competences.map((c) => (
+        <li>
+          <button
+            type="button"
+            data-objectifs={c.objectifs.join(' ')}
+            class="flex w-full cursor-pointer flex-col items-start gap-3 rounded-md border border-border bg-surface-raised p-4 text-left shadow-(--shadow-sm) transition-colors duration-(--motion-state) ease-standard hover:border-action aria-pressed:border-action aria-pressed:bg-surface-brand"
+          >
+            <span class="body text-ink">{c.libelle}</span>
+            <span class="flex flex-wrap gap-2">
+              {c.objectifs.map((n) => (
+                <Badge tone="gold">Objectif {n}</Badge>
+              ))}
+            </span>
+          </button>
+        </li>
+      ))}
+    </ul>
+  </div>
+</div>
+
+<script>
+  for (const bloc of document.querySelectorAll<HTMLElement>('[data-objectifs-competences]')) {
+    const boutons = [...bloc.querySelectorAll<HTMLButtonElement>('button[data-objectifs]')];
+    const objectifs = [...bloc.querySelectorAll<HTMLElement>('[data-objectif]')];
+    bloc.querySelector('[data-aide]')?.removeAttribute('hidden');
+
+    const choisir = (actif: HTMLButtonElement | null) => {
+      for (const b of boutons) b.setAttribute('aria-pressed', String(b === actif));
+      const numeros = new Set(actif?.dataset.objectifs?.split(' ') ?? []);
+      for (const o of objectifs)
+        o.toggleAttribute('data-actif', numeros.has(o.dataset.objectif ?? ''));
+    };
+    for (const b of boutons) {
+      b.setAttribute('aria-pressed', 'false');
+      b.addEventListener('click', () =>
+        choisir(b.getAttribute('aria-pressed') === 'true' ? null : b),
+      );
+    }
+  }
+</script>

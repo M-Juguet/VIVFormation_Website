@@ -1,4 +1,6 @@
 ---
+import type { ImageMetadata } from 'astro';
+import { getImage } from 'astro:assets';
 import '../styles/global.css';
 import SiteHeader from '../components/SiteHeader.astro';
 import SiteFooter from '../components/SiteFooter.astro';
@@ -7,13 +9,19 @@ import { SITE } from '../config/site';
 interface Props {
   title?: string;
   description?: string;
+  /** Image de partage (Open Graph), avec son texte alternatif. */
+  image?: ImageMetadata;
+  imageAlt?: string;
 }
 
-const { title, description = SITE.description } = Astro.props;
+const { title, description = SITE.description, image, imageAlt } = Astro.props;
 const pageTitle = title
   ? `${title} — ${SITE.name}`
   : `${SITE.name} — formations 3D, graphisme 2D et IA générative`;
 const canonical = new URL(Astro.url.pathname, Astro.site);
+const partage = image
+  ? new URL((await getImage({ src: image, width: 1200, format: 'jpg' })).src, Astro.site)
+  : undefined;
 ---
 
 <!doctype html>
@@ -45,6 +53,13 @@ const canonical = new URL(Astro.url.pathname, Astro.site);
     <meta property="og:title" content={pageTitle} />
     <meta property="og:description" content={description} />
     <meta property="og:url" content={canonical} />
+    {partage && (
+      <>
+        <meta property="og:image" content={partage} />
+        {imageAlt && <meta property="og:image:alt" content={imageAlt} />}
+        <meta name="twitter:card" content="summary_large_image" />
+      </>
+    )}
     <slot name="head" />
   </head>
   <body class="flex min-h-screen flex-col">

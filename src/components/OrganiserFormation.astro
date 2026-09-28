@@ -1,0 +1,110 @@
+---
+/* Organiser une session : tarifs et financement, délais d'accès en chiffres clés, équipement à
+   prévoir. Cartes de verre sur la bande sombre qui porte aussi le formulaire de demande.
+   Textes fixes de docs/design-system/templates/fiche-programme/REGLES.md (tarif intra, effectif
+   minimum, délais d'accès) ; la note sur les droits d'installation vient de la fiche programme
+   d'origine du design system. */
+import Icon from './ds/Icon.astro';
+import { SITE } from '../config/site';
+
+interface Props {
+  /** Tarif inter-entreprises mis en forme (« 1 900 € »), absent s'il est sur devis. */
+  tarif?: string;
+  /** Équipement requis, non fourni par VIV. Absent : fourni par VIV, le bloc disparaît. */
+  equipement?: string[];
+}
+
+const { tarif, equipement } = Astro.props;
+
+const delais = [
+  { nombre: '11', unite: 'jours ouvrés', texte: 'de délai minimal suivant la date de demande' },
+  {
+    nombre: '2',
+    unite: 'semaines',
+    texte: 'au minimum entre la convention signée et le démarrage',
+  },
+  { nombre: '8', unite: 'apprenants', texte: 'au maximum par session' },
+];
+const carte = 'viv-glass flex flex-col gap-5 p-6';
+const titre = 'heading-md flex items-center gap-2';
+---
+
+<div class:list={['grid gap-6 md:grid-cols-2', equipement && 'lg:grid-cols-3']}>
+  <div class={carte}>
+    <h3 class={titre}>
+      <Icon name="euro" />
+      Tarifs
+    </h3>
+    <div>
+      <p class="body-sm text-ink-muted">Inter-entreprises</p>
+      {tarif ? (
+        <p class="mt-1">
+          <span class="display-md">{tarif}</span>{' '}
+          <span class="body-sm text-ink-muted">HT/pers.*</span>
+        </p>
+      ) : (
+        <p class="display-md mt-1">Sur devis</p>
+      )}
+    </div>
+    <div class="border-t border-border pt-4">
+      <p class="body-sm text-ink-muted">Intra-entreprise</p>
+      <p class="heading-md mt-1">Sur devis</p>
+    </div>
+    {tarif && (
+      <p class="caption text-ink-muted">* Prix constitué à partir d’un effectif minimum.</p>
+    )}
+    <p class="body-sm mt-auto border-t border-border pt-4 text-ink-muted">
+      Financement : prise en charge OPCO et plan de développement des compétences de votre
+      entreprise.
+    </p>
+  </div>
+
+  <div class={carte}>
+    <h3 class={titre}>
+      <Icon name="clock" />
+      Délais d’accès
+    </h3>
+    <ul class="flex flex-col gap-4">
+      {delais.map((d) => (
+        <li>
+          <p class="flex items-baseline gap-2">
+            <span class="display-md text-accent-deep">{d.nombre}</span>
+            <span class="heading-md">{d.unite}</span>
+          </p>
+          <p class="body-sm text-ink-muted">{d.texte}</p>
+        </li>
+      ))}
+    </ul>
+    <p class="body-sm mt-auto border-t border-border pt-4 text-ink-muted">
+      La formation peut être mise en place à tout moment. La demande d’informations ou d’inscription
+      s’effectue par mail (
+      <a href={`mailto:${SITE.email}`}>
+        <span class="whitespace-nowrap">{SITE.email}</span>
+      </a>
+      ).
+    </p>
+  </div>
+
+  {equipement && (
+    <div class:list={[carte, 'md:col-span-2 lg:col-span-1']}>
+      <h3 class={titre}>
+        <Icon name="monitor" />
+        Équipement à prévoir
+      </h3>
+      <ul class="flex flex-col gap-3">
+        {equipement.map((e) => (
+          <li class="body flex items-start gap-3">
+            <span class="flex pt-0.5 text-action">
+              <Icon name="check" />
+            </span>
+            {e}
+          </li>
+        ))}
+      </ul>
+      <p class="body-sm mt-auto border-t border-border pt-4 text-ink-muted">
+        Non fourni par VIV. Les droits d’installation sur les postes dépendent de votre service
+        informatique : prévoyez la validation avant la première journée.
+      </p>
+    </div>
+  )}
+</div>

@@ -109,6 +109,12 @@
     outline: 2px solid var(--focus);
     outline-offset: 2px;
   }
+  /* Pas de gras droit dans la charte : le gras est toujours le gras italique de Noto Sans. */
+  strong,
+  b {
+    font-weight: 700;
+    font-style: italic;
+  }
 }
 
 @layer components {
@@ -128,6 +134,46 @@
   }
   .viv-drawer a.viv-btn--secondary:hover {
     border-color: var(--action);
+  }
+
+  /* Fiche formation : pastille du module en cours de lecture (ProgrammeFormation) et objectifs mis
+     en évidence par la compétence choisie (ObjectifsFormation). Changement de couleur seulement :
+     les objectifs ne bougent jamais. */
+  .viv-steps__dot,
+  .viv-objectives__bullet {
+    transition:
+      background-color var(--motion-state) var(--motion-standard),
+      color var(--motion-state) var(--motion-standard);
+  }
+  .viv-objectives__list li {
+    margin: calc(-1 * var(--space-1)) calc(-1 * var(--space-2));
+    padding: var(--space-1) var(--space-2);
+    border-radius: var(--radius-md);
+    transition: background-color var(--motion-state) var(--motion-standard);
+  }
+  .viv-objectives__list li[data-actif] {
+    background: var(--surface-raised);
+  }
+  .viv-objectives__list li[data-actif] .viv-objectives__bullet {
+    background: var(--action);
+    color: var(--on-action);
+  }
+}
+
+/* Fiche formation : visuel de couverture en fond de l'en-tête sombre, en fondu horizontal (l'axe
+   du logo) — transparent à gauche, sous le titre, opacité pleine au bord droit de l'écran. Le masque
+   ne lit que l'opacité : noir et transparent n'y sont pas des couleurs affichées. */
+.viv-entete-visuel {
+  mask-image: linear-gradient(90deg, transparent, black);
+}
+
+/* Fiche formation : les ancres tiennent compte de la barre de fiche collante (BarreFormation). */
+html:has([data-barre]) {
+  scroll-padding-top: 136px;
+}
+@media (min-width: 900px) {
+  html:has([data-barre]) {
+    scroll-padding-top: 164px;
   }
 }
 
@@ -164,10 +210,6 @@
   }
   & li + li {
     margin-top: var(--space-2);
-  }
-  & strong {
-    font-weight: 700;
-    font-style: italic;
   }
   & ul {
     list-style: disc;

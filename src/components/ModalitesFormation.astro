@@ -1,0 +1,62 @@
+---
+/* Déroulement d'une formation : méthodes pédagogiques et animation côte à côte, accessibilité en
+   encart. Textes fixes repris mot pour mot de docs/design-system/templates/fiche-programme/REGLES.md ;
+   les méthodes pédagogiques sont communes à toutes les formations (texte de la fiche TRL01). Seul
+   le matériel fourni par VIV vient du fichier de la formation. */
+import Callout from './ds/Callout.astro';
+import Card from './ds/Card.astro';
+import { SITE } from '../config/site';
+
+interface Props {
+  materielFourni?: string[];
+}
+
+const { materielFourni = [] } = Astro.props;
+
+const moyens = [
+  'Documents supports de formation projetés',
+  'Étude de cas concrets',
+  ...materielFourni,
+  'Mise à disposition en ligne de documents supports téléchargeables à la suite de la formation',
+];
+---
+
+<div class="flex flex-col gap-6">
+  <div class="grid gap-6 md:grid-cols-2">
+    <Card title="Méthodes pédagogiques">
+      <div class="flex flex-col gap-3">
+        <p>
+          Nous utilisons des exposés théoriques, et appliquons la méthode active : les connaissances
+          liées à cette formation ne s’apprennent pas, elles s’appliquent.
+        </p>
+        <p>L’organisation de la formation comprend :</p>
+        <ul class="flex list-disc flex-col gap-1 pl-5 marker:text-brand-rose">
+          {moyens.map((m) => (
+            <li>{m}</li>
+          ))}
+        </ul>
+      </div>
+    </Card>
+    <Card title="Modalités d’animation">
+      <p>
+        Nous sommes conscients des impératifs liés au monde de la production. La formation est
+        réalisée en salle de façon synchrone, en présentiel, dans vos locaux, et nous proposons un
+        rythme d’apprentissage flexible : la répartition et l’intensité des sessions peuvent être
+        adaptées pour s’ajuster au mieux aux besoins et aux disponibilités de vos équipes.
+      </p>
+    </Card>
+  </div>
+  <Callout tone="info" title="Accessibilité aux personnes handicapées">
+    <p>
+      Nous sommes sensibles aux enjeux de l’inclusion et investis sur la thématique du handicap.
+      Merci de nous contacter afin de pouvoir vous accompagner dans les meilleures conditions.
+    </p>
+    <p class="mt-2">
+      Responsable handicap : <strong>{SITE.referentHandicap.nom}</strong> (
+      <a href={`mailto:${SITE.referentHandicap.email}`}>
+        <strong class="whitespace-nowrap">{SITE.referentHandicap.email}</strong>
+      </a>
+      ).
+    </p>
+  </Callout>
+</div>

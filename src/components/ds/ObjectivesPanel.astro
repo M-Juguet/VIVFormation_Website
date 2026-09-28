@@ -1,7 +1,8 @@
 ---
 /* Encart des objectifs pédagogiques, obligatoire sur toute fiche programme.
    Objectifs à l'infinitif, un verbe d'action par ligne, trois à six.
-   Portage de docs/design-system/components/formation/ObjectivesPanel.jsx. */
+   Portage de docs/design-system/components/formation/ObjectivesPanel.jsx. Ajout du site :
+   `data-objectif` (numéro) sur chaque ligne, pour la mise en évidence par compétence. */
 interface Props {
   title?: string;
   intro?: string;
@@ -17,7 +18,7 @@ const { title = 'Objectifs pédagogiques', intro, items, class: className } = As
   {intro && <p class="viv-objectives__intro">{intro}</p>}
   <ul class="viv-objectives__list">
     {items.map((item, i) => (
-      <li>
+      <li data-objectif={i + 1}>
         <span class="viv-objectives__bullet" aria-hidden="true">
           {i + 1}
         </span>

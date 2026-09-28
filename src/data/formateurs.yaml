@@ -1,0 +1,23 @@
+# Formateurs : copie, sans reformulation, des fiches du design system
+# (docs/design-system/templates/support-formation/formateurs.md, qui fait foi). Aucune coordonnée
+# personnelle. Chaque groupe d'expertises est rattaché aux domaines de formation qu'il couvre : la
+# page d'une formation affiche le groupe de son domaine. `portrait` (facultatif) : image carrée dans
+# public/, prise avec l'accord de la personne ; à défaut, les initiales sur le dégradé de marque.
+- id: matthieu-juguet
+  nom: Matthieu JUGUET
+  fonction: Infographiste 3D, artiste technique et formateur
+  parcours:
+    - 'Formateur depuis 2021 : conception et animation de parcours pour adultes'
+    - Gestion de projets 3D et intégration d’IA en production depuis 2019
+    - Certification de formateur pour adultes (Cegos, 2023) · Master en gestion de projets multimédia
+  expertises:
+    - groupe: IA
+      domaines: [ia-generative]
+      items: [IA et automatisation, Intégration d’IA en production, Programmation Python]
+    - groupe: 3D
+      domaines: [preparation-donnees-3d, 3d-precalculee, 3d-temps-reel]
+      items: [Blender / Unreal Engine, Création d’environnements 3D, Réalité virtuelle]
+    - groupe: Graphisme et web
+      domaines: [graphisme-2d]
+      items: [Suite Adobe, Identité graphique, Webdesign]
+  langues: Formations en français et en anglais

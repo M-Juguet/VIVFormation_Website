@@ -1,7 +1,5 @@
 import { getCollection, getEntries, getEntry, type CollectionEntry } from 'astro:content';
 import type { BadgeTone } from '../components/ds/Badge.astro';
-import type { ProgramStep } from '../components/ds/ProgramSteps.astro';
-import { DEROULE } from '../config/site';
 
 export type Formation = CollectionEntry<'formations'>;
 type Ordonnable = { data: { ordre: number; label?: string; titre?: string } };
@@ -12,11 +10,43 @@ const parOrdre = (a: Ordonnable, b: Ordonnable) =>
 
 /** Formations publiées (les brouillons restent visibles en dev), triées. */
 export async function getFormations() {
-  const all = await getCollection(
-    'formations',
-    ({ data }) => import.meta.env.DEV || !data.brouillon,
-  );
-  return all.sort(parOrdre);
+  const all = await getCollection('formations');
+  await verifierFormations(all);
+  return all.filter(({ data }) => import.meta.env.DEV || !data.brouillon).sort(parOrdre);
+}
+
+/**
+ * Contrôles que le schéma de src/content.config.ts ne peut pas faire seul, brouillons compris :
+ * corps vide, référence préfixée par le code du domaine, référence unique. Une erreur fait échouer
+ * le build.
+ */
+async function verifierFormations(formations: Formation[]) {
+  const erreurs: string[] = [];
+  const references = new Map<string, string>();
+  for (const f of formations) {
+    const fichier = f.filePath ?? f.id;
+    if (f.body?.trim()) {
+      erreurs.push(`${fichier} : le corps doit rester vide, tout passe par le frontmatter.`);
+    }
+    const { code, label } = (await getEntry(f.data.domaine)).data;
+    if (!code) {
+      erreurs.push(
+        `${fichier} : le domaine « ${label} » n’a pas de code (src/data/domaines.yaml).`,
+      );
+    } else if (
+      !f.data.reference.startsWith(code) ||
+      !/^\d{2}$/.test(f.data.reference.slice(code.length))
+    ) {
+      erreurs.push(
+        `${fichier} : la référence ${f.data.reference} doit être ${code} + deux chiffres.`,
+      );
+    }
+    const doublon = references.get(f.data.reference);
+    if (doublon)
+      erreurs.push(`${fichier} : la référence ${f.data.reference} est déjà celle de ${doublon}.`);
+    references.set(f.data.reference, fichier);
+  }
+  if (erreurs.length) throw new Error(`Formations invalides :\n- ${erreurs.join('\n- ')}`);
 }
 
 /** Les classements, triés. */
@@ -38,23 +68,20 @@ export const formationUrl = (f: Formation) => `/formations/${f.id}/`;
 /* ---------- Mise en forme (règles d'écriture de la charte) ---------- */
 
 const pluriel = (n: number, mot: string) => `${n} ${mot}${n > 1 ? 's' : ''}`;
-const majuscule = (s: string) => s.charAt(0).toUpperCase() + s.slice(1);
 
 /** « 21 heures — 3 jours » */
 export const formatDuree = ({ heures, jours }: Formation['data']['duree']) =>
   `${pluriel(heures, 'heure')} — ${pluriel(jours, 'jour')}`;
-
-/** « 3 à 6 participants » */
-export const formatParticipants = ({ min, max }: Formation['data']['participants']) =>
-  min === max ? pluriel(min, 'participant') : `${min} à ${max} participants`;
 
 const euros = new Intl.NumberFormat('fr-FR', {
   style: 'currency',
   currency: 'EUR',
   maximumFractionDigits: 0,
 });
-/** « 1 400 € » (net de taxe), ou undefined si la formation est sur devis. */
-export const formatTarif = (tarif?: number) => (tarif ? euros.format(tarif) : undefined);
+/** « 1 900 € » (HT par personne, inter-entreprises), ou undefined si la formation est sur devis. */
+// Espace fine insécable (U+202F) d'Intl remplacée par une insécable : Playfair n'a pas ce glyphe.
+export const formatTarif = (tarif?: number) =>
+  tarif ? euros.format(tarif).replace(/\u202f/g, '\u00a0') : undefined;
 
 export const formatDate = (d: Date) =>
   d.toLocaleDateString('fr-FR', { day: 'numeric', month: 'long', year: 'numeric' });
@@ -67,10 +94,11 @@ export const statutTone = (statut: Formation['data']['statut']): BadgeTone =>
 /** Résout les classements d'une formation et prépare ce que cartes et fiches affichent. */
 export async function resolveFormation(formation: Formation) {
   const d = formation.data;
-  const [type, domaine, outils] = await Promise.all([
+  const [type, domaine, outils, formateur] = await Promise.all([
     getEntry(d.type),
     getEntry(d.domaine),
     getEntries(d.outils),
+    d.formateur ? getEntry(d.formateur) : undefined,
   ]);
 
   const badges: { label: string; tone: BadgeTone }[] = [
@@ -88,29 +116,17 @@ export async function resolveFormation(formation: Formation) {
     type,
     domaine,
     outils,
+    formateur,
     /** Repère de la carte : outil principal, sinon domaine (règle de la charte). */
     mark: outils[0]?.data.icone ?? domaine.data.icone,
     overline: `${type.data.label} · ${domaine.data.label}`,
     badges,
     duree: formatDuree(d.duree),
-    participants: formatParticipants(d.participants),
     tarif: formatTarif(d.tarif),
   };
 }
 
 export type FormationResolue = Awaited<ReturnType<typeof resolveFormation>>;
-
-/** Déroulé complet : cadrage téléphonique, une étape par journée, suivi. */
-export function programmeSteps(formation: Formation): ProgramStep[] {
-  const { programme, duree } = formation.data;
-  const heuresParJour = Math.round((duree.heures / duree.jours) * 10) / 10;
-  const journees = programme.map((jour, i) => ({
-    title: programme.length > 1 ? `Journée ${i + 1} — ${jour.titre}` : majuscule(jour.titre),
-    meta: `${pluriel(heuresParJour, 'heure')} — présentiel`,
-    body: jour.contenu,
-  }));
-  return [DEROULE.cadrage, ...journees, DEROULE.suivi];
-}
 
 /** Formations proches : même domaine d'abord, puis un outil en commun. */
 export function formationsProches(cible: FormationResolue, toutes: FormationResolue[], n = 3) {

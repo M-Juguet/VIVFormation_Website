@@ -110,7 +110,7 @@ const engagements = [
           <h2 class="display-md mt-2">Formations souvent demandées</h2>
         </div>
         <Button variant="secondary" href="/catalogue/" icon="arrow-right">
-          Voir les {compte(formations.length)}
+          {formations.length > 1 ? `Voir les ${compte(formations.length)}` : 'Voir le catalogue'}
         </Button>
       </div>
       <div class="viv-grid-cards">

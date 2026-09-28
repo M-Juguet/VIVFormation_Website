@@ -1,5 +1,8 @@
 # Domaines d'expertise : ce que la formation apprend à faire. Ils structurent l'accueil (cartes),
 # le premier filtre du catalogue et le pied de page (colonne « Formations »), dans l'ordre de `ordre`.
+# `code` : préfixe de la référence des formations du domaine (code + numéro sur deux chiffres, ex.
+# IAG01), repris par la fiche programme, le déroulé et le support. Codes établis : IAG et TRL. Un
+# domaine sans code ne peut pas encore recevoir de formation.
 - id: preparation-donnees-3d
   label: Préparation de données 3D
   icone: domaine-dataprep
@@ -14,6 +17,7 @@
   ordre: 2
 - id: 3d-temps-reel
   label: 3D temps réel
+  code: TRL
   icone: domaine-temps-reel
   description: Rendre une scène interactive, de la revue de design au configurateur produit.
   outilsTexte: Unreal Engine, Unity, VRED
@@ -26,6 +30,7 @@
   ordre: 4
 - id: ia-generative
   label: IA générative
+  code: IAG
   icone: sparkles
   description: Faire produire un modèle, vérifier ce qu’il produit et savoir ce qu’il ne faut pas lui confier.
   outilsTexte: ComfyUI, assistants conversationnels

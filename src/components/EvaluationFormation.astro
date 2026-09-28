@@ -1,0 +1,55 @@
+---
+/* Évaluation et validation d'une formation : quatre temps en cartes de verre sur la bande de
+   dégradé, reliés par des flèches sur grand écran. Textes communs à toutes les formations :
+   évaluation de la fiche TRL01, sanction reprise mot pour mot de
+   docs/design-system/templates/fiche-programme/REGLES.md, ligne du QCM reprise du support. */
+import Icon from './ds/Icon.astro';
+import type { IconName } from './ds/icons';
+
+interface Props {
+  /** Nombre d'objectifs pédagogiques, vérifiés par le QCM final. */
+  objectifs: number;
+}
+
+const { objectifs } = Astro.props;
+
+const temps: { icon: IconName; titre: string; texte: string; note?: string }[] = [
+  { icon: 'target', titre: 'Avant', texte: 'Évaluation des connaissances en début de parcours' },
+  { icon: 'monitor', titre: 'Pendant', texte: 'Exercices pratiques de mise en situation et quiz' },
+  {
+    icon: 'circle-check',
+    titre: 'À la fin',
+    texte: 'QCM de vérification des compétences acquises',
+    note: `Il vérifie l’atteinte des ${objectifs} objectifs pédagogiques.`,
+  },
+];
+---
+
+<ol class="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
+  {temps.map((t) => (
+    <li class="viv-glass relative flex flex-col gap-3 p-6">
+      <h3 class="heading-md flex items-center gap-2">
+        <Icon name={t.icon} />
+        {t.titre}
+      </h3>
+      <p class="body text-ink-muted">{t.texte}</p>
+      {t.note && <p class="body-sm text-ink-muted">{t.note}</p>}
+      <span
+        aria-hidden="true"
+        class="absolute top-1/2 -right-5 hidden -translate-y-1/2 text-ink-on-pastel lg:flex"
+      >
+        <Icon name="arrow-right" size={16} />
+      </span>
+    </li>
+  ))}
+  <li class="viv-glass flex flex-col gap-3 p-6">
+    <h3 class="heading-md flex items-center gap-2">
+      <Icon name="diploma" />
+      Validation
+    </h3>
+    <p class="body text-ink-muted">
+      Un <strong>certificat de réalisation</strong> est remis à chaque apprenant en fin de
+      formation.
+    </p>
+  </li>
+</ol>

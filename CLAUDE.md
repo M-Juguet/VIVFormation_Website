@@ -16,10 +16,11 @@ Site vitrine statique (Astro + Markdown + Tailwind v4) pour l'organisme de forma
 ## Contenu
 
 - Contenu et interface en **français**, vouvoiement, casse phrase.
-- Jamais : CPF, sessions au calendrier / « S'inscrire », distanciel, Qualiopi.
-- Formations : `src/content/formations/*.md` ou `.mdx` (corps = chapô). Classements : `src/data/*.yaml`. Schémas : `src/content.config.ts`. Mise en forme (durée, tarif, déroulé) : `src/lib/formations.ts`.
+- Jamais : CPF, sessions au calendrier / « S'inscrire », distanciel, Qualiopi, « notre salle » (formations chez le client uniquement : « dans vos locaux »). Tarifs : « 1 900 € HT/pers. ».
+- Formations : un fichier `src/content/formations/<slug>.md` par formation, source unique de la page du site et de la fiche programme, base du déroulé et du support. Lire `docs/format-formation.md` avant d'en créer ou d'en modifier une ; modèle `_modele.md` ; corps vide. Gabarits et règles des documents : `docs/design-system/templates/*/REGLES.md`.
+- Classements et formateurs : `src/data/*.yaml`. Schémas : `src/content.config.ts`. Contrôles croisés et mise en forme : `src/lib/formations.ts`. Page de formation : `src/pages/formations/[id].astro` et les composants `src/components/*Formation.astro` ; textes fixes dans `ModalitesFormation`, `EvaluationFormation` et `OrganiserFormation`.
 - Les formations `provisoire: true` sont des exemples à remplacer.
-- Autres valeurs provisoires, à ne pas reprendre comme réelles : le domaine `site` (`astro.config.mjs`) et `declarationActivite` (`src/config/site.ts`).
+- Valeurs provisoires, à ne pas reprendre comme réelles : le domaine `site` (`astro.config.mjs`), `SITE.linkedin` (`#`) et `SITE.email` (`formation@viv-formation.com`, non confirmée). Codes de domaine établis : `IAG` et `TRL` ; les autres restent à définir (`src/data/domaines.yaml`).
 
 ## Technique
 

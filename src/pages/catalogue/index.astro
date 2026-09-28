@@ -25,11 +25,12 @@ const rows: Row[] = [
 const texteRecherche = (f: (typeof formations)[number]) =>
   [
     f.formation.data.titre,
-    f.formation.data.resume,
+    f.formation.data.sousTitre,
     f.domaine.data.label,
     f.type.data.label,
     ...f.outils.map((o) => o.data.label),
     ...f.formation.data.objectifs,
+    ...f.formation.data.programme.map((p) => p.titre),
   ]
     .join(' ')
     .toLowerCase();
@@ -47,7 +48,7 @@ const texteRecherche = (f: (typeof formations)[number]) =>
       </h1>
       <p class="body-lg mb-10 max-w-[62ch] text-ink-muted">
         Conception 3D, graphisme 2D et IA générative. Les dates se fixent avec vous ; toutes les
-        sessions se tiennent en présentiel, dans vos locaux ou dans notre salle.
+        sessions se tiennent en présentiel, dans vos locaux.
       </p>
 
       <div id="filtres" class="viv-glass flex flex-col gap-4 p-5">
