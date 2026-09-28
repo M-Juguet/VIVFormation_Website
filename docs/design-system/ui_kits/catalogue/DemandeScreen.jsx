@@ -48,7 +48,7 @@ function DemandeScreen({ onBack }) {
                 hint="Entre 3 et 6 pour ce module"
                 error={invalid ? 'Indiquez un nombre entre 3 et 6.' : undefined}
               />
-              <Field label="Lieu envisagé" defaultValue="Nos locaux" hint="Vos locaux, notre salle, ou à préciser" />
+              <Field label="Lieu de la formation" hint="Adresse de vos locaux : la formation s'y tient." />
               <Field
                 label="Période envisagée et contraintes" multiline rows={4}
                 hint="Semaines possibles, versions installées, projets en cours"

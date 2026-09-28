@@ -25,7 +25,7 @@ function FicheScreen({ id, onBack, onDemande }) {
                   { icon: 'clock', label: f.duree },
                   { icon: 'niveau', label: 'Niveau : ' + f.niveau },
                   { icon: 'users', label: f.groupe },
-                  { icon: 'map-pin', label: 'Présentiel — vos locaux ou notre salle' },
+                  { icon: 'map-pin', label: 'Présentiel, dans vos locaux' },
                   { icon: 'target', label: 'Évaluation : quiz de fin de formation' }
                 ].map((r) => (
                   <li key={r.icon} style={{ display: 'flex', gap: 'var(--space-3)', alignItems: 'flex-start' }}>

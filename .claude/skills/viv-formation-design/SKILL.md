@@ -9,6 +9,7 @@ Le design system VIV Formation est intégré au projet :
 - **Cartes de fondations** : `docs/design-system/guidelines/*.card.html` (couleurs, type, espacement, mobile, mouvement, marque).
 - **Composants de référence** : `docs/design-system/components/**` (`.prompt.md` = quand et comment l'utiliser, `.d.ts` = props, `.jsx` = balisage d'origine). Leurs portages Astro sont dans `src/components/ds/`.
 - **UI kits** : `docs/design-system/ui_kits/` (catalogue, accueil, module web).
+- **Gabarits de documents** : `docs/design-system/templates/` — fiche programme, déroulé pédagogique, support de formation, chacun avec ses règles de rédaction (`REGLES.md`) ; fiches formateurs dans `templates/support-formation/formateurs.md`. Le fichier formation qui les alimente : `docs/format-formation.md`.
 - **Fichiers runtime** : `src/design-system/` (tokens CSS, `components.css`, fontes) — copie non modifiée, importée par `src/styles/global.css`.
 - **Logos** : `public/logos/*.svg`, via le composant `src/components/ds/Logo.astro`.
 
