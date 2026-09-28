@@ -24,11 +24,8 @@ const domaines = defineCollection({
   loader: donneesYaml('src/data/domaines.yaml'),
   schema: z.object({
     ...taxonomie,
-    /** Préfixe des références de formation du domaine : IAG → IAG01. Absent = pas encore de code. */
-    code: z
-      .string()
-      .regex(/^[A-Z0-9]{2,4}$/, 'code : 2 à 4 capitales ou chiffres')
-      .optional(),
+    /** Préfixe des références de formation du domaine : IAG → IAG01. */
+    code: z.string().regex(/^[A-Z0-9]{2,4}$/, 'code : 2 à 4 capitales ou chiffres'),
     icone,
     /** Texte de la carte du domaine sur l'accueil. */
     description: z.string(),

@@ -76,7 +76,7 @@ La référence est `docs/design-system/readme.md` (charte complète : couleurs, 
 
 ### Classements (`src/data/`)
 
-- **Domaine** (`domaines.yaml`) : le domaine d'expertise — Préparation de données 3D, 3D précalculée, 3D temps réel, Graphisme 2D, IA générative. Chaque domaine a sa carte sur l'accueil (`description`, `outilsTexte`) et structure le premier filtre du catalogue et la colonne « Formations » du pied de page. Son `code` préfixe la référence des formations (`IAG` → `IAG01`) ; codes établis : `IAG` (IA générative) et `TRL` (3D temps réel).
+- **Domaine** (`domaines.yaml`) : le domaine d'expertise — Préparation de données 3D, 3D précalculée, 3D temps réel, Graphisme 2D, IA générative. Chaque domaine a sa carte sur l'accueil (`description`, `outilsTexte`) et structure le premier filtre du catalogue et la colonne « Formations » du pied de page. Son `code` préfixe la référence des formations (`IAG` → `IAG01`) : `DPP` (préparation de données 3D), `PRC` (3D précalculée), `TRL` (3D temps réel), `GPH` (graphisme 2D), `IAG` (IA générative).
 - **Outil** (`outils.yaml`) : Blender, Unreal Engine, VRED, Unity, Illustrator, ComfyUI.
 - **Type** (`types.yaml`) : Module, Parcours pipeline, Sensibilisation.
 - **Formateur** (`formateurs.yaml`) : copie des fiches de `docs/design-system/templates/support-formation/formateurs.md`, qui fait foi (fonction, parcours, expertises par groupe de domaines, langues, portrait facultatif). La page d'une formation affiche les expertises du groupe de son domaine.

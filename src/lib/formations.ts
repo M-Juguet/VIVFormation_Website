@@ -28,12 +28,8 @@ async function verifierFormations(formations: Formation[]) {
     if (f.body?.trim()) {
       erreurs.push(`${fichier} : le corps doit rester vide, tout passe par le frontmatter.`);
     }
-    const { code, label } = (await getEntry(f.data.domaine)).data;
-    if (!code) {
-      erreurs.push(
-        `${fichier} : le domaine « ${label} » n’a pas de code (src/data/domaines.yaml).`,
-      );
-    } else if (
+    const { code } = (await getEntry(f.data.domaine)).data;
+    if (
       !f.data.reference.startsWith(code) ||
       !/^\d{2}$/.test(f.data.reference.slice(code.length))
     ) {

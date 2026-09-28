@@ -1,16 +1,17 @@
 # Domaines d'expertise : ce que la formation apprend à faire. Ils structurent l'accueil (cartes),
 # le premier filtre du catalogue et le pied de page (colonne « Formations »), dans l'ordre de `ordre`.
 # `code` : préfixe de la référence des formations du domaine (code + numéro sur deux chiffres, ex.
-# IAG01), repris par la fiche programme, le déroulé et le support. Codes établis : IAG et TRL. Un
-# domaine sans code ne peut pas encore recevoir de formation.
+# IAG01), repris par la fiche programme, le déroulé et le support. Obligatoire.
 - id: preparation-donnees-3d
   label: Préparation de données 3D
+  code: DPP
   icone: domaine-dataprep
   description: Importer une donnée CAO, la nettoyer et l’alléger pour l’exploiter en rendu comme en temps réel.
   outilsTexte: Blender, Unreal Engine, VRED
   ordre: 1
 - id: 3d-precalculee
   label: 3D précalculée
+  code: PRC
   icone: domaine-precalcule
   description: Modéliser, texturer, éclairer et calculer une image ou une animation de qualité finale.
   outilsTexte: Blender, Unreal Engine, VRED
@@ -24,6 +25,7 @@
   ordre: 3
 - id: graphisme-2d
   label: Graphisme 2D
+  code: GPH
   icone: domaine-graphisme-2d
   description: Tracer, mettre au net, composer et décliner une image vectorielle pour l’écran et l’impression.
   outilsTexte: Illustrator
