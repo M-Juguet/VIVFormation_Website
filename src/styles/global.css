@@ -136,10 +136,8 @@
     border-color: var(--action);
   }
 
-  /* Fiche formation : pastille du module en cours de lecture (ProgrammeFormation) et objectifs mis
-     en évidence par la compétence choisie (ObjectifsFormation). Changement de couleur seulement :
-     les objectifs ne bougent jamais. */
-  .viv-steps__dot,
+  /* Fiche formation : objectifs mis en évidence par la compétence choisie (ObjectifsFormation).
+     Changement de couleur seulement : les objectifs ne bougent jamais. */
   .viv-objectives__bullet {
     transition:
       background-color var(--motion-state) var(--motion-standard),
@@ -157,6 +155,24 @@
   .viv-objectives__list li[data-actif] .viv-objectives__bullet {
     background: var(--action);
     color: var(--on-action);
+  }
+
+  /* Programme (ProgrammeFormation) : dans l'index, le fil se remplit en couleur d'action (unie :
+     pas de dégradé vertical) jusqu'au module en cours de lecture, dont la pastille passe en couleur
+     d'action avec un halo. Couleur et ombre seulement : rien ne bouge. */
+  .viv-programme__rempli {
+    transition: height var(--motion-state) var(--motion-standard);
+  }
+  .viv-programme__lien .viv-steps__dot {
+    transition:
+      background-color var(--motion-state) var(--motion-standard),
+      color var(--motion-state) var(--motion-standard),
+      box-shadow var(--motion-state) var(--motion-standard);
+  }
+  .viv-programme__lien[aria-current] .viv-steps__dot {
+    background: var(--action);
+    color: var(--on-action);
+    box-shadow: 0 0 0 6px var(--surface-brand);
   }
 }
 

@@ -63,7 +63,7 @@ const sections = [
   { id: 'evaluation', label: 'Évaluation' },
   { id: 'deroulement', label: 'Déroulement' },
   ...(item.formateur ? [{ id: 'formateur', label: 'Formateur' }] : []),
-  { id: 'organiser', label: 'Tarifs et accès' },
+  { id: 'organiser', label: 'Tarifs' },
 ];
 
 // Mention du visuel de couverture : crédit et, pour un visuel d'IA, « Image générée avec <outil> ».
@@ -72,6 +72,12 @@ const mentionVisuel = [f.visuelCredit, f.visuelIA && `Image générée avec ${f.
   .join(' · ');
 
 const modules = f.programme.length;
+// Chiffres clés en tête du programme, tirés du fichier formation.
+const chiffresProgramme = [
+  { icon: 'box', label: `${modules} module${modules > 1 ? 's' : ''}` },
+  { icon: 'clock', label: item.duree },
+  { icon: 'map-pin', label: 'Présentiel, dans vos locaux' },
+] as const;
 const reference = `Référence ${f.reference} · version ${f.version} · programme révisé le ${formatDate(f.revision)}.`;
 ---
 
@@ -240,9 +246,16 @@ const reference = `Référence ${f.reference} · version ${f.version} · program
       <div class="mb-12 max-w-[720px]">
         <p class="overline text-ink-muted">Programme</p>
         <h2 class="display-md mt-2">Programme détaillé</h2>
-        <p class="body-lg mt-4 text-ink-muted">
-          {modules} module{modules > 1 ? 's' : ''}, {item.duree}, en présentiel dans vos locaux.
-        </p>
+        <ul class="mt-6 flex flex-wrap gap-x-8 gap-y-3">
+          {chiffresProgramme.map((c) => (
+            <li class="body-lg flex items-center gap-2 text-ink-muted">
+              <span class="flex text-action">
+                <Icon name={c.icon} />
+              </span>
+              {c.label}
+            </li>
+          ))}
+        </ul>
       </div>
       <ProgrammeFormation programme={f.programme} />
     </div>

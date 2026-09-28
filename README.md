@@ -38,7 +38,7 @@ src/
 │   ├── ContactForm.astro    # Formulaire → webhook n8n
 │   ├── BarreFormation.astro      # Fiche formation : barre collante (sections, tarif, action)
 │   ├── ObjectifsFormation.astro  #   objectifs reliés aux compétences visées
-│   ├── ProgrammeFormation.astro  #   programme détaillé en frise
+│   ├── ProgrammeFormation.astro  #   programme détaillé : index collant en frise et une carte par module
 │   ├── EvaluationFormation.astro #   évaluation et validation (textes fixes)
 │   ├── ModalitesFormation.astro  #   déroulement : méthodes, animation, accessibilité (textes fixes)
 │   ├── FormateurFormation.astro  #   qui anime (section affichée si la formation désigne un formateur)

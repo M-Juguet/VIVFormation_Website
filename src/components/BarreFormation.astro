@@ -27,10 +27,10 @@ const { titreCourt, tarif, sections, apres, avant } = Astro.props;
   inert
   class="pointer-events-none fixed inset-x-0 top-(--barre-top,88px) z-10 -translate-y-2 border-b border-(--glass-border) bg-(--glass-surface) opacity-0 shadow-(--shadow-sm) backdrop-blur-(--glass-blur) transition duration-(--motion-panel) ease-enter data-visible:pointer-events-auto data-visible:translate-y-0 data-visible:opacity-100 max-sm:bg-surface-raised max-sm:backdrop-blur-none"
 >
-  <div class="viv-wrap flex h-14 items-center gap-6">
+  <div class="viv-wrap flex h-14 items-center gap-4 lg:gap-5">
     <p class="heading-sm hidden shrink-0 lg:block">{titreCourt}</p>
     <nav aria-label="Sections de la formation" class="hidden min-w-0 flex-1 md:block">
-      <ul class="body-sm flex gap-5">
+      <ul class="body-sm flex gap-4">
         {sections.map((s) => (
           <li>
             <a
