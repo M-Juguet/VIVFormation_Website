@@ -1,9 +1,15 @@
 ---
-/* Objectifs pédagogiques et compétences visées, reliés : choisir une compétence met en évidence
-   les objectifs qui y mènent (changement de couleur, sans mouvement : les objectifs ne bougent
-   jamais). Sans JavaScript, les pastilles « Objectif N » portent déjà le lien. */
-import Badge from './ds/Badge.astro';
-import ObjectivesPanel from './ds/ObjectivesPanel.astro';
+/* Objectifs pédagogiques et compétences visées, reliés dans les deux sens. En haut, dans l'encart
+   des objectifs, des étiquettes numérotées qui s'enchaînent ; en bas, une carte par compétence avec
+   les numéros des objectifs qui y mènent, comme sur la fiche : le lien se lit sans survol ni script.
+   Grand écran : survoler un objectif ou une compétence montre ce qui lui est relié dans l'autre
+   zone (aperçu), le clic fixe la sélection, un second clic ou Échap revient au repos. Ce qui n'est
+   pas relié passe en encre atténuée : couleur seulement, jamais d'opacité (réservée au désactivé)
+   ni de mouvement (les objectifs ne bougent jamais).
+   Sous 900 px : compétences empilées ; toucher un élément ouvre un panneau par le bas qui liste ce
+   qui lui est relié. Un objectif sans compétence reste sans interaction.
+   Styles d'état dans global.css (`.viv-oc`). */
+import Button from './ds/Button.astro';
 
 interface Props {
   objectifs: string[];
@@ -11,56 +17,223 @@ interface Props {
 }
 
 const { objectifs, competences } = Astro.props;
+
+/** Indices des compétences alimentées par chaque objectif. */
+const liens = objectifs.map((_, i) =>
+  competences.flatMap((c, j) => (c.objectifs.includes(i + 1) ? [j] : [])),
+);
+
+const listeFr = new Intl.ListFormat('fr', { type: 'conjunction' });
+/** « Objectif 4 », « Objectifs 2 et 3 ». */
+const renvoi = (ns: number[]) =>
+  `${ns.length > 1 ? 'Objectifs' : 'Objectif'} ${listeFr.format(ns.map(String))}`;
 ---
 
-<div class="viv-split viv-split--even" data-objectifs-competences>
-  <ObjectivesPanel intro="À l’issue de la formation, vous serez capable de :" items={objectifs} />
-  <div>
-    <h3 class="heading-sm text-accent-deep">Compétences visées</h3>
-    <p class="body-sm mt-2 text-ink-muted">
-      Chaque compétence renvoie aux objectifs qui y mènent.{' '}
-      <span data-aide hidden>
-        Choisissez-en une pour les repérer dans la liste.
-      </span>
-    </p>
-    <ul class="mt-5 flex flex-col gap-3">
-      {competences.map((c) => (
-        <li>
-          <button
-            type="button"
-            data-objectifs={c.objectifs.join(' ')}
-            class="flex w-full cursor-pointer flex-col items-start gap-3 rounded-md border border-border bg-surface-raised p-4 text-left shadow-(--shadow-sm) transition-colors duration-(--motion-state) ease-standard hover:border-action aria-pressed:border-action aria-pressed:bg-surface-brand"
-          >
-            <span class="body text-ink">{c.libelle}</span>
-            <span class="flex flex-wrap gap-2">
+<div class="viv-oc" data-oc>
+  <div class="viv-objectives">
+    <h3 class="viv-objectives__title">Objectifs pédagogiques</h3>
+    <p class="viv-objectives__intro">À l’issue de la formation, vous serez capable de :</p>
+    <ol class="flex flex-wrap gap-3">
+      {objectifs.map((o, i) => {
+        const contenu = (
+          <>
+            <span class="viv-objectives__bullet" aria-hidden="true">
+              {i + 1}
+            </span>
+            <span data-oc-texte>{o}</span>
+          </>
+        );
+        return (
+          <li class="flex max-w-full">
+            {liens[i].length ? (
+              <button
+                type="button"
+                class="viv-oc__objectif"
+                data-oc-objectif={i + 1}
+                data-oc-liens={liens[i].join(' ')}
+              >
+                {contenu}
+              </button>
+            ) : (
+              <span class="viv-oc__objectif" data-oc-objectif={i + 1}>
+                {contenu}
+              </span>
+            )}
+          </li>
+        );
+      })}
+    </ol>
+  </div>
+
+  <h3 class="heading-sm mt-10 text-accent-deep md:text-center">Compétences visées</h3>
+  <p class="body-sm mt-2 text-ink-muted md:text-center">
+    Chaque compétence renvoie aux objectifs qui y mènent.{' '}
+    <span data-oc-aide hidden>
+      Choisissez un objectif ou une compétence pour voir ce qui les relie.
+    </span>
+  </p>
+  <ul class="mt-5 grid gap-4 sm:grid-cols-2 md:flex md:flex-wrap md:justify-center md:gap-6">
+    {competences.map((c, j) => (
+      <li class="flex md:max-w-[340px] md:flex-[1_1_240px]">
+        <button
+          type="button"
+          class="viv-card viv-oc__competence"
+          data-oc-competence={j}
+          data-oc-liens={c.objectifs.join(' ')}
+        >
+          <span class="heading-sm" data-oc-texte>
+            {c.libelle}
+          </span>
+          <span class="viv-oc__renvoi">
+            <span class="sr-only">{renvoi(c.objectifs)}</span>
+            <span aria-hidden="true" class="flex flex-wrap items-center gap-1.5">
+              <span class="body-sm mr-0.5">
+                {c.objectifs.length > 1 ? 'Objectifs' : 'Objectif'}
+              </span>
               {c.objectifs.map((n) => (
-                <Badge tone="gold">Objectif {n}</Badge>
+                <span class="viv-objectives__bullet" data-oc-numero={n}>
+                  {n}
+                </span>
               ))}
             </span>
-          </button>
-        </li>
-      ))}
-    </ul>
-  </div>
+          </span>
+        </button>
+      </li>
+    ))}
+  </ul>
+
+  <dialog class="viv-oc__panneau" data-oc-panneau aria-labelledby="oc-panneau-titre">
+    <div class="viv-oc__panneau-corps">
+      <div class="flex items-center justify-between gap-4">
+        <p class="overline text-ink-muted" data-oc-surtitre></p>
+        <Button variant="ghost" size="sm" icon="x" data-oc-fermer>
+          Fermer
+        </Button>
+      </div>
+      <p id="oc-panneau-titre" class="heading-md mt-1" data-oc-titre></p>
+      <p class="overline mt-6 text-accent-deep" data-oc-sous></p>
+      <ul class="mt-3 flex flex-col gap-3" data-oc-liste></ul>
+    </div>
+  </dialog>
 </div>
 
 <script>
-  for (const bloc of document.querySelectorAll<HTMLElement>('[data-objectifs-competences]')) {
-    const boutons = [...bloc.querySelectorAll<HTMLButtonElement>('button[data-objectifs]')];
-    const objectifs = [...bloc.querySelectorAll<HTMLElement>('[data-objectif]')];
-    bloc.querySelector('[data-aide]')?.removeAttribute('hidden');
+  const large = matchMedia('(min-width: 900px)');
 
-    const choisir = (actif: HTMLButtonElement | null) => {
-      for (const b of boutons) b.setAttribute('aria-pressed', String(b === actif));
-      const numeros = new Set(actif?.dataset.objectifs?.split(' ') ?? []);
-      for (const o of objectifs)
-        o.toggleAttribute('data-actif', numeros.has(o.dataset.objectif ?? ''));
+  for (const bloc of document.querySelectorAll<HTMLElement>('[data-oc]')) {
+    const objectifs = [...bloc.querySelectorAll<HTMLElement>('[data-oc-objectif]')];
+    const competences = [...bloc.querySelectorAll<HTMLElement>('[data-oc-competence]')];
+    const boutons = [...bloc.querySelectorAll<HTMLButtonElement>('button[data-oc-liens]')];
+    const numerosCartes = [
+      ...bloc.querySelectorAll<HTMLElement>('[data-oc-competence] [data-oc-numero]'),
+    ];
+    const panneau = bloc.querySelector<HTMLDialogElement>('[data-oc-panneau]')!;
+    const champ = (nom: string) => panneau.querySelector<HTMLElement>(`[data-oc-${nom}]`)!;
+    bloc.querySelector('[data-oc-aide]')?.removeAttribute('hidden');
+
+    const estObjectif = (el: HTMLElement) => el.dataset.ocObjectif !== undefined;
+    /** Éléments de l'autre zone reliés à un bouton. */
+    const relies = (b: HTMLElement) => {
+      const ids = (b.dataset.ocLiens ?? '').split(' ');
+      return estObjectif(b)
+        ? competences.filter((c) => ids.includes(c.dataset.ocCompetence ?? ''))
+        : objectifs.filter((o) => ids.includes(o.dataset.ocObjectif ?? ''));
     };
-    for (const b of boutons) {
-      b.setAttribute('aria-pressed', 'false');
-      b.addEventListener('click', () =>
-        choisir(b.getAttribute('aria-pressed') === 'true' ? null : b),
+
+    /* Grand écran : le survol montre un aperçu, le clic fixe la sélection. */
+    let epingle: HTMLElement | null = null;
+    let survol: HTMLElement | null = null;
+
+    const afficher = () => {
+      const source = large.matches ? (survol ?? epingle) : null;
+      const lies = new Set(source ? [source, ...relies(source)] : []);
+      const numeros = new Set(
+        objectifs.filter((o) => lies.has(o)).map((o) => o.dataset.ocObjectif),
       );
+      bloc.toggleAttribute('data-actif', source !== null);
+      for (const el of [...objectifs, ...competences]) {
+        el.toggleAttribute('data-lie', lies.has(el));
+        el.toggleAttribute('data-source', el === source);
+      }
+      // Dans une carte reliée, seuls les numéros des objectifs en cause passent en couleur d'action.
+      for (const n of numerosCartes) {
+        const carte = n.closest<HTMLElement>('[data-oc-competence]')!;
+        n.toggleAttribute('data-lie', lies.has(carte) && numeros.has(n.dataset.ocNumero));
+      }
+      if (large.matches)
+        for (const b of boutons) b.setAttribute('aria-pressed', String(b === epingle));
+    };
+
+    /* Petit écran : panneau par le bas qui liste ce qui est relié à l'élément touché. */
+    const copie = (el: HTMLElement) => {
+      const li = document.createElement('li');
+      li.className = el.className;
+      li.append(...[...el.childNodes].map((n) => n.cloneNode(true)));
+      return li;
+    };
+    const ouvrir = (b: HTMLElement) => {
+      const lies = relies(b);
+      const plusieurs = lies.length > 1;
+      const objectif = estObjectif(b);
+      champ('surtitre').textContent = objectif
+        ? `Objectif ${b.dataset.ocObjectif}`
+        : 'Compétence visée';
+      champ('titre').textContent = b.querySelector('[data-oc-texte]')?.textContent?.trim() ?? '';
+      champ('sous').textContent = objectif
+        ? plusieurs
+          ? 'Compétences visées'
+          : 'Compétence visée'
+        : plusieurs
+          ? 'Objectifs qui y mènent'
+          : 'Objectif qui y mène';
+      champ('liste').replaceChildren(...lies.map(copie));
+      panneau.showModal();
+    };
+    champ('fermer').addEventListener('click', () => panneau.close());
+    // Un appui hors du panneau (sur le voile) le ferme ; Échap aussi, nativement.
+    panneau.addEventListener('click', (e) => {
+      if (e.target === panneau) panneau.close();
+    });
+
+    for (const b of boutons) {
+      b.addEventListener('pointerenter', (e) => {
+        if (e.pointerType !== 'mouse') return;
+        survol = b;
+        afficher();
+      });
+      b.addEventListener('pointerleave', () => {
+        if (survol !== b) return;
+        survol = null;
+        afficher();
+      });
+      b.addEventListener('click', () => {
+        if (!large.matches) return ouvrir(b);
+        epingle = epingle === b ? null : b;
+        // Désélectionné sous le pointeur : retour au repos, sans attendre la sortie du survol.
+        survol = null;
+        afficher();
+      });
     }
+    addEventListener('keydown', (e) => {
+      if (e.key !== 'Escape' || !epingle) return;
+      epingle = null;
+      afficher();
+    });
+
+    // Changement de mode (rotation, fenêtre redimensionnée) : retour au repos.
+    const preparer = () => {
+      epingle = survol = null;
+      if (panneau.open) panneau.close();
+      for (const b of boutons) {
+        if (large.matches) b.removeAttribute('aria-haspopup');
+        else {
+          b.removeAttribute('aria-pressed');
+          b.setAttribute('aria-haspopup', 'dialog');
+        }
+      }
+      afficher();
+    };
+    large.addEventListener('change', preparer);
+    preparer();
   }
 </script>

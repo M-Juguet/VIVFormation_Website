@@ -136,25 +136,114 @@
     border-color: var(--action);
   }
 
-  /* Fiche formation : objectifs mis en évidence par la compétence choisie (ObjectifsFormation).
-     Changement de couleur seulement : les objectifs ne bougent jamais. */
-  .viv-objectives__bullet {
-    transition:
-      background-color var(--motion-state) var(--motion-standard),
-      color var(--motion-state) var(--motion-standard);
-  }
-  .viv-objectives__list li {
-    margin: calc(-1 * var(--space-1)) calc(-1 * var(--space-2));
-    padding: var(--space-1) var(--space-2);
-    border-radius: var(--radius-md);
-    transition: background-color var(--motion-state) var(--motion-standard);
-  }
-  .viv-objectives__list li[data-actif] {
+  /* Objectifs et compétences (ObjectifsFormation). Étiquette d'objectif au rayon des cartes : une
+     gélule sur une ligne, un rectangle arrondi quand le texte passe à la ligne. États en couleur
+     seulement, jamais en opacité (réservée au désactivé) ni en mouvement : reliés en surface-brand
+     et filet d'action, source cerclée, le reste en encre atténuée. */
+  .viv-oc__objectif {
+    display: inline-flex;
+    align-items: flex-start;
+    gap: var(--space-3);
+    padding: var(--space-2) var(--space-4);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
     background: var(--surface-raised);
+    color: var(--ink);
+    font: var(--text-body);
+    text-align: left;
   }
-  .viv-objectives__list li[data-actif] .viv-objectives__bullet {
+  .viv-oc__competence {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: var(--space-4);
+    width: 100%;
+    padding: var(--space-5);
+    text-align: left;
+  }
+  .viv-oc__renvoi {
+    color: var(--ink-muted);
+  }
+  :is(.viv-oc__objectif, .viv-oc__competence),
+  :is(.viv-oc__objectif, .viv-oc__competence) .viv-objectives__bullet {
+    transition:
+      color var(--motion-micro) var(--motion-standard),
+      background-color var(--motion-micro) var(--motion-standard),
+      border-color var(--motion-micro) var(--motion-standard),
+      box-shadow var(--motion-micro) var(--motion-standard);
+  }
+  button:is(.viv-oc__objectif, .viv-oc__competence) {
+    cursor: pointer;
+  }
+  button.viv-oc__objectif:hover {
+    border-color: var(--border-strong);
+  }
+  [data-oc][data-actif] :is(.viv-oc__objectif, .viv-oc__competence):not([data-lie]) {
+    color: var(--ink-subtle);
+  }
+  [data-oc][data-actif]
+    :is(.viv-oc__objectif, .viv-oc__competence):not([data-lie])
+    .viv-objectives__bullet {
+    background: var(--border);
+    color: var(--ink-muted);
+  }
+  :is(.viv-oc__objectif, .viv-oc__competence)[data-lie] {
+    background: var(--surface-brand);
+    border-color: var(--action);
+  }
+  .viv-oc__objectif[data-lie] .viv-objectives__bullet,
+  .viv-oc__competence .viv-objectives__bullet[data-lie] {
     background: var(--action);
     color: var(--on-action);
+  }
+  .viv-oc__objectif[data-source] {
+    box-shadow: 0 0 0 1px var(--action);
+  }
+  .viv-oc__competence[data-source] {
+    box-shadow:
+      0 0 0 1px var(--action),
+      var(--shadow-md);
+  }
+  @media (pointer: coarse) {
+    .viv-oc__objectif {
+      min-height: var(--touch-min);
+    }
+  }
+
+  /* Panneau des objectifs et compétences, sous 900 px : ouvert depuis le bas, comme le tiroir de
+     navigation l'est depuis le haut (8 px et un fondu, --motion-panel). Pas d'ombre empilée : les
+     cartes recopiées dedans restent à plat. */
+  .viv-oc__panneau {
+    inset: auto 0 0;
+    width: 100%;
+    max-width: none;
+    max-height: 85dvh;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    border-radius: var(--radius-xl) var(--radius-xl) 0 0;
+    background: var(--surface-raised);
+    color: var(--ink);
+    box-shadow: var(--shadow-lg);
+    overflow: auto;
+    overscroll-behavior: contain;
+  }
+  .viv-oc__panneau[open] {
+    animation: viv-oc-panneau var(--motion-panel) var(--motion-enter) both;
+  }
+  .viv-oc__panneau::backdrop {
+    background: color-mix(in srgb, var(--ink) 40%, transparent);
+    animation: viv-oc-voile var(--motion-panel) var(--motion-enter) both;
+  }
+  .viv-oc__panneau-corps {
+    padding: var(--space-5) var(--space-5) calc(var(--space-8) + env(safe-area-inset-bottom));
+  }
+  .viv-oc__panneau .viv-card {
+    box-shadow: none;
+  }
+  html:has(.viv-oc__panneau[open]) {
+    overflow: hidden;
   }
 
   /* Programme (ProgrammeFormation) : dans l'index, le fil se remplit en couleur d'action (unie :
@@ -173,6 +262,22 @@
     background: var(--action);
     color: var(--on-action);
     box-shadow: 0 0 0 6px var(--surface-brand);
+  }
+}
+
+@keyframes viv-oc-panneau {
+  from {
+    opacity: 0;
+    transform: translateY(var(--motion-shift));
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+@keyframes viv-oc-voile {
+  from {
+    opacity: 0;
   }
 }
 
