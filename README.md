@@ -93,6 +93,10 @@ Copier `src/content/formations/_modele.md`, puis remplir le frontmatter ; le cor
 
 Les textes communs à toutes les formations (méthodes pédagogiques, évaluation, modalités d'animation, délais d'accès, accessibilité, sanction) ne sont pas dans le fichier : ils sont repris mot pour mot de la fiche programme dans les composants `src/components/ModalitesFormation.astro`, `EvaluationFormation.astro` et `OrganiserFormation.astro`.
 
+### Qualité (accueil)
+
+Les sections « Gage de qualité » et « Indicateurs qualité » de l'accueil lisent `ENGAGEMENTS_QUALITE` et `INDICATEUR_SATISFACTION` dans `src/config/site.ts`. Après chaque session, reporter dans `INDICATEUR_SATISFACTION` la note moyenne réelle du questionnaire de satisfaction, sur 5 et toutes formations confondues (`note`), et la date du relevé (`releve`, AAAA-MM-JJ). Une note `null` affiche « Mesure en cours ». La mention de certification se placera en tête de la colonne latérale de « Gage de qualité », une fois le certificat obtenu (emplacement signalé par un commentaire dans `src/pages/index.astro`).
+
 ### Règles d'écriture (extrait de la charte)
 
 Vouvoiement ; casse phrase ; versions exactes ; durées écrites en toutes lettres ; aucun emoji. **Jamais** : CPF, sessions au calendrier ou « S'inscrire » (on écrit « Demander des dates » / « Demander un devis »), distanciel, « notre salle » (les formations se tiennent uniquement chez le client : « dans vos locaux »), mention Qualiopi. Tarifs au format « 1 900 € HT/pers. ».

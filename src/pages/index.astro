@@ -6,9 +6,16 @@ import FormationCard from '../components/FormationCard.astro';
 import Badge from '../components/ds/Badge.astro';
 import Button from '../components/ds/Button.astro';
 import Callout from '../components/ds/Callout.astro';
+import Card from '../components/ds/Card.astro';
 import Icon from '../components/ds/Icon.astro';
-import { ETAPES_ORGANISATION, SECTEURS } from '../config/site';
-import { getFormations, getTaxonomies, resolveFormation } from '../lib/formations';
+import {
+  ENGAGEMENTS_QUALITE,
+  ETAPES_ORGANISATION,
+  INDICATEUR_SATISFACTION,
+  SECTEURS,
+  SITE,
+} from '../config/site';
+import { formatDate, getFormations, getTaxonomies, resolveFormation } from '../lib/formations';
 
 const formations = await Promise.all((await getFormations()).map(resolveFormation));
 const { domaines } = await getTaxonomies();
@@ -19,6 +26,10 @@ const engagements = [
   { icon: 'clock', texte: 'De 7 à 35 heures selon le programme' },
   { icon: 'target', texte: 'Objectifs évalués au poste de travail' },
 ] as const;
+const { note, releve } = INDICATEUR_SATISFACTION;
+// Tracé Lucide v1.47.0 « star » (lucide.dev), absent de ICON_PATHS.
+const etoile =
+  '<path d="M11.525 2.295a.53.53 0 0 1 .95 0l2.31 4.679a2.123 2.123 0 0 0 1.595 1.16l5.166.756a.53.53 0 0 1 .294.904l-3.736 3.638a2.123 2.123 0 0 0-.611 1.878l.882 5.14a.53.53 0 0 1-.771.56l-4.618-2.428a2.122 2.122 0 0 0-1.973 0L6.396 21.01a.53.53 0 0 1-.77-.56l.881-5.139a2.122 2.122 0 0 0-.611-1.879L2.16 9.795a.53.53 0 0 1 .294-.906l5.165-.755a2.122 2.122 0 0 0 1.597-1.16z" />';
 ---
 
 <BaseLayout>
@@ -166,6 +177,100 @@ const engagements = [
           </li>
         ))}
       </ul>
+    </div>
+  </section>
+
+  <!-- Gage de qualité -->
+  <section id="qualite" class="viv-section bg-surface-sunken">
+    <div class="viv-wrap">
+      <div class="mb-10 max-w-[720px]">
+        <p class="overline text-ink-muted">Gage de qualité</p>
+        <h2 class="display-md mt-2">Un même cadre pour chaque formation</h2>
+        <p class="body-lg mt-4 text-ink-muted">
+          De la première demande à l’entretien de suivi, chaque formation suit les mêmes règles,
+          quels que soient le logiciel et la taille du groupe.
+        </p>
+      </div>
+      <div class="viv-split viv-split--aside">
+        <ul class="grid gap-6 sm:grid-cols-2">
+          {ENGAGEMENTS_QUALITE.map((e) => (
+            <li class="viv-card flex flex-col gap-3 p-6">
+              <h3 class="heading-md flex items-start gap-3">
+                <span class="flex pt-1 text-action">
+                  <Icon name={e.icone} path={e.trace} />
+                </span>
+                {e.titre}
+              </h3>
+              <p class="body text-ink-muted">{e.texte}</p>
+            </li>
+          ))}
+        </ul>
+        <div class="flex flex-col gap-6">
+          {/* La mention de certification (marque, numéro de certificat, catégorie d'action) se place
+              ici, en tête de colonne, une fois le certificat obtenu — jamais avant (charte). */}
+          <Callout tone="info" title="Accessibilité">
+            <p>
+              Un responsable handicap étudie avec vous, avant la session, les adaptations utiles à
+              chaque participant.
+            </p>
+            <p class="mt-2">
+              <strong>{SITE.referentHandicap.nom}</strong>,{' '}
+              <a href={`mailto:${SITE.referentHandicap.email}`}>
+                <span class="whitespace-nowrap">{SITE.referentHandicap.email}</span>
+              </a>
+            </p>
+          </Callout>
+          <Card title="Réclamations">
+            <p>
+              Un problème pendant une session, une réclamation : écrivez-nous depuis le formulaire
+              de contact. Chaque signalement est enregistré, reçoit une réponse et sert à améliorer
+              nos formations.
+            </p>
+            <a
+              href="/contact/?sujet=dysfonctionnement"
+              class="body mt-4 flex items-center gap-2 text-action no-underline hover:text-action-hover"
+            >
+              Signaler un problème <Icon name="arrow-right" size={16} />
+            </a>
+          </Card>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Indicateurs qualité : bande sombre -->
+  <section id="indicateurs" class="viv-section bg-surface-sunken text-ink" data-theme="sombre">
+    <div class="viv-wrap viv-split viv-split--aside items-center">
+      <div>
+        <p class="overline text-ink-muted">Indicateurs qualité</p>
+        <h2 class="display-md mt-2 mb-4">Ce que vous pensez de nos formations</h2>
+        <p class="body-lg max-w-[60ch] text-ink-muted">
+          Chaque session se termine par un questionnaire de satisfaction. Nous publions la note
+          moyenne de l’ensemble de nos formations et la mettons à jour après chaque session.
+        </p>
+      </div>
+      <dl class="viv-glass flex flex-col gap-3 p-6">
+        <dt class="heading-md flex items-start gap-3">
+          <span class="flex pt-1 text-action">
+            <Icon path={etoile} />
+          </span>
+          Satisfaction des participants
+        </dt>
+        {note === null ? (
+          <dd class="heading-lg">Mesure en cours</dd>
+        ) : (
+          <dd class="flex items-baseline gap-2">
+            <span class="display-lg text-accent-deep">
+              {note.toLocaleString('fr-FR', { maximumFractionDigits: 1 })}
+            </span>
+            <span class="heading-md">/ 5</span>
+          </dd>
+        )}
+        <dd class="body-sm text-ink-muted">
+          Note moyenne sur 5, toutes formations confondues.
+          {releve && ` Résultat au ${formatDate(new Date(releve))}.`}
+        </dd>
+      </dl>
     </div>
   </section>
 
