@@ -134,15 +134,15 @@ Production : **https://formation.viv-prod.com**, servi par nginx sur le VPS (Deb
 
 Settings → Secrets and variables → Actions.
 
-| Nom                              | Type     | Valeur                                                                                                           |
-| -------------------------------- | -------- | ---------------------------------------------------------------------------------------------------------------- |
-| `DEPLOY_SSH_KEY`                 | secret   | Clé privée de déploiement (ed25519), lignes `BEGIN` et `END` comprises                                           |
-| `DEPLOY_HOST`                    | variable | `formation.viv-prod.com`                                                                                         |
-| `DEPLOY_USER`                    | variable | `viv-deploy`                                                                                                     |
-| `DEPLOY_PATH`                    | variable | `/home/user/formation/html` (chemin absolu, trois niveaux au moins : `--delete` y supprime les anciens fichiers) |
-| `DEPLOY_KNOWN_HOSTS`             | variable | Empreintes SSH du serveur, lues sur le VPS (voir plus bas)                                                       |
-| `DEPLOY_PORT`                    | variable | Port SSH, seulement s'il diffère de 22                                                                           |
-| `PUBLIC_N8N_CONTACT_WEBHOOK_URL` | variable | URL du webhook n8n, quand il sera en service (intégrée au build, visible dans le navigateur)                     |
+| Nom                              | Type     | Valeur                                                                                                          |
+| -------------------------------- | -------- | --------------------------------------------------------------------------------------------------------------- |
+| `DEPLOY_SSH_KEY`                 | secret   | Clé privée de déploiement (ed25519), lignes `BEGIN` et `END` comprises                                          |
+| `DEPLOY_HOST`                    | variable | `formation.viv-prod.com`                                                                                        |
+| `DEPLOY_USER`                    | variable | `viv-deploy`                                                                                                    |
+| `DEPLOY_PATH`                    | variable | `/home/user/formation/www` (chemin absolu, trois niveaux au moins : `--delete` y supprime les anciens fichiers) |
+| `DEPLOY_KNOWN_HOSTS`             | variable | Empreintes SSH du serveur, lues sur le VPS (voir plus bas)                                                      |
+| `DEPLOY_PORT`                    | variable | Port SSH, seulement s'il diffère de 22                                                                          |
+| `PUBLIC_N8N_CONTACT_WEBHOOK_URL` | variable | URL du webhook n8n, quand il sera en service (intégrée au build, visible dans le navigateur)                    |
 
 ### Préparer le VPS (une fois)
 
@@ -151,7 +151,7 @@ Commandes lancées par un utilisateur qui a `sudo` (sans `sudo` si vous êtes `r
 ```bash
 sudo apt update && sudo apt install -y rsync
 sudo adduser --disabled-password --comment "Deploiement du site VIV Formation" viv-deploy
-sudo mkdir -p /home/user/formation/html && sudo chown -R viv-deploy:viv-deploy /home/user/formation/html
+sudo mkdir -p /home/user/formation/www && sudo chown -R viv-deploy:viv-deploy /home/user/formation/www
 sudo chmod o+x /home/user /home/user/formation   # traversée pour viv-deploy et nginx (www-data)
 
 # Clé de déploiement, réservée à GitHub Actions (« restrict » : ni terminal ni redirection de ports)
@@ -178,7 +178,7 @@ Le serveur du sous-domaine sert directement les fichiers (pas de `proxy_pass`) :
 server {
     server_name formation.viv-prod.com;
     # listen 443 ssl + certificats : gérés par certbot
-    root /home/user/formation/html;
+    root /home/user/formation/www;
     index index.html;
 
     location / {
