@@ -120,3 +120,79 @@ Vouvoiement ; casse phrase ; versions exactes ; durées écrites en toutes lettr
 ```
 
 `sujet` ∈ `dates` | `devis` | `information` | `dysfonctionnement`. Les paramètres d'URL `?sujet=` et `?formation=` pré-remplissent le formulaire. Le webhook doit autoriser l'origine du site (CORS) et répondre en 2xx.
+
+## Déploiement
+
+Production : **https://formation.viv-prod.com**, servi par nginx sur le VPS (Debian). Le VPS n'a ni Node ni le code source : GitHub Actions construit le site et envoie le dossier `dist/` par rsync + SSH.
+
+- **Mettre à jour le site** : pousser sur `main`. Le job `build` (formatage, `astro check`, build) puis le job `deploy` s'enchaînent ; un build en échec n'est jamais déployé, les pull requests sont construites sans être déployées.
+- **Redéployer sans commit** (après un changement de variable, par exemple) : onglet Actions → CI → _Run workflow_ sur `main`.
+- **Revenir en arrière** : `git revert` du commit en cause, puis push.
+- Le job `deploy` est ignoré tant que la variable `DEPLOY_HOST` n'existe pas.
+
+### Réglages GitHub
+
+Settings → Secrets and variables → Actions.
+
+| Nom                              | Type     | Valeur                                                                                                           |
+| -------------------------------- | -------- | ---------------------------------------------------------------------------------------------------------------- |
+| `DEPLOY_SSH_KEY`                 | secret   | Clé privée de déploiement (ed25519), lignes `BEGIN` et `END` comprises                                           |
+| `DEPLOY_HOST`                    | variable | `formation.viv-prod.com`                                                                                         |
+| `DEPLOY_USER`                    | variable | `viv-deploy`                                                                                                     |
+| `DEPLOY_PATH`                    | variable | `/home/user/formation/html` (chemin absolu, trois niveaux au moins : `--delete` y supprime les anciens fichiers) |
+| `DEPLOY_KNOWN_HOSTS`             | variable | Empreintes SSH du serveur, lues sur le VPS (voir plus bas)                                                       |
+| `DEPLOY_PORT`                    | variable | Port SSH, seulement s'il diffère de 22                                                                           |
+| `PUBLIC_N8N_CONTACT_WEBHOOK_URL` | variable | URL du webhook n8n, quand il sera en service (intégrée au build, visible dans le navigateur)                     |
+
+### Préparer le VPS (une fois)
+
+Commandes lancées par un utilisateur qui a `sudo` (sans `sudo` si vous êtes `root`) :
+
+```bash
+sudo apt update && sudo apt install -y rsync
+sudo adduser --disabled-password --comment "Deploiement du site VIV Formation" viv-deploy
+sudo mkdir -p /home/user/formation/html && sudo chown -R viv-deploy:viv-deploy /home/user/formation/html
+sudo chmod o+x /home/user /home/user/formation   # traversée pour viv-deploy et nginx (www-data)
+
+# Clé de déploiement, réservée à GitHub Actions (« restrict » : ni terminal ni redirection de ports)
+ssh-keygen -t ed25519 -N "" -C "github-actions viv-formation" -f ~/viv-deploy-cle
+sudo install -d -m 700 -o viv-deploy -g viv-deploy /home/viv-deploy/.ssh
+echo "restrict $(cat ~/viv-deploy-cle.pub)" | sudo tee /home/viv-deploy/.ssh/authorized_keys >/dev/null
+sudo chown viv-deploy:viv-deploy /home/viv-deploy/.ssh/authorized_keys && sudo chmod 600 /home/viv-deploy/.ssh/authorized_keys
+
+# Empreintes pour DEPLOY_KNOWN_HOSTS (remplacer PORT si SSH n'écoute pas sur 22)
+PORT=22; H=formation.viv-prod.com; [ "$PORT" = 22 ] || H="[$H]:$PORT"; for f in /etc/ssh/ssh_host_*_key.pub; do echo "$H $(cut -d' ' -f1,2 "$f")"; done
+
+# Clé privée à coller dans le secret DEPLOY_SSH_KEY, puis à effacer du VPS
+cat ~/viv-deploy-cle
+shred -u ~/viv-deploy-cle && rm ~/viv-deploy-cle.pub
+```
+
+Si `sshd` limite les connexions (`AllowUsers`, `AllowGroups`, pare-feu filtrant les adresses), `viv-deploy` et les serveurs de GitHub doivent y être autorisés.
+
+### nginx
+
+Le serveur du sous-domaine sert directement les fichiers (pas de `proxy_pass`) :
+
+```nginx
+server {
+    server_name formation.viv-prod.com;
+    # listen 443 ssl + certificats : gérés par certbot
+    root /home/user/formation/html;
+    index index.html;
+
+    location / {
+        try_files $uri $uri/ $uri.html =404;
+    }
+
+    # Fichiers versionnés par Astro : cache long sans risque
+    location /_astro/ {
+        add_header Cache-Control "public, max-age=31536000, immutable";
+    }
+
+    error_page 404 /404.html;
+
+    # Tant que le contenu est provisoire : pas d'indexation (à retirer à l'ouverture)
+    add_header X-Robots-Tag "noindex, nofollow" always;
+}
+```

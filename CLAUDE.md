@@ -21,13 +21,14 @@ Site vitrine statique (Astro + Markdown + Tailwind v4) pour l'organisme de forma
 - Classements et formateurs : `src/data/*.yaml`. Schémas : `src/content.config.ts`. Contrôles croisés et mise en forme : `src/lib/formations.ts`. Page de formation : `src/pages/formations/[id].astro` et les composants `src/components/*Formation.astro` ; textes fixes dans `ModalitesFormation`, `EvaluationFormation` et `OrganiserFormation`.
 - Les formations `provisoire: true` sont des exemples à remplacer.
 - Indicateur qualité de l'accueil (`INDICATEUR_SATISFACTION`, `src/config/site.ts`) : note de satisfaction réelle fournie par l'organisme, jamais estimée ; `null` = « Mesure en cours ». Pas de nombre d'apprenants.
-- Valeurs provisoires, à ne pas reprendre comme réelles : le domaine `site` (`astro.config.mjs`), `SITE.linkedin` (`#`) et `SITE.email` (`formation@viv-formation.com`, non confirmée).
+- Valeurs provisoires, à ne pas reprendre comme réelles : `SITE.linkedin` (`#`) et `SITE.email` (`formation@viv-formation.com`, non confirmée). Domaine de production : `https://formation.viv-prod.com` (`site`, `astro.config.mjs`).
 
 ## Technique
 
 - Site 100 % statique : pas d'adapter serveur. Interactions (filtres du catalogue, formulaire, tiroir mobile) en scripts vanilla dans les composants.
 - Serveur de dev : configuration `astro-dev` de `.claude/launch.json` (aperçu de l'app Claude), à la place du `astro dev --background` d'AGENTS.md. Un seul serveur à la fois (Astro pose un verrou).
 - Avant de livrer : `npm run format` puis `npm run build` (inclut `astro check`). La CI GitHub (`.github/workflows/ci.yml`) rejoue `format:check` et `build` à chaque push sur `main` et sur les PR.
+- Déploiement : après un push sur `main`, la CI envoie `dist/` sur le VPS par rsync + SSH (réglages et préparation du VPS : README, « Déploiement »). Pas de Node sur le VPS.
 
 ## n8n
 

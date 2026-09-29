@@ -4,6 +4,8 @@ on:
   push:
     branches: [main]
   pull_request:
+  # Bouton « Run workflow » de l'onglet Actions : redéploie main sans nouveau commit.
+  workflow_dispatch:
 
 jobs:
   build:
@@ -17,3 +19,54 @@ jobs:
       - run: npm ci
       - run: npm run format:check
       - run: npm run build
+        env:
+          # Intégrée au site au moment du build (vide tant que le webhook n'est pas en service).
+          PUBLIC_N8N_CONTACT_WEBHOOK_URL: ${{ vars.PUBLIC_N8N_CONTACT_WEBHOOK_URL }}
+      - if: github.event_name != 'pull_request' && github.ref == 'refs/heads/main'
+        uses: actions/upload-artifact@v7
+        with:
+          name: site
+          path: dist
+
+  # Envoi de dist/ sur le VPS par rsync + SSH (README, « Déploiement »). Ignoré tant que la
+  # variable DEPLOY_HOST n'est pas définie dans le dépôt.
+  deploy:
+    needs: build
+    if: github.event_name != 'pull_request' && github.ref == 'refs/heads/main' && vars.DEPLOY_HOST != ''
+    runs-on: ubuntu-latest
+    environment:
+      name: production
+      url: https://formation.viv-prod.com
+    concurrency:
+      group: deploy-production
+      cancel-in-progress: false
+    steps:
+      - uses: actions/download-artifact@v8
+        with:
+          name: site
+          path: dist
+      - name: Clé SSH et empreinte du serveur
+        env:
+          SSH_KEY: ${{ secrets.DEPLOY_SSH_KEY }}
+          KNOWN_HOSTS: ${{ vars.DEPLOY_KNOWN_HOSTS }}
+        run: |
+          install -m 700 -d ~/.ssh
+          printf '%s\n' "$SSH_KEY" > ~/.ssh/deploy
+          chmod 600 ~/.ssh/deploy
+          printf '%s\n' "$KNOWN_HOSTS" > ~/.ssh/known_hosts
+      - name: Envoi sur le VPS
+        env:
+          DEPLOY_HOST: ${{ vars.DEPLOY_HOST }}
+          DEPLOY_USER: ${{ vars.DEPLOY_USER }}
+          DEPLOY_PATH: ${{ vars.DEPLOY_PATH }}
+          DEPLOY_PORT: ${{ vars.DEPLOY_PORT || '22' }}
+        run: |
+          # --delete supprime ce qui n'est plus dans dist/ : refus d'une racine ou d'un dossier
+          # personnel entier, le chemin doit compter au moins trois niveaux (/home/user/site).
+          case "$DEPLOY_PATH" in
+            /*/*/?*) ;;
+            *) echo "::error::DEPLOY_PATH : chemin absolu d'au moins trois niveaux attendu (reçu : « $DEPLOY_PATH »)"; exit 1 ;;
+          esac
+          rsync -rlpz --checksum --delete-delay --delay-updates --chmod=D755,F644 \
+            -e "ssh -i ~/.ssh/deploy -p $DEPLOY_PORT -o IdentitiesOnly=yes -o StrictHostKeyChecking=yes" \
+            dist/ "$DEPLOY_USER@$DEPLOY_HOST:${DEPLOY_PATH%/}/"
