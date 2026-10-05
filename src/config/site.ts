@@ -12,10 +12,10 @@ export const SITE = {
     'Formations professionnelles à la conception 3D, au graphisme 2D et à l’IA générative : Blender, Unreal Engine, VRED, Unity, Illustrator. En présentiel, dans vos locaux.',
   locale: 'fr-FR',
   lang: 'fr',
-  // Adresse de contact et d'inscription NON CONFIRMÉE (celle des fiches programme) : à mettre à jour
-  // ici, dans les CGV et dans le design system dès qu'elle est confirmée ou remplacée.
-  email: 'formation@viv-formation.com',
-  adresse: { rue: '14 rue de Mantes', codePostal: '92700', ville: 'Colombes' },
+  // Adresse de contact et d'inscription (pied de page, contact, délais d'accès). En cas de
+  // changement, la reporter aussi dans les CGV (annulation) et dans le design system (fiches).
+  email: 'formation@viv-prod.com',
+  adresse: { rue: '14-30 rue de Mantes', codePostal: '92700', ville: 'Colombes' },
   // TODO : adresse réelle de la page LinkedIn de l'organisme.
   linkedin: '#',
   declarationActivite: '11923083592',
@@ -132,7 +132,7 @@ export const ENGAGEMENTS_QUALITE: ({ titre: string; texte: string } & Repere)[] 
  * Section « Indicateurs qualité » de l'accueil : indicateurs de résultats, toutes formations
  * confondues (indicateur 2 du référentiel Qualiopi), tirés du questionnaire de satisfaction de fin
  * de session. Valeurs relevées, jamais estimées ni arrondies à la hausse : `null` affiche « Mesure en
- * cours ». À mettre à jour après chaque session, avec la date du relevé (`releve`, AAAA-MM-JJ).
+ * cours ». À mettre à jour chaque année, avec la date du relevé (`releve`, AAAA-MM-JJ).
  * Pas de nombre de participants : il n'est pas significatif à ce stade.
  */
 export const INDICATEURS_QUALITE: {

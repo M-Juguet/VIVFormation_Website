@@ -22,7 +22,7 @@ Site vitrine statique (Astro + Markdown + Tailwind v4) pour l'organisme de forma
 - Les formations `provisoire: true` sont des exemples à remplacer.
 - Fiche programme PDF d'une formation : `public/programmes/<slug>.pdf` ; sans fichier, pas de bouton « Télécharger le programme ».
 - Indicateurs qualité de l'accueil (`INDICATEURS_QUALITE`, `src/config/site.ts`) : satisfaction sur 5 et taux de recommandation réels, fournis par l'organisme, jamais estimés ; `null` = « Mesure en cours ». Pas de nombre d'apprenants.
-- Valeurs provisoires, à ne pas reprendre comme réelles : `SITE.linkedin` (`#`) et `SITE.email` (`formation@viv-formation.com`, non confirmée). Domaine de production : `https://formation.viv-prod.com` (`site`, `astro.config.mjs`).
+- Valeur provisoire, à ne pas reprendre comme réelle : `SITE.linkedin` (`#`). Coordonnées de l'organisme (`SITE`) : 14-30 rue de Mantes, 92700 Colombes ; `formation@viv-prod.com`. Le siège social des mentions légales et des CGV (« 14 rue de Mantes ») reste inchangé en attendant la confirmation de la direction : ne pas l'aligner. Domaine de production : `https://formation.viv-prod.com` (`site`, `astro.config.mjs`).
 
 ## Technique
 

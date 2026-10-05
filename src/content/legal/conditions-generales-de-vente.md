@@ -42,7 +42,7 @@ Si le client bénéficie d’un financement par un OPCO, il doit faire une deman
 
 ### Conditions de report et d’annulation d’une séance de formation
 
-L’annulation d’une séance de formation est possible, à condition de le faire au moins 10 jours calendaires avant le jour et l’heure du début de la formation. Toute annulation doit faire l’objet d’une notification par e-mail à l’adresse <formation@viv-formation.com>. En cas d’annulation entre 4 et 10 jours ouvrables avant la date de la formation, le client est tenu de payer une pénalité d’annulation, à hauteur de 10 % du coût total initial de la formation. En cas d’annulation moins de 3 jours ouvrables avant le début de la formation, une pénalité d’annulation correspondant à 50 % du coût total initial sera facturée au client.
+L’annulation d’une séance de formation est possible, à condition de le faire au moins 10 jours calendaires avant le jour et l’heure du début de la formation. Toute annulation doit faire l’objet d’une notification par e-mail à l’adresse <formation@viv-prod.com>. En cas d’annulation entre 4 et 10 jours ouvrables avant la date de la formation, le client est tenu de payer une pénalité d’annulation, à hauteur de 10 % du coût total initial de la formation. En cas d’annulation moins de 3 jours ouvrables avant le début de la formation, une pénalité d’annulation correspondant à 50 % du coût total initial sera facturée au client.
 
 La demande de report de sa participation à une formation peut être effectuée par le client, à condition d’adresser une demande écrite à l’organisme de formation dans un délai de 10 jours avant la date de la formation.
 

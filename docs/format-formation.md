@@ -75,7 +75,3 @@ Les **méthodes pédagogiques** et l'**évaluation** (avant, pendant, à la fin)
 - **Fiche programme** : tous les champs sauf ceux propres au site. Ligne de référence : `<reference>-PRO • Révisé le : <mois année> • Version : <version> • Déclaration d'activité : 11923083592`.
 - **Déroulé pédagogique** : `<reference>-DP` ; `titre`, `sousTitre` (objectif général), `public`, `prerequis`, `objectifs` (mêmes numéros), `formateur`, `duree` ; chaque partie de `programme` est un module (même numéro, même titre), que le déroulé complète par son jour, sa durée et ses séquences.
 - **Support de formation** : `<reference>-SU` ; `sousTitre` et `competences` (slide 2), `public` et `prerequis` avec l'équipement (slide 3), `objectifs` (slide 4), modules de `programme` (slide 5 et ouvertures de module), `formateur` (slide 9).
-
-## Données en attente de confirmation
-
-- **Adresse de contact et d'inscription** `formation@viv-formation.com` : non confirmée.
