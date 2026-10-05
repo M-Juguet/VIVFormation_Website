@@ -16,10 +16,11 @@ Site vitrine statique (Astro + Markdown + Tailwind v4) pour l'organisme de forma
 ## Contenu
 
 - Contenu et interface en **français**, vouvoiement, casse phrase.
-- Jamais : CPF, sessions au calendrier / « S'inscrire », distanciel, Qualiopi, « notre salle » (formations chez le client uniquement : « dans vos locaux »). Tarifs : « 1 900 € HT/pers. ».
+- Jamais : CPF, sessions au calendrier / « S'inscrire », distanciel, Qualiopi, « notre salle » (formations chez le client uniquement : « dans vos locaux »). Tarifs : « 1 900 € HT/pers. » ; toute mention du tarif inter-entreprises s'accompagne du tarif intra-entreprise (« sur devis »). Pas de tarif sur les cartes du catalogue ni dans la barre collante de la fiche.
 - Formations : un fichier `src/content/formations/<slug>.md` par formation, source unique de la page du site et de la fiche programme, base du déroulé et du support. Lire `docs/format-formation.md` avant d'en créer ou d'en modifier une ; modèle `_modele.md` ; corps vide. Gabarits et règles des documents : `docs/design-system/templates/*/REGLES.md`.
 - Classements et formateurs : `src/data/*.yaml`. Schémas : `src/content.config.ts`. Contrôles croisés et mise en forme : `src/lib/formations.ts`. Page de formation : `src/pages/formations/[id].astro` et les composants `src/components/*Formation.astro` ; textes fixes dans `ModalitesFormation`, `EvaluationFormation` et `OrganiserFormation`.
 - Les formations `provisoire: true` sont des exemples à remplacer.
+- Fiche programme PDF d'une formation : `public/programmes/<slug>.pdf` ; sans fichier, pas de bouton « Télécharger le programme ».
 - Indicateurs qualité de l'accueil (`INDICATEURS_QUALITE`, `src/config/site.ts`) : satisfaction sur 5 et taux de recommandation réels, fournis par l'organisme, jamais estimés ; `null` = « Mesure en cours ». Pas de nombre d'apprenants.
 - Valeurs provisoires, à ne pas reprendre comme réelles : `SITE.linkedin` (`#`) et `SITE.email` (`formation@viv-formation.com`, non confirmée). Domaine de production : `https://formation.viv-prod.com` (`site`, `astro.config.mjs`).
 

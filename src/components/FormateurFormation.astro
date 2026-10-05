@@ -1,20 +1,18 @@
 ---
 /* Qui anime : section dédiée au formateur, affichée seulement quand la formation en désigne un.
-   À gauche, le motif de couverture de la marque et un médaillon (portrait fourni, sinon initiales
-   sur le dégradé). À droite, la fiche recopiée de formateurs.md : nom (Playfair, réservé aux noms
-   de personnes), fonction, parcours, expertises du domaine de la formation, langues. */
+   Un tiers / deux tiers : à gauche, le médaillon (portrait fourni, sinon initiales sur le dégradé),
+   de même taille dans les deux cas ; à droite, la fiche recopiée de formateurs.md : nom (Playfair,
+   réservé aux noms de personnes), fonction, parcours, expertises du domaine de la formation,
+   langues. Sous 900 px, le médaillon passe au-dessus de la fiche. */
 import type { CollectionEntry } from 'astro:content';
-import CoverMotif from './CoverMotif.astro';
 
 interface Props {
   formateur: CollectionEntry<'formateurs'>;
   /** id du domaine de la formation : choisit le groupe d'expertises affiché. */
   domaine: string;
-  /** Couleur de fond de la section, pour les découpes du motif et le liseré du médaillon. */
-  fond?: string;
 }
 
-const { formateur, domaine, fond = 'var(--surface)' } = Astro.props;
+const { formateur, domaine } = Astro.props;
 const { nom, fonction, parcours, expertises, langues, portrait } = formateur.data;
 const expertisesDuDomaine = expertises.find((g) => g.domaines.some((d) => d.id === domaine));
 const initiales = nom
@@ -25,23 +23,21 @@ const initiales = nom
   .join('');
 ---
 
-<div class="viv-split viv-split--even items-center">
-  <div class="grid max-w-[440px]">
-    <CoverMotif cutout={fond} class="col-start-1 row-start-1" />
+<div class="grid items-center gap-8 md:grid-cols-3 md:gap-12">
+  <div class="flex md:justify-center">
     <div
-      class="col-start-1 row-start-1 -mb-4 -ml-2 flex size-40 items-center justify-center self-end justify-self-start overflow-hidden rounded-pill bg-(image:--gradient-brand) text-ink-on-pastel sm:size-44"
-      style={`box-shadow: 0 0 0 8px ${fond}`}
+      class="flex size-44 items-center justify-center overflow-hidden rounded-pill bg-(image:--gradient-brand) text-ink-on-pastel md:size-56"
       aria-hidden={portrait ? undefined : 'true'}
     >
       {portrait ? (
         <img src={portrait} alt={nom} class="size-full object-cover" />
       ) : (
-        <span class="display-lg">{initiales}</span>
+        <span class="display-xl">{initiales}</span>
       )}
     </div>
   </div>
 
-  <div>
+  <div class="md:col-span-2">
     <p class="overline text-ink-muted">Qui anime</p>
     <h2 class="display-md mt-2">{nom}</h2>
     <p class="body-lg mt-2 text-ink-muted">{fonction}</p>

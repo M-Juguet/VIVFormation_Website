@@ -1,5 +1,6 @@
 ---
-/* Carte catalogue d'une formation : ModuleCard du design system alimentée par le contenu. */
+/* Carte catalogue d'une formation : ModuleCard du design system alimentée par le contenu.
+   Ni description ni tarif : ils sont réservés à la page de la formation. */
 import ModuleCard from './ds/ModuleCard.astro';
 import type { FormationResolue } from '../lib/formations';
 
@@ -10,6 +11,11 @@ interface Props {
 
 const { item, class: className } = Astro.props;
 const d = item.formation.data;
+// « Présentiel » et « Dates à convenir » valent pour toutes les formations : la carte ne garde que
+// les outils, un statut de session particulier et la mention d'exemple provisoire.
+const badges = item.badges.filter(
+  (b) => b.label !== 'Présentiel' && b.label !== 'Dates à convenir',
+);
 ---
 
 <ModuleCard
@@ -20,14 +26,11 @@ const d = item.formation.data;
   mark={item.mark}
   overline={item.overline}
   title={d.titre}
-  summary={d.sousTitre}
   meta={[
     { label: 'Durée', value: item.duree },
     { label: 'Niveau', value: d.niveau },
   ]}
-  badges={item.badges}
-  price={item.tarif ?? 'Sur devis'}
-  priceNote={item.tarif ? 'HT/pers., inter-entreprises' : undefined}
+  badges={badges}
   href={item.url}
   actionLabel="Voir la fiche"
 />

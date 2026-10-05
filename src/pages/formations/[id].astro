@@ -5,6 +5,8 @@
    validée, comment se déroule-t-elle, comment l'organiser. Une barre collante porte la navigation,
    le tarif et l'action ; tout ce qui sert à organiser (tarifs, délais, équipement, demande) est
    regroupé dans la bande sombre finale. */
+import { existsSync } from 'node:fs';
+import { join } from 'node:path';
 import type { GetStaticPaths } from 'astro';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import BarreFormation from '../../components/BarreFormation.astro';
@@ -46,8 +48,13 @@ const f = item.formation.data;
 
 // Le fil d'Ariane renvoie au catalogue filtré sur le domaine de la formation.
 const catalogueDomaine = `/catalogue/?domaine=${item.domaine.id}`;
-// TODO : adresse de la fiche programme PDF, quand les fiches générées seront publiées.
-const fichePdf = '#';
+// Fiche programme PDF : public/programmes/<nom du fichier formation>.pdf, publiée telle quelle avec
+// le site (adresse stable d'une version à l'autre). Téléchargée sous son nom documentaire
+// <reference>-PRO-<version>.pdf. Sans fichier, le bouton n'apparaît pas.
+const fichePdf = existsSync(join(process.cwd(), 'public', 'programmes', `${item.formation.id}.pdf`))
+  ? `/programmes/${item.formation.id}.pdf`
+  : undefined;
+const fichePdfNom = `${f.reference}-PRO-${f.version}.pdf`;
 
 const faits = [
   { icon: 'clock', label: item.duree },
@@ -76,7 +83,7 @@ const modules = f.programme.length;
 const chiffresProgramme = [
   { icon: 'box', label: `${modules} module${modules > 1 ? 's' : ''}` },
   { icon: 'clock', label: item.duree },
-  { icon: 'map-pin', label: 'Présentiel, dans vos locaux' },
+  { icon: 'map-pin', label: 'Présentiel' },
 ] as const;
 const reference = `Référence ${f.reference} · version ${f.version} · programme révisé le ${formatDate(f.revision)}.`;
 ---
@@ -84,7 +91,6 @@ const reference = `Référence ${f.reference} · version ${f.version} · program
 <BaseLayout title={f.titre} description={f.sousTitre} image={f.visuel} imageAlt={f.visuelAlt}>
   <BarreFormation
     titreCourt={f.titreCourt}
-    tarif={item.tarif}
     sections={sections}
     apres="presentation"
     avant="organiser"
@@ -164,22 +170,41 @@ const reference = `Référence ${f.reference} · version ${f.version} · program
               </li>
             ))}
           </ul>
-          <div class="mb-5 flex flex-wrap items-baseline gap-3 border-y border-border py-4">
-            {item.tarif ? (
-              <>
-                <span class="display-md">{item.tarif}</span>
-                <span class="caption text-ink-muted">HT/pers., inter-entreprises</span>
-              </>
-            ) : (
-              <span class="display-md">Sur devis</span>
-            )}
-          </div>
+          {/* Tarifs inter et intra, toujours ensemble (le tarif intra est toujours sur devis). */}
+          <dl class="mb-5 flex flex-col gap-2 border-y border-border py-4">
+            <div class="flex flex-wrap items-baseline justify-between gap-x-3">
+              <dt class="body-sm text-ink-muted">Inter-entreprises</dt>
+              <dd>
+                {item.tarif ? (
+                  <>
+                    <span class="display-md">{item.tarif}</span>{' '}
+                    <span class="caption text-ink-muted">HT/pers.</span>
+                  </>
+                ) : (
+                  <span class="display-md">Sur devis</span>
+                )}
+              </dd>
+            </div>
+            <div class="flex flex-wrap items-baseline justify-between gap-x-3">
+              <dt class="body-sm text-ink-muted">Intra-entreprise</dt>
+              <dd class="heading-md">Sur devis</dd>
+            </div>
+          </dl>
           <Button href="#demande" icon="calendar" class="w-full">
             Demander des dates
           </Button>
-          <Button variant="secondary" size="sm" href={fichePdf} icon="download" class="mt-3 w-full">
-            Télécharger le programme
-          </Button>
+          {fichePdf && (
+            <Button
+              variant="secondary"
+              size="sm"
+              href={fichePdf}
+              download={fichePdfNom}
+              icon="download"
+              class="mt-3 w-full"
+            >
+              Télécharger le programme
+            </Button>
+          )}
         </div>
       </div>
     </div>

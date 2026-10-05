@@ -91,6 +91,8 @@ Un fichier par formation, `src/content/formations/<slug>.md`, source unique de l
 
 Copier `src/content/formations/_modele.md`, puis remplir le frontmatter ; le corps reste vide. Les champs, leurs règles et les documents qui les utilisent sont décrits dans **`docs/format-formation.md`**. Le schéma de `src/content.config.ts` les valide : un champ manquant ou inconnu, un objectif ouvert par un verbe non observable (« maîtriser », « comprendre »…), une référence qui ne suit pas le code du domaine font échouer `npm run build`.
 
+La fiche programme PDF se dépose dans `public/programmes/<slug>.pdf` (même nom que le fichier de la formation) : elle est publiée avec le site et le bouton « Télécharger le programme » de la page la propose sous son nom documentaire `<reference>-PRO-<version>.pdf`. Sans fichier, le bouton n'apparaît pas. À chaque nouvelle version du programme, remplacer le PDF en gardant le même nom.
+
 Les textes communs à toutes les formations (méthodes pédagogiques, évaluation, modalités d'animation, délais d'accès, accessibilité, sanction) ne sont pas dans le fichier : ils sont repris mot pour mot de la fiche programme dans les composants `src/components/ModalitesFormation.astro`, `EvaluationFormation.astro` et `OrganiserFormation.astro`.
 
 ### Qualité (accueil)

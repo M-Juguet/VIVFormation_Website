@@ -1,15 +1,14 @@
 ---
 /* Barre de fiche : apparaît sous l'en-tête du site dès que l'en-tête de la formation sort de
    l'écran, disparaît quand arrive la zone qui porte les tarifs et le formulaire (un seul bouton
-   principal visible à la fois). Grand écran : titre court, onglets des sections avec suivi de
-   lecture, tarif, action. Mobile : tarif et action. Verre dépoli, puisque la page défile dessous ;
+   principal visible à la fois). Pas de tarif : il est dans l'en-tête et dans la zone tarifs.
+   Grand écran : titre court, onglets des sections avec suivi de lecture, action. Écran moyen :
+   onglets et action. Mobile : titre court et action. Verre dépoli, puisque la page défile dessous ;
    repli surface-raised sous 600 px, comme le veut la charte. */
 import Button from './ds/Button.astro';
 
 interface Props {
   titreCourt: string;
-  /** Tarif inter-entreprises mis en forme (« 1 900 € »), absent s'il est sur devis. */
-  tarif?: string;
   sections: { id: string; label: string }[];
   /** id de l'en-tête de la formation : la barre apparaît quand il sort de l'écran. */
   apres: string;
@@ -17,7 +16,7 @@ interface Props {
   avant: string;
 }
 
-const { titreCourt, tarif, sections, apres, avant } = Astro.props;
+const { titreCourt, sections, apres, avant } = Astro.props;
 ---
 
 <div
@@ -28,7 +27,9 @@ const { titreCourt, tarif, sections, apres, avant } = Astro.props;
   class="pointer-events-none fixed inset-x-0 top-(--barre-top,88px) z-10 -translate-y-2 border-b border-(--glass-border) bg-(--glass-surface) opacity-0 shadow-(--shadow-sm) backdrop-blur-(--glass-blur) transition duration-(--motion-panel) ease-enter data-visible:pointer-events-auto data-visible:translate-y-0 data-visible:opacity-100 max-sm:bg-surface-raised max-sm:backdrop-blur-none"
 >
   <div class="viv-wrap flex h-14 items-center gap-4 lg:gap-5">
-    <p class="heading-sm hidden shrink-0 lg:block">{titreCourt}</p>
+    <p class="heading-sm min-w-0 flex-1 truncate md:hidden lg:block lg:flex-none lg:shrink-0">
+      {titreCourt}
+    </p>
     <nav aria-label="Sections de la formation" class="hidden min-w-0 flex-1 md:block">
       <ul class="body-sm flex gap-4">
         {sections.map((s) => (
@@ -44,10 +45,6 @@ const { titreCourt, tarif, sections, apres, avant } = Astro.props;
         ))}
       </ul>
     </nav>
-    <p class="min-w-0 flex-1 md:flex-none">
-      <span class="heading-sm whitespace-nowrap">{tarif ?? 'Sur devis'}</span>
-      {tarif && <span class="caption whitespace-nowrap text-ink-muted"> HT/pers.</span>}
-    </p>
     <Button size="sm" href="#demande" icon="calendar">
       Demander des dates
     </Button>
