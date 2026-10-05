@@ -29,6 +29,7 @@ Site vitrine statique (Astro + Markdown + Tailwind v4) pour l'organisme de forma
 - Site 100 % statique : pas d'adapter serveur. Interactions (filtres du catalogue, formulaire, tiroir mobile) en scripts vanilla dans les composants.
 - Serveur de dev : configuration `astro-dev` de `.claude/launch.json` (aperçu de l'app Claude), à la place du `astro dev --background` d'AGENTS.md. Un seul serveur à la fois (Astro pose un verrou).
 - Avant de livrer : `npm run format` puis `npm run build` (inclut `astro check`). La CI GitHub (`.github/workflows/ci.yml`) rejoue `format:check` et `build` à chaque push sur `main` et sur les PR.
+- Skill Claude Desktop `skills/rediger-formation/` (rédaction des fichiers formation, README) : il doit rester aligné sur le format. Après l'ajout d'une formation ou un changement de `src/data/*.yaml`, `_modele.md` ou des verbes refusés : `npm run skill:donnees`. Après un changement du schéma ou de `docs/format-formation.md` : reporter aussi les règles dans `skills/rediger-formation/references/*.md` et `scripts/verifier_formation.py`.
 - Déploiement : après un push sur `main`, la CI envoie `dist/` sur le VPS par rsync + SSH (réglages et préparation du VPS : README, « Déploiement »). Pas de Node sur le VPS.
 
 ## n8n

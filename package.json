@@ -12,7 +12,8 @@
     "check": "astro check",
     "format": "prettier --write .",
     "format:check": "prettier --check .",
-    "astro": "astro"
+    "astro": "astro",
+    "skill:donnees": "node scripts/exporter-skill-formation.mjs && prettier --write skills/rediger-formation scripts"
   },
   "dependencies": {
     "@astrojs/markdown-satteri": "^0.4.2",

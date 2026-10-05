@@ -95,6 +95,21 @@ La fiche programme PDF se dépose dans `public/programmes/<slug>.pdf` (même nom
 
 Les textes communs à toutes les formations (méthodes pédagogiques, évaluation, modalités d'animation, délais d'accès, accessibilité, sanction) ne sont pas dans le fichier : ils sont repris mot pour mot de la fiche programme dans les composants `src/components/ModalitesFormation.astro`, `EvaluationFormation.astro` et `OrganiserFormation.astro`.
 
+### Skill de rédaction des formations (Claude Desktop)
+
+Le skill `rediger-formation` (`skills/rediger-formation/`) fait générer par Claude Desktop le fichier `<slug>.md` d'une formation, à partir du contenu arrêté dans la conversation ou d'un programme fourni (PDF, Word, texte). Le fichier se dépose tel quel dans `src/content/formations/` et suffit seul à Claude Design pour la fiche programme : des commentaires « fiche : », ignorés par le site, y donnent les valeurs résolues (libellé du domaine, formateur, ligne de référence…). Le skill embarque tout ce que le site exige (champs, limites, identifiants, références attribuées, mise en forme, typographie, interdits de la charte) et un script Python qui écrit ces commentaires et contrôle le fichier, puisqu'il travaille sans accès au dépôt.
+
+À déposer avec le fichier, le cas échéant : le visuel de couverture sous le nom exact `<slug>.jpg` (ou `.png`, `.webp`) dans `src/content/formations/visuels/` (sans lui, le build refuse le fichier), et la fiche PDF de Claude Design sous `public/programmes/<slug>.pdf`.
+
+- `SKILL.md` : la démarche ; `references/format-fichier.md` et `references/regles-redaction.md` : le format et les règles de rédaction ; `scripts/verifier_formation.py` : les commentaires « fiche : » (`--annoter`), le contrôle et la référence suivante d'un domaine. Le même script, lancé depuis la racine du site, contrôle un fichier avant publication : `python skills/rediger-formation/scripts/verifier_formation.py src/content/formations/<slug>.md`.
+- `references/donnees-site.json`, `modele.md` et `exemple.md` sont **générés** depuis le site : `npm run skill:donnees`. À relancer après l'ajout d'une formation (nouvelle référence attribuée), un changement de `src/data/*.yaml` ou du modèle, puis réimporter le skill.
+- Si le format change (schéma de `src/content.config.ts`, `docs/format-formation.md`), reporter aussi les règles dans `references/*.md` et `scripts/verifier_formation.py`.
+- Paquet à importer dans Claude Desktop (réglages, section des skills ; l'exécution de code doit être activée pour le script de contrôle) :
+
+```bash
+python -m zipfile -c rediger-formation.zip skills/rediger-formation
+```
+
 ### Qualité (accueil)
 
 Les sections « Gage de qualité » et « Indicateurs qualité » de l'accueil lisent `ENGAGEMENTS_QUALITE` et `INDICATEURS_QUALITE` dans `src/config/site.ts`. Après chaque session, reporter dans `INDICATEURS_QUALITE` les résultats réels du questionnaire de satisfaction, toutes formations confondues : note moyenne sur 5 (`satisfaction`), part en % des participants qui recommanderaient la formation (`recommandation`), et la date du relevé (`releve`, AAAA-MM-JJ). Une valeur `null` affiche « Mesure en cours ». La mention de certification se placera à droite du titre de « Gage de qualité », une fois le certificat obtenu (emplacement signalé par un commentaire dans `src/pages/index.astro`).

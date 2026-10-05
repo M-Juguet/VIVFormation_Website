@@ -1,0 +1,114 @@
+{
+  "exporteLe": "2026-10-05",
+  "declarationActivite": "11923083592",
+  "domaines": [
+    {
+      "id": "preparation-donnees-3d",
+      "label": "Préparation de données 3D",
+      "code": "DPP",
+      "description": "Importer une donnée CAO, la nettoyer et l’alléger pour l’exploiter en rendu comme en temps réel."
+    },
+    {
+      "id": "3d-precalculee",
+      "label": "3D précalculée",
+      "code": "PRC",
+      "description": "Modéliser, texturer, éclairer et calculer une image ou une animation de qualité finale."
+    },
+    {
+      "id": "3d-temps-reel",
+      "label": "3D temps réel",
+      "code": "TRL",
+      "description": "Rendre une scène interactive, de la revue de design au configurateur produit."
+    },
+    {
+      "id": "graphisme-2d",
+      "label": "Graphisme 2D",
+      "code": "GPH",
+      "description": "Tracer, mettre au net, composer et décliner une image vectorielle pour l’écran et l’impression."
+    },
+    {
+      "id": "ia-generative",
+      "label": "IA générative",
+      "code": "IAG",
+      "description": "Faire produire un modèle, vérifier ce qu’il produit et savoir ce qu’il ne faut pas lui confier."
+    }
+  ],
+  "types": [
+    {
+      "id": "module",
+      "label": "Module"
+    },
+    {
+      "id": "parcours-pipeline",
+      "label": "Parcours pipeline"
+    },
+    {
+      "id": "sensibilisation",
+      "label": "Sensibilisation"
+    }
+  ],
+  "outils": [
+    {
+      "id": "blender",
+      "label": "Blender"
+    },
+    {
+      "id": "unreal-engine",
+      "label": "Unreal Engine"
+    },
+    {
+      "id": "vred",
+      "label": "VRED"
+    },
+    {
+      "id": "unity",
+      "label": "Unity"
+    },
+    {
+      "id": "illustrator",
+      "label": "Illustrator"
+    },
+    {
+      "id": "comfyui",
+      "label": "ComfyUI"
+    }
+  ],
+  "formateurs": [
+    {
+      "id": "matthieu-juguet",
+      "nom": "Matthieu JUGUET",
+      "fonction": "Infographiste 3D, artiste technique et formateur",
+      "parcours": [
+        "Formateur depuis 2021 : conception et animation de parcours pour adultes",
+        "Gestion de projets 3D et intégration d’IA en production depuis 2019",
+        "Certification de formateur pour adultes (Cegos, 2023) · Master en gestion de projets multimédia"
+      ]
+    }
+  ],
+  "formations": [
+    {
+      "slug": "materiaux-rendu-blender-fondamentaux",
+      "reference": "PRC04",
+      "version": "26v01",
+      "titre": "Matériaux et rendu dans Blender : les fondamentaux"
+    },
+    {
+      "slug": "initiation-unreal-engine-imagerie",
+      "reference": "TRL01",
+      "version": "26v01",
+      "titre": "Initiation à Unreal Engine pour l’imagerie"
+    }
+  ],
+  "verbesRefuses": [
+    "appréhender",
+    "comprendre",
+    "connaître",
+    "découvrir",
+    "décoder",
+    "maîtriser",
+    "savoir",
+    "se familiariser",
+    "sensibiliser",
+    "s'initier"
+  ]
+}

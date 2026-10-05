@@ -7,6 +7,8 @@ Un fichier Markdown par formation, `src/content/formations/<slug>.md`. C'est la 
 
 C'est aussi la **base** du déroulé pédagogique et du support de formation (`templates/deroule-pedagogique/`, `templates/support-formation/`) : ils en reprennent l'identité, le public, les prérequis, les objectifs et les modules ; leur propre détail (jours, horaires, séquences, slides, notes) reste dans ces documents, pas dans le fichier.
 
+Pour rédiger un fichier à partir d'un programme, le skill Claude Desktop `rediger-formation` (`skills/rediger-formation/`, README) applique ce format et ses règles.
+
 Le contrat est le schéma de `src/content.config.ts` : un fichier non conforme fait échouer `npm run build`, donc la CI. Exemple réel : `src/content/formations/initiation-unreal-engine-imagerie.md`. Modèle à copier : `src/content/formations/_modele.md`.
 
 ## Principes
@@ -16,6 +18,7 @@ Le contrat est le schéma de `src/content.config.ts` : un fichier non conforme f
 - **Le nom du fichier est l'URL de la formation** : il ne change plus une fois la page publiée.
 - **Le texte du programme validé est repris tel quel.** Seule la typographie est corrigée : apostrophe typographique (’), casse phrase. En YAML, un texte qui contient « : » s'écrit entre apostrophes droites : `'Configuration d’un projet : unités, espace de couleurs'`.
 - Un fichier dont le nom commence par `_` est ignoré par le site (modèle, brouillon de travail).
+- Les commentaires « fiche : » donnent à Claude Design les valeurs résolues de la fiche programme (libellés, durée, tarifs, ligne de référence, formateur) ; le site les ignore. Ils s'écrivent avec `python skills/rediger-formation/scripts/verifier_formation.py --annoter <fichier>`.
 
 ## Champs
 

@@ -1,5 +1,7 @@
 # build output
 dist/
+# paquet du skill Claude Desktop (npm run skill:donnees, puis zip : README)
+rediger-formation.zip
 # generated types
 .astro/
 
@@ -28,3 +30,6 @@ pnpm-debug.log*
 
 # Windows
 Thumbs.db
+
+# Python
+__pycache__/
