@@ -1,17 +1,17 @@
 ---
+import type { ImageMetadata } from 'astro';
+import { Image } from 'astro:assets';
+import equipeReunion from '../assets/accueil/equipe-reunion.jpg';
 import BaseLayout from '../layouts/BaseLayout.astro';
 import ContactForm from '../components/ContactForm.astro';
-import CoverMotif from '../components/CoverMotif.astro';
 import FormationCard from '../components/FormationCard.astro';
-import Badge from '../components/ds/Badge.astro';
 import Button from '../components/ds/Button.astro';
 import Callout from '../components/ds/Callout.astro';
-import Card from '../components/ds/Card.astro';
 import Icon from '../components/ds/Icon.astro';
 import {
   ENGAGEMENTS_QUALITE,
   ETAPES_ORGANISATION,
-  INDICATEUR_SATISFACTION,
+  INDICATEURS_QUALITE,
   SECTEURS,
   SITE,
 } from '../config/site';
@@ -19,28 +19,83 @@ import { formatDate, getFormations, getTaxonomies, resolveFormation } from '../l
 
 const formations = await Promise.all((await getFormations()).map(resolveFormation));
 const { domaines } = await getTaxonomies();
-const enAvant = formations.filter((f) => f.formation.data.enAvant).slice(0, 3);
 const compte = (n: number) => `${n} formation${n > 1 ? 's' : ''}`;
-const engagements = [
-  { icon: 'map-pin', texte: 'Sur vos postes, avec vos versions' },
-  { icon: 'clock', texte: 'De 7 à 35 heures selon le programme' },
-  { icon: 'target', texte: 'Objectifs évalués au poste de travail' },
-] as const;
-const { note, releve } = INDICATEUR_SATISFACTION;
-// Tracé Lucide v1.47.0 « star » (lucide.dev), absent de ICON_PATHS.
-const etoile =
-  '<path d="M11.525 2.295a.53.53 0 0 1 .95 0l2.31 4.679a2.123 2.123 0 0 0 1.595 1.16l5.166.756a.53.53 0 0 1 .294.904l-3.736 3.638a2.123 2.123 0 0 0-.611 1.878l.882 5.14a.53.53 0 0 1-.771.56l-4.618-2.428a2.122 2.122 0 0 0-1.973 0L6.396 21.01a.53.53 0 0 1-.77-.56l.881-5.139a2.122 2.122 0 0 0-.611-1.879L2.16 9.795a.53.53 0 0 1 .294-.906l5.165-.755a2.122 2.122 0 0 0 1.597-1.16z" />';
+
+// Section « Formations souvent demandées » masquée à la demande de l'organisme (octobre 2026) :
+// passer à true pour la rétablir. Le fond de la section « Pour qui » s'adapte pour garder
+// l'alternance des bandes.
+const afficherFormationsEnAvant = false;
+const enAvant = formations.filter((f) => f.formation.data.enAvant).slice(0, 3);
+
+/* Visuel du bandeau, posé comme celui de l'en-tête d'une fiche formation : fond de la bande
+   sombre, fondu horizontal vers le texte, et image de partage de la page. Rendu ou capture d'un
+   fichier d'exercice VIV Formation, ou portrait de l'équipe ; 16:9, 1920 × 1080 px au moins.
+   Jamais une photo de session, un logo d'éditeur ni un élément de projet client (charte,
+   « Images »). Fichier dans src/assets/accueil/, importé ci-dessus ; credit et ai (outil d'IA
+   générative) s'affichent dans la pastille de mention. Sans src, la bande reste unie.
+   Provisoire : photo reprise de l'ancien site, en attendant un visuel conforme à la charte. */
+const visuelBandeau: { src?: ImageMetadata; alt: string; credit?: string; ai?: string } = {
+  src: equipeReunion,
+  alt: 'Une équipe échange autour d’une grande table de travail.',
+};
+const mentionBandeau = [
+  visuelBandeau.credit,
+  visuelBandeau.ai && `Image générée avec ${visuelBandeau.ai}`,
+]
+  .filter(Boolean)
+  .join(' · ');
+
+// Indicateurs qualité. Tracés Lucide v1.47.0 (lucide.dev) « star » et « thumbs-up », absents de
+// ICON_PATHS.
+const { releve } = INDICATEURS_QUALITE;
+const indicateurs = [
+  {
+    trace:
+      '<path d="M11.525 2.295a.53.53 0 0 1 .95 0l2.31 4.679a2.123 2.123 0 0 0 1.595 1.16l5.166.756a.53.53 0 0 1 .294.904l-3.736 3.638a2.123 2.123 0 0 0-.611 1.878l.882 5.14a.53.53 0 0 1-.771.56l-4.618-2.428a2.122 2.122 0 0 0-1.973 0L6.396 21.01a.53.53 0 0 1-.77-.56l.881-5.139a2.122 2.122 0 0 0-.611-1.879L2.16 9.795a.53.53 0 0 1 .294-.906l5.165-.755a2.122 2.122 0 0 0 1.597-1.16z" />',
+    libelle: 'Satisfaction',
+    valeur: INDICATEURS_QUALITE.satisfaction,
+    unite: '/ 5',
+    methode: 'Note moyenne donnée à la formation, sur 5.',
+  },
+  {
+    trace:
+      '<path d="M15 5.88 14 10h5.83a2 2 0 0 1 1.92 2.56l-2.33 8A2 2 0 0 1 17.5 22H4a2 2 0 0 1-2-2v-8a2 2 0 0 1 2-2h2.76a2 2 0 0 0 1.79-1.11L12 2a3.13 3.13 0 0 1 3 3.88Z" /> <path d="M7 10v12" />',
+    libelle: 'Recommandation',
+    valeur: INDICATEURS_QUALITE.recommandation,
+    unite: '%',
+    methode: 'Part des participants qui recommanderaient la formation.',
+  },
+];
 ---
 
-<BaseLayout>
-  <!-- Hero : bande sombre -->
-  <section class="viv-section overflow-hidden bg-surface-brand text-ink" data-theme="sombre">
-    <div class="viv-wrap viv-split viv-split--hero">
-      <div class="flex flex-col items-start">
-        <Badge tone="gold" icon="map-pin">
-          Présentiel, dans vos locaux ou sur votre site
-        </Badge>
-        <h1 class="display-xl my-5 text-balance">
+<BaseLayout image={visuelBandeau.src} imageAlt={visuelBandeau.alt}>
+  <!-- Hero : bande sombre, visuel en fond (même traitement que l'en-tête d'une fiche formation) -->
+  <section
+    class:list={[
+      'viv-section relative overflow-hidden bg-surface-brand text-ink',
+      mentionBandeau && 'max-md:pb-16',
+    ]}
+    data-theme="sombre"
+  >
+    {visuelBandeau.src && (
+      <div
+        aria-hidden="true"
+        class="viv-entete-visuel pointer-events-none absolute inset-y-0 right-0 w-full max-md:opacity-40 md:w-[70%]"
+      >
+        <Image
+          src={visuelBandeau.src}
+          alt=""
+          widths={[800, 1280, 1920]}
+          sizes="(max-width: 900px) 100vw, 70vw"
+          loading="eager"
+          fetchpriority="high"
+          class="size-full object-cover"
+        />
+      </div>
+    )}
+    <div class="viv-wrap relative">
+      <div class="flex max-w-[640px] flex-col items-start">
+        <h1 class="display-xl mb-5 text-balance">
           Formez vos équipes à la 3D, au graphisme 2D et à l’IA générative
         </h1>
         <p class="body-lg mb-8 max-w-[58ch] text-pretty text-ink-muted">
@@ -57,21 +112,12 @@ const etoile =
           </Button>
         </div>
       </div>
-      <div class="relative grid">
-        <CoverMotif class="col-start-1 row-start-1" />
-        <div class="viv-glass col-start-1 row-start-1 -mb-2 -ml-2 flex max-w-[320px] flex-col gap-3 self-end justify-self-start p-5">
-          <p class="overline text-ink-muted">Chaque formation</p>
-          {engagements.map((e) => (
-            <div class="flex items-center gap-3">
-              <span class="flex text-action">
-                <Icon name={e.icon} />
-              </span>
-              <span class="body">{e.texte}</span>
-            </div>
-          ))}
-        </div>
-      </div>
     </div>
+    {mentionBandeau && (
+      <p class="viv-glass caption absolute right-4 bottom-3 rounded-pill px-3 py-1 text-ink-muted">
+        {mentionBandeau}
+      </p>
+    )}
   </section>
 
   <!-- Domaines d'expertise -->
@@ -112,23 +158,55 @@ const etoile =
     </div>
   </section>
 
-  <!-- Formations mises en avant -->
-  <section id="catalogue" class="viv-section bg-surface-sunken">
-    <div class="viv-wrap">
-      <div class="mb-10 flex flex-wrap items-end justify-between gap-4">
-        <div class="max-w-[720px]">
-          <p class="overline text-ink-muted">Catalogue</p>
-          <h2 class="display-md mt-2">Formations souvent demandées</h2>
+  <!-- Formations mises en avant : masquée (afficherFormationsEnAvant) -->
+  {afficherFormationsEnAvant && (
+    <section id="catalogue" class="viv-section bg-surface-sunken">
+      <div class="viv-wrap">
+        <div class="mb-10 flex flex-wrap items-end justify-between gap-4">
+          <div class="max-w-[720px]">
+            <p class="overline text-ink-muted">Catalogue</p>
+            <h2 class="display-md mt-2">Formations souvent demandées</h2>
+          </div>
+          <Button variant="secondary" href="/catalogue/" icon="arrow-right">
+            {formations.length > 1 ? `Voir les ${compte(formations.length)}` : 'Voir le catalogue'}
+          </Button>
         </div>
-        <Button variant="secondary" href="/catalogue/" icon="arrow-right">
-          {formations.length > 1 ? `Voir les ${compte(formations.length)}` : 'Voir le catalogue'}
-        </Button>
+        <div class="viv-grid-cards">
+          {enAvant.map((item) => (
+            <FormationCard item={item} />
+          ))}
+        </div>
       </div>
-      <div class="viv-grid-cards">
-        {enAvant.map((item) => (
-          <FormationCard item={item} />
+    </section>
+  )}
+
+  <!-- Pour qui -->
+  <section
+    id="clients"
+    class:list={['viv-section', afficherFormationsEnAvant ? 'bg-surface' : 'bg-surface-sunken']}
+  >
+    <div class="viv-wrap viv-split viv-split--even">
+      <div>
+        <p class="overline text-ink-muted">Pour qui</p>
+        <h2 class="display-md mt-2 mb-5">
+          Pour les équipes de conception, en toute confidentialité
+        </h2>
+        <p class="body-lg mb-4 max-w-[60ch] text-ink-muted">
+          Nous formons des designers, des infographistes et des équipes projet. Les sessions portent
+          sur des fichiers d’exercice ; vos projets restent sur vos postes.
+        </p>
+        <p class="body max-w-[60ch] text-ink-muted">
+          Rien de ce qui se passe en session ne sort de la salle : ni photo, ni capture, ni fichier.
+        </p>
+      </div>
+      <ul class="flex flex-col">
+        {SECTEURS.map((s) => (
+          <li class="flex items-baseline justify-between gap-4 border-b border-border py-5">
+            <span class="heading-md">{s.nom}</span>
+            <span class="body-sm text-right text-ink-muted">{s.detail}</span>
+          </li>
         ))}
-      </div>
+      </ul>
     </div>
   </section>
 
@@ -152,124 +230,75 @@ const etoile =
     </div>
   </section>
 
-  <!-- Pour qui -->
-  <section id="clients" class="viv-section bg-surface">
-    <div class="viv-wrap viv-split viv-split--even">
-      <div>
-        <p class="overline text-ink-muted">Pour qui</p>
-        <h2 class="display-md mt-2 mb-5">
-          Des équipes de conception, sur des projets confidentiels
-        </h2>
-        <p class="body-lg mb-4 max-w-[60ch] text-ink-muted">
-          Nous formons des designers, des infographistes et des équipes projet, souvent dans leurs
-          propres locaux. Les sessions portent sur des fichiers d’exercice ; vos projets restent sur
-          vos postes.
-        </p>
-        <p class="body max-w-[60ch] text-ink-muted">
-          Rien de ce qui se passe en session ne sort de la salle : ni photo, ni capture, ni fichier.
-        </p>
-      </div>
-      <ul class="flex flex-col">
-        {SECTEURS.map((s) => (
-          <li class="flex items-baseline justify-between gap-4 border-b border-border py-5">
-            <span class="heading-md">{s.nom}</span>
-            <span class="body-sm text-right text-ink-muted">{s.detail}</span>
-          </li>
-        ))}
-      </ul>
-    </div>
-  </section>
-
   <!-- Gage de qualité -->
   <section id="qualite" class="viv-section bg-surface-sunken">
     <div class="viv-wrap">
-      <div class="mb-10 max-w-[720px]">
-        <p class="overline text-ink-muted">Gage de qualité</p>
-        <h2 class="display-md mt-2">Un même cadre pour chaque formation</h2>
-        <p class="body-lg mt-4 text-ink-muted">
-          De la première demande à l’entretien de suivi, chaque formation suit les mêmes règles,
-          quels que soient le logiciel et la taille du groupe.
-        </p>
-      </div>
-      <div class="viv-split viv-split--aside">
-        <ul class="grid gap-6 sm:grid-cols-2">
-          {ENGAGEMENTS_QUALITE.map((e) => (
-            <li class="viv-card flex flex-col gap-3 p-6">
-              <h3 class="heading-md flex items-start gap-3">
-                <span class="flex pt-1 text-action">
-                  <Icon name={e.icone} path={e.trace} />
-                </span>
-                {e.titre}
-              </h3>
-              <p class="body text-ink-muted">{e.texte}</p>
-            </li>
-          ))}
-        </ul>
-        <div class="flex flex-col gap-6">
-          {/* La mention de certification (marque, numéro de certificat, catégorie d'action) se place
-              ici, en tête de colonne, une fois le certificat obtenu — jamais avant (charte). */}
-          <Callout tone="info" title="Accessibilité">
-            <p>
-              Un responsable handicap étudie avec vous, avant la session, les adaptations utiles à
-              chaque participant.
-            </p>
-            <p class="mt-2">
-              <strong>{SITE.referentHandicap.nom}</strong>,{' '}
-              <a href={`mailto:${SITE.referentHandicap.email}`}>
-                <span class="whitespace-nowrap">{SITE.referentHandicap.email}</span>
-              </a>
-            </p>
-          </Callout>
-          <Card title="Réclamations">
-            <p>
-              Un problème pendant une session, une réclamation : écrivez-nous depuis le formulaire
-              de contact. Chaque signalement est enregistré, reçoit une réponse et sert à améliorer
-              nos formations.
-            </p>
-            <a
-              href="/contact/?sujet=dysfonctionnement"
-              class="body mt-4 flex items-center gap-2 text-action no-underline hover:text-action-hover"
-            >
-              Signaler un problème <Icon name="arrow-right" size={16} />
-            </a>
-          </Card>
+      <div class="mb-10 flex flex-wrap items-end justify-between gap-4">
+        <div class="max-w-[720px]">
+          <p class="overline text-ink-muted">Gage de qualité</p>
+          <h2 class="display-md mt-2">Un même cadre pour chaque formation</h2>
         </div>
+        {/* La mention de certification (marque, numéro de certificat, catégorie d'action) se place
+            ici, à droite du titre, une fois le certificat obtenu — jamais avant (charte). */}
       </div>
+      <ul class="grid gap-8 md:grid-cols-3">
+        {ENGAGEMENTS_QUALITE.map((e) => (
+          <li class="flex flex-col items-start gap-3">
+            <Icon name={e.icone} path={e.trace} size={24} tile="degrade" shape="carre" />
+            <h3 class="heading-md mt-2">{e.titre}</h3>
+            <p class="body text-ink-muted">{e.texte}</p>
+          </li>
+        ))}
+      </ul>
+      <p class="body mt-10 flex flex-wrap items-center gap-x-2 border-t border-border pt-6 text-ink-muted">
+        Un problème pendant une session ?
+        <a
+          href="/contact/?sujet=dysfonctionnement"
+          class="flex items-center gap-2 text-action no-underline hover:text-action-hover"
+        >
+          Signalez-le <Icon name="arrow-right" size={16} />
+        </a>
+      </p>
     </div>
   </section>
 
   <!-- Indicateurs qualité : bande sombre -->
   <section id="indicateurs" class="viv-section bg-surface-sunken text-ink" data-theme="sombre">
-    <div class="viv-wrap viv-split viv-split--aside items-center">
+    <div class="viv-wrap viv-split viv-split--even items-center">
       <div>
         <p class="overline text-ink-muted">Indicateurs qualité</p>
         <h2 class="display-md mt-2 mb-4">Ce que vous pensez de nos formations</h2>
         <p class="body-lg max-w-[60ch] text-ink-muted">
-          Chaque session se termine par un questionnaire de satisfaction. Nous publions la note
-          moyenne de l’ensemble de nos formations et la mettons à jour après chaque session.
+          Chaque session se termine par un questionnaire de satisfaction. Nous en publions les
+          résultats, toutes formations confondues, et les mettons à jour après chaque session.
         </p>
-      </div>
-      <dl class="viv-glass flex flex-col gap-3 p-6">
-        <dt class="heading-md flex items-start gap-3">
-          <span class="flex pt-1 text-action">
-            <Icon path={etoile} />
-          </span>
-          Satisfaction des participants
-        </dt>
-        {note === null ? (
-          <dd class="heading-lg">Mesure en cours</dd>
-        ) : (
-          <dd class="flex items-baseline gap-2">
-            <span class="display-lg text-accent-deep">
-              {note.toLocaleString('fr-FR', { maximumFractionDigits: 1 })}
-            </span>
-            <span class="heading-md">/ 5</span>
-          </dd>
+        {releve && (
+          <p class="caption mt-4 text-ink-muted">Résultats au {formatDate(new Date(releve))}.</p>
         )}
-        <dd class="body-sm text-ink-muted">
-          Note moyenne sur 5, toutes formations confondues.
-          {releve && ` Résultat au ${formatDate(new Date(releve))}.`}
-        </dd>
+      </div>
+      {/* Tuiles en sous-grille : libellé, valeur et méthode restent alignés d'une tuile à l'autre. */}
+      <dl class="grid gap-6 sm:grid-cols-2">
+        {indicateurs.map((ind) => (
+          <div class="viv-glass row-span-3 grid grid-rows-subgrid gap-3 p-6">
+            <dt class="heading-md flex items-start gap-3">
+              <span class="flex pt-1 text-action">
+                <Icon path={ind.trace} />
+              </span>
+              {ind.libelle}
+            </dt>
+            {ind.valeur === null ? (
+              <dd class="heading-lg">Mesure en cours</dd>
+            ) : (
+              <dd class="flex items-baseline gap-2">
+                <span class="display-lg text-accent-deep">
+                  {ind.valeur.toLocaleString('fr-FR', { maximumFractionDigits: 1 })}
+                </span>
+                <span class="heading-md">{ind.unite}</span>
+              </dd>
+            )}
+            <dd class="body-sm text-ink-muted">{ind.methode}</dd>
+          </div>
+        ))}
       </dl>
     </div>
   </section>
@@ -286,12 +315,26 @@ const etoile =
             ce que vous produisez. Les dates se fixent ensuite avec vous.
           </p>
         </div>
-        <Callout tone="info" title="Financement">
-          <p>
-            Prise en charge OPCO et plan de développement des compétences de votre entreprise. Nous
-            ne proposons pas de financement par le compte personnel de formation.
-          </p>
-        </Callout>
+        <div class="flex flex-col gap-4">
+          <Callout tone="info" title="Financement">
+            <p>
+              Prise en charge OPCO et plan de développement des compétences de votre entreprise.
+              Nous ne proposons pas de financement par le compte personnel de formation.
+            </p>
+          </Callout>
+          <Callout tone="info" title="Accessibilité">
+            <p>
+              Un besoin d’adaptation lié à un handicap ? Précisez-le dans votre demande : notre
+              responsable handicap, {SITE.referentHandicap.nom}, l’étudie avec vous avant la
+              session.
+            </p>
+            <p class="mt-2">
+              <a href={`mailto:${SITE.referentHandicap.email}`}>
+                <span class="whitespace-nowrap">{SITE.referentHandicap.email}</span>
+              </a>
+            </p>
+          </Callout>
+        </div>
       </div>
       <ContactForm id="accueil" sujet="devis" />
     </div>

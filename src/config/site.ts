@@ -59,10 +59,10 @@ export type ContactSubject = (typeof CONTACT_SUBJECTS)[number]['value'];
 /** Section « Comment se déroule une formation » de l'accueil. */
 export const ETAPES_ORGANISATION = [
   {
-    titre: 'Cadrage',
+    titre: 'Besoin et faisabilité',
     meta: '1 heure — entretien téléphonique',
     texte:
-      'Vos postes, vos versions installées, ce que vous produisez et ce qui doit être opérationnel après la formation.',
+      'Nous identifions avec vous ce que vos équipes doivent savoir faire après la formation, et vérifions sa faisabilité : niveau des participants, matériel, versions installées, délais.',
   },
   {
     titre: 'Programme ajusté',
@@ -74,12 +74,13 @@ export const ETAPES_ORGANISATION = [
     titre: 'Sessions',
     meta: 'Présentiel, dans vos locaux',
     texte:
-      'Petits groupes, fichiers d’exercice installés la veille, objectifs évalués en fin de journée.',
+      'En petits groupes, sur vos postes : apports théoriques, exercices de mise en situation et quiz, puis un QCM final sur les compétences acquises.',
   },
   {
     titre: 'Suivi',
-    meta: '1 heure — entretien téléphonique',
-    texte: 'Deux semaines après la session, sur vos premiers fichiers de production.',
+    meta: 'Après la mise en application',
+    texte:
+      'Une fois vos équipes en pratique, nous assurons un suivi en production ou des séances de questions-réponses, à un moment fixé avec vous selon vos besoins et vos disponibilités.',
   },
 ] as const;
 
@@ -99,42 +100,23 @@ interface Repere {
 }
 
 /**
- * Section « Gage de qualité » de l'accueil : un engagement par exigence du référentiel national
- * qualité (Qualiopi), sans le nommer tant que le certificat n'est pas obtenu — information du public,
- * objectifs adaptés, suivi et évaluation, moyens, compétences des formateurs, recueil des
- * appréciations. L'accessibilité et les réclamations occupent la colonne latérale de la section, où
- * se placera la mention de certification.
+ * Section « Gage de qualité » de l'accueil : trois engagements, alignés sur le référentiel national
+ * qualité (Qualiopi) sans le nommer tant que le certificat n'est pas obtenu — information et
+ * adaptation, évaluation des acquis, recueil des appréciations. La mention de certification se
+ * placera à droite du titre de la section ; l'accessibilité est dans la section Contact.
  */
 export const ENGAGEMENTS_QUALITE: ({ titre: string; texte: string } & Repere)[] = [
   {
-    icone: 'file-text',
-    titre: 'Une information complète avant votre demande',
-    texte:
-      'La fiche de chaque formation publie les objectifs, le public, les prérequis, la durée, le tarif, les délais d’accès et les modalités d’évaluation.',
-  },
-  {
     icone: 'target',
-    titre: 'Un programme ajusté à votre équipe',
+    titre: 'Un programme adapté',
     texte:
-      'Le cadrage d’une heure et l’évaluation de début de parcours situent le niveau de chacun ; le déroulé s’adapte à vos postes, à vos versions et à vos projets.',
+      'Objectifs, prérequis, durée et tarif publiés pour chaque formation ; le déroulé s’ajuste à votre équipe.',
   },
   {
     icone: 'circle-check',
     titre: 'Des acquis vérifiés',
     texte:
-      'Exercices et quiz pendant la formation, QCM final sur chaque objectif pédagogique, certificat de réalisation remis à chaque participant.',
-  },
-  {
-    icone: 'monitor',
-    titre: 'Sur vos postes, dans vos locaux',
-    texte:
-      'Chaque session se tient sur votre matériel et vos versions de logiciel, avec des fichiers d’exercice installés la veille et 8 participants au maximum.',
-  },
-  {
-    icone: 'users',
-    titre: 'Des formateurs du métier',
-    texte:
-      'Nos formateurs travaillent en production 3D et en intégration d’IA : ils enseignent ce qu’ils pratiquent et tiennent les programmes à jour des versions des logiciels.',
+      'Exercices pratiques et QCM final ; un certificat de réalisation pour chaque participant.',
   },
   {
     // Lucide « message-square-text ».
@@ -142,18 +124,25 @@ export const ENGAGEMENTS_QUALITE: ({ titre: string; texte: string } & Repere)[] 
       '<path d="M22 17a2 2 0 0 1-2 2H6.828a2 2 0 0 0-1.414.586l-2.202 2.202A.71.71 0 0 1 2 21.286V5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2z" /> <path d="M7 11h10" /> <path d="M7 15h6" /> <path d="M7 7h8" />',
     titre: 'Vos retours pris en compte',
     texte:
-      'Un questionnaire de satisfaction clôt chaque session et l’entretien de suivi recueille vos retours de production : ils font évoluer les programmes.',
+      'Questionnaire de satisfaction en fin de session et suivi après la formation ; les résultats sont publiés ci-dessous.',
   },
 ];
 
 /**
- * Section « Indicateurs qualité » de l'accueil : un indicateur de résultats, toutes formations
- * confondues (indicateur 2 du référentiel Qualiopi) — la note moyenne sur 5 du questionnaire de
- * satisfaction de fin de session. Valeur relevée, jamais estimée ni arrondie à la hausse :
- * `note: null` affiche « Mesure en cours ». À mettre à jour après chaque session, avec la date du
- * relevé (`releve`, AAAA-MM-JJ). Pas de nombre de participants : il n'est pas significatif à ce stade.
+ * Section « Indicateurs qualité » de l'accueil : indicateurs de résultats, toutes formations
+ * confondues (indicateur 2 du référentiel Qualiopi), tirés du questionnaire de satisfaction de fin
+ * de session. Valeurs relevées, jamais estimées ni arrondies à la hausse : `null` affiche « Mesure en
+ * cours ». À mettre à jour après chaque session, avec la date du relevé (`releve`, AAAA-MM-JJ).
+ * Pas de nombre de participants : il n'est pas significatif à ce stade.
  */
-export const INDICATEUR_SATISFACTION: { note: number | null; releve: string | null } = {
-  note: null,
+export const INDICATEURS_QUALITE: {
+  releve: string | null;
+  /** Note moyenne sur 5 donnée à la formation. */
+  satisfaction: number | null;
+  /** Part, en %, des participants qui répondent « oui » à « Recommanderiez-vous cette formation ? ». */
+  recommandation: number | null;
+} = {
   releve: null,
+  satisfaction: null,
+  recommandation: null,
 };

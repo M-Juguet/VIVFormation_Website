@@ -95,7 +95,9 @@ Les textes communs à toutes les formations (méthodes pédagogiques, évaluatio
 
 ### Qualité (accueil)
 
-Les sections « Gage de qualité » et « Indicateurs qualité » de l'accueil lisent `ENGAGEMENTS_QUALITE` et `INDICATEUR_SATISFACTION` dans `src/config/site.ts`. Après chaque session, reporter dans `INDICATEUR_SATISFACTION` la note moyenne réelle du questionnaire de satisfaction, sur 5 et toutes formations confondues (`note`), et la date du relevé (`releve`, AAAA-MM-JJ). Une note `null` affiche « Mesure en cours ». La mention de certification se placera en tête de la colonne latérale de « Gage de qualité », une fois le certificat obtenu (emplacement signalé par un commentaire dans `src/pages/index.astro`).
+Les sections « Gage de qualité » et « Indicateurs qualité » de l'accueil lisent `ENGAGEMENTS_QUALITE` et `INDICATEURS_QUALITE` dans `src/config/site.ts`. Après chaque session, reporter dans `INDICATEURS_QUALITE` les résultats réels du questionnaire de satisfaction, toutes formations confondues : note moyenne sur 5 (`satisfaction`), part en % des participants qui recommanderaient la formation (`recommandation`), et la date du relevé (`releve`, AAAA-MM-JJ). Une valeur `null` affiche « Mesure en cours ». La mention de certification se placera à droite du titre de « Gage de qualité », une fois le certificat obtenu (emplacement signalé par un commentaire dans `src/pages/index.astro`).
+
+Le visuel du bandeau de l'accueil se règle dans `visuelBandeau` (`src/pages/index.astro`) : fichier dans `src/assets/accueil/`, importé, avec son texte alternatif, son crédit et, s'il vient d'une IA générative, l'outil utilisé. Il est traité comme le visuel d'une fiche formation : fond de la bande sombre en fondu horizontal, image de partage de la page. Sans visuel, la bande reste unie. La section « Formations souvent demandées » est masquée (`afficherFormationsEnAvant = false`, même fichier).
 
 ### Règles d'écriture (extrait de la charte)
 
