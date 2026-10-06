@@ -288,6 +288,35 @@
   mask-image: linear-gradient(90deg, transparent, black);
 }
 
+/* Bandeaux illustrés (accueil, en-tête de fiche) : parallaxe au défilement, ajout au site que la
+   charte ne décrit pas encore (octobre 2026). Pendant que la bande passe sous l'en-tête du site
+   (84 px, opaque), le visuel descend de 40 % de sa hauteur : il défile à 60 % de la vitesse de la
+   page, et son bord haut reste caché sous l'en-tête. Animation liée au défilement, sans script ;
+   sous 900 px, en mouvement réduit ou sans prise en charge, le visuel reste fixe dans la bande. */
+@media (min-width: 900px) and (prefers-reduced-motion: no-preference) {
+  @supports (animation-timeline: view()) {
+    /* Chronologie nommée sur la section : avec overflow-hidden, la section est le conteneur de
+       défilement le plus proche du visuel, et une view() posée sur le visuel resterait immobile. */
+    :has(> .viv-entete-visuel) {
+      view-timeline: --viv-entete block;
+      view-timeline-inset: 84px 0px;
+    }
+    .viv-entete-visuel {
+      animation-name: viv-parallaxe;
+      animation-duration: auto;
+      animation-timing-function: linear;
+      animation-fill-mode: both;
+      animation-timeline: --viv-entete;
+      animation-range: exit-crossing;
+    }
+  }
+}
+@keyframes viv-parallaxe {
+  to {
+    transform: translateY(40%);
+  }
+}
+
 /* Fiche formation : les ancres tiennent compte de la barre de fiche collante (BarreFormation). */
 html:has([data-barre]) {
   scroll-padding-top: 136px;
