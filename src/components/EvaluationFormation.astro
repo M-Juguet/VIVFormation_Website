@@ -2,38 +2,46 @@
 /* Évaluation et validation d'une formation : quatre temps en cartes de verre sur la bande de
    dégradé, reliés par des flèches sur grand écran. Textes communs à toutes les formations :
    évaluation de la fiche TRL01, sanction reprise mot pour mot de
-   docs/design-system/templates/fiche-programme/REGLES.md, ligne du QCM reprise du support. */
+   docs/design-system/templates/fiche-programme/REGLES.md, ligne du QCM reprise du support sans le
+   nombre d'objectifs (rien à tenir à jour). Propres au site (octobre 2026), absents du gabarit de
+   fiche programme : les précisions sous filet des temps Avant et Pendant (règles du support,
+   docs/design-system/templates/support-formation/REGLES.md) et les mentions « formation
+   certifiante » et « droits de poursuite d'études ». Chaque carte suit la même structure — titre,
+   texte, précision sous filet — alignée d'une carte à l'autre par une sous-grille. */
 import Icon from './ds/Icon.astro';
 import type { IconName } from './ds/icons';
 
-interface Props {
-  /** Nombre d'objectifs pédagogiques, vérifiés par le QCM final. */
-  objectifs: number;
-}
-
-const { objectifs } = Astro.props;
-
-const temps: { icon: IconName; titre: string; texte: string; note?: string }[] = [
-  { icon: 'target', titre: 'Avant', texte: 'Évaluation des connaissances en début de parcours' },
-  { icon: 'monitor', titre: 'Pendant', texte: 'Exercices pratiques de mise en situation et quiz' },
+const temps: { icon: IconName; titre: string; texte: string; note: string }[] = [
+  {
+    icon: 'target',
+    titre: 'Avant',
+    texte: 'Évaluation des connaissances en début de parcours',
+    note: 'Un formulaire, rempli avant la formation, recueille aussi vos attentes.',
+  },
+  {
+    icon: 'monitor',
+    titre: 'Pendant',
+    texte: 'Exercices pratiques de mise en situation et quiz',
+    note: 'Au moins un quiz par jour de formation.',
+  },
   {
     icon: 'circle-check',
     titre: 'À la fin',
     texte: 'QCM de vérification des compétences acquises',
-    note: `Il vérifie l’atteinte des ${objectifs} objectifs pédagogiques.`,
+    note: 'Il vérifie l’atteinte des objectifs pédagogiques.',
   },
 ];
 ---
 
 <ol class="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
   {temps.map((t) => (
-    <li class="viv-glass relative flex flex-col gap-3 p-6">
+    <li class="viv-glass relative row-span-3 grid grid-rows-subgrid gap-3 p-6">
       <h3 class="heading-md flex items-center gap-2">
         <Icon name={t.icon} />
         {t.titre}
       </h3>
       <p class="body text-ink-muted">{t.texte}</p>
-      {t.note && <p class="body-sm text-ink-muted">{t.note}</p>}
+      <p class="body-sm border-t border-border pt-3 text-ink-muted">{t.note}</p>
       <span
         aria-hidden="true"
         class="absolute top-1/2 -right-5 hidden -translate-y-1/2 text-ink-on-pastel lg:flex"
@@ -42,7 +50,7 @@ const temps: { icon: IconName; titre: string; texte: string; note?: string }[] =
       </span>
     </li>
   ))}
-  <li class="viv-glass flex flex-col gap-3 p-6">
+  <li class="viv-glass row-span-3 grid grid-rows-subgrid gap-3 p-6">
     <h3 class="heading-md flex items-center gap-2">
       <Icon name="diploma" />
       Validation
@@ -51,5 +59,17 @@ const temps: { icon: IconName; titre: string; texte: string; note?: string }[] =
       Un <strong>certificat de réalisation</strong> est remis à chaque apprenant en fin de
       formation.
     </p>
+    <dl class="body-sm flex flex-col gap-1 border-t border-border pt-3 text-ink-muted">
+      {/* Libellé et valeur sur la même ligne : l'écart vient de la marge du dd, Prettier
+          supprimant l'espace entre deux éléments de bloc. */}
+      <div>
+        <dt class="inline">Formation certifiante&nbsp;:</dt>
+        <dd class="ms-1 inline text-ink">non</dd>
+      </div>
+      <div>
+        <dt class="inline">Droits de poursuite d’études&nbsp;:</dt>
+        <dd class="ms-1 inline text-ink">aucun</dd>
+      </div>
+    </dl>
   </li>
 </ol>
