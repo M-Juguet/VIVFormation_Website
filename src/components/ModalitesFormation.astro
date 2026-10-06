@@ -1,8 +1,9 @@
 ---
 /* Déroulement d'une formation : méthodes pédagogiques et animation côte à côte, accessibilité en
-   encart. Textes fixes repris mot pour mot de docs/design-system/templates/fiche-programme/REGLES.md ;
-   les méthodes pédagogiques sont communes à toutes les formations (texte de la fiche TRL01). Seul
-   le matériel fourni par VIV vient du fichier de la formation. */
+   encart. Textes fixes repris mot pour mot de docs/design-system/templates/fiche-programme/REGLES.md,
+   sauf « dans vos locaux », retiré des modalités d'animation sur le site (octobre 2026) ; les
+   méthodes pédagogiques sont communes à toutes les formations (texte de la fiche TRL01). Seul le
+   matériel fourni par VIV vient du fichier de la formation. */
 import Callout from './ds/Callout.astro';
 import Card from './ds/Card.astro';
 import { SITE } from '../config/site';
@@ -38,12 +39,14 @@ const moyens = [
       </div>
     </Card>
     <Card title="Modalités d’animation">
-      <p>
-        Nous sommes conscients des impératifs liés au monde de la production. La formation est
-        réalisée en salle de façon synchrone, en présentiel, dans vos locaux, et nous proposons un
-        rythme d’apprentissage flexible : la répartition et l’intensité des sessions peuvent être
-        adaptées pour s’ajuster au mieux aux besoins et aux disponibilités de vos équipes.
-      </p>
+      <div class="flex flex-col gap-3">
+        <p>Nous sommes conscients des impératifs liés au monde de la production.</p>
+        <p>
+          La formation est réalisée en salle de façon synchrone, en présentiel, et nous proposons un
+          rythme d’apprentissage flexible : la répartition et l’intensité des sessions peuvent être
+          adaptées pour s’ajuster au mieux aux besoins et aux disponibilités de vos équipes.
+        </p>
+      </div>
     </Card>
   </div>
   <Callout tone="info" title="Accessibilité aux personnes handicapées">
