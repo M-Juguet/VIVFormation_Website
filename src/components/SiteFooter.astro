@@ -1,9 +1,11 @@
 ---
 import Logo from './ds/Logo.astro';
 import { SITE } from '../config/site';
+import { getCatalogue } from '../lib/catalogue';
 import { getTaxonomiesUtilisees } from '../lib/formations';
 
 const { domaines } = await getTaxonomiesUtilisees();
+const catalogue = getCatalogue();
 const lien = 'text-ink-muted no-underline hover:text-ink';
 const aPropos = [
   { href: '/mentions-legales/', label: 'Mentions légales' },
@@ -33,6 +35,13 @@ const plan = `https://www.google.com/maps/search/?api=1&query=${encodeURICompone
             Catalogue complet
           </a>
         </li>
+        {catalogue && (
+          <li class="body-sm">
+            <a href={catalogue.href} download class={lien}>
+              Catalogue PDF
+            </a>
+          </li>
+        )}
         {domaines.map((d) => (
           <li class="body-sm">
             <a href={`/catalogue/?domaine=${d.id}`} class={lien}>

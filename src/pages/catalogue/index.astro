@@ -4,10 +4,12 @@ import FormationCard from '../../components/FormationCard.astro';
 import Button from '../../components/ds/Button.astro';
 import Callout from '../../components/ds/Callout.astro';
 import Field from '../../components/ds/Field.astro';
+import { getCatalogue } from '../../lib/catalogue';
 import { getFormations, getTaxonomiesUtilisees, resolveFormation } from '../../lib/formations';
 
 const formations = await Promise.all((await getFormations()).map(resolveFormation));
 const { domaines, outils, types } = await getTaxonomiesUtilisees();
+const catalogue = getCatalogue();
 
 /* Lignes de filtres : seuls les classements qui ont une formation ; une ligne qui n'offre qu'un
    choix est masquée (elle revient avec un deuxième classement). */
@@ -47,10 +49,23 @@ const texteRecherche = (f: (typeof formations)[number]) =>
       <h1 class="display-lg mt-2 mb-4 max-w-[760px] text-balance">
         Toutes nos formations, organisées à la demande
       </h1>
-      <p class="body-lg mb-10 max-w-[62ch] text-ink-muted">
+      <p class:list={['body-lg max-w-[62ch] text-ink-muted', catalogue ? 'mb-6' : 'mb-10']}>
         Conception 3D, graphisme 2D et IA générative. Les dates se fixent avec vous ; toutes les
         sessions se tiennent en présentiel.
       </p>
+      {catalogue && (
+        <div class="mb-10">
+          <Button
+            variant="secondary"
+            size="sm"
+            href={catalogue.href}
+            download={`VIV-Formation-catalogue-${catalogue.annee}.pdf`}
+            icon="download"
+          >
+            Télécharger le catalogue
+          </Button>
+        </div>
+      )}
 
       <div id="filtres" class="viv-glass flex flex-col gap-4 p-5">
         <div class="max-w-[480px]">

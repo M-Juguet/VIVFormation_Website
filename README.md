@@ -110,6 +110,10 @@ Le skill `rediger-formation` (`skills/rediger-formation/`) fait générer par Cl
 python -m zipfile -c rediger-formation.zip skills/rediger-formation
 ```
 
+### Catalogue PDF
+
+Déposer le catalogue dans `public/catalogue/viv-formation-catalogue-AAAA.pdf` (ex. `viv-formation-catalogue-2026.pdf`). Le fichier le plus récent est proposé par un bouton « Télécharger le catalogue » sur la page Catalogue et par un lien « Catalogue PDF » dans le pied de page (`src/lib/catalogue.ts`) ; sans fichier, ni bouton ni lien.
+
 ### Qualité (accueil)
 
 Les sections « Gage de qualité » et « Indicateurs qualité » de l'accueil lisent `ENGAGEMENTS_QUALITE` et `INDICATEURS_QUALITE` dans `src/config/site.ts`. Chaque année, reporter dans `INDICATEURS_QUALITE` les résultats réels du questionnaire de satisfaction, toutes formations confondues : note moyenne sur 5 (`satisfaction`), part en % des participants qui recommanderaient la formation (`recommandation`), et l'année ou la période couverte (`periode`, affichée « Résultats 2026. »). La note de satisfaction est la valeur exacte (deux décimales au plus) : une note sur 10 se divise par 2, sans arrondi. Une valeur `null` affiche « Mesure en cours ». La mention de certification se placera à droite du titre de « Gage de qualité », une fois le certificat obtenu (emplacement signalé par un commentaire dans `src/pages/index.astro`).
