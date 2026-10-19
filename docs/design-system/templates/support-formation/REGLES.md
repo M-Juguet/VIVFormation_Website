@@ -28,15 +28,16 @@
 | avant-dernière | Clôture | QCM de vérification des compétences (QR code et adresse fournis), avec la ligne « Il vérifie l'atteinte des N objectifs pédagogiques. » (N = nombre d'objectifs de la slide 4) ; remerciements et logo couleur. |
 | dernière | Glossaire | Termes techniques du support, avec l'équivalent anglais, par ordre alphabétique, lus colonne par colonne. 12 termes maximum par slide (6 par colonne) ; au-delà, « Glossaire (1/2) », « Glossaire (2/2) ». |
 
-Seul le pied de page des slides 6, 7 et 8 change (titre de la formation).
+Seul le pied de page des slides 6, 7 et 8 change (ligne de référence du support).
 
 ## Couverture
 
 - Moitié gauche : logo en haut, bloc titre centré verticalement (surtitre, titre, sous-titre, pastilles), ligne de référence en bas.
 - Pastilles : durée sur `brand-rose`, niveau sur `brand-gold`, texte `ink-on-pastel`. Pas d'autre pastille.
 - Ligne de référence, 20 px, `ink-subtle`, séparateur « • », libellés suivis de « : » :
-  `[Réf. formation]-SU • Révisé le : [date en toutes lettres] • Référent : [Prénom NOM] • Version : [AAvNN]`
-  La référence formation est composée du domaine, du numéro de formation et du type de document (SU = support). Exemple : `IAG01-SU • Révisé le : 24 septembre 2026 • Référent : Matthieu JUGUET • Version : 26v01`.
+  `[Réf. formation]-SU • Révisé le : [jour mois année, mois en toutes lettres] • Référent : [Prénom NOM] • Version : [AAvNN]`
+  La référence formation est composée du domaine, du numéro de formation et du type de document (SU = support). Exemple : `IAG01-SU • Révisé le : 16 octobre 2026 • Référent : Matthieu JUGUET • Version : 26v01`.
+  Tant qu'aucune révision n'a eu lieu, « Révisé le » reprend la date de la première version : le support n'a pas de champ « Créé le ». La date de la première version est la date du jour de la première génération du support, modifiable sur demande de l'utilisateur.
 - Moitié droite : visuel à fond perdu (bords haut, bas et droit, sans arrondi), fourni par l'utilisateur. Il montre le sujet de la formation (rendu, poste de travail, résultat obtenu) ; jamais de logo d'éditeur ni d'élément identifiable d'un projet client ; 1920 px de large minimum. Sans visuel fourni, conserver l'illustration géométrique du gabarit. Ne jamais générer ni dessiner d'image de remplacement.
 - Pas de formateur (il a sa propre slide), pas de mention de propriété.
 
@@ -93,7 +94,7 @@ Seul le pied de page des slides 6, 7 et 8 change (titre de la formation).
 
 - Contenu identique pour toutes les formations : recopier la slide du gabarit telle quelle, notes comprises.
 - Horaires : frise de la journée, proportionnelle aux durées (9 h 00 – 12 h 30, déjeuner, 13 h 30 – 17 h 00 ; pauses de 15 min en `brand-gold`, déjeuner en `brand-rose`). Ce sont les horaires de base ; les ajustements se décident à l'oral en début de formation, la slide ne change pas.
-- Deux cartes : Émargement (numérique, chaque demi-journée) et Accessibilité (référent handicap : Mme Morgane CHAUFOURNAIS, m-chaufournais@viv-prod.com).
+- Deux cartes : Émargement (numérique, chaque demi-journée) et Accessibilité (Référente handicap : Mme Morgane CHAUFOURNAIS, m-chaufournais@viv-prod.com).
 - Pas d'information sur le lieu (formations chez les clients) ni de variante à distance (aucune formation à distance).
 
 ## Votre formateur (slide 9)
@@ -123,7 +124,7 @@ La pastille de module, le surtitre et le pied de page doivent concorder avec le 
 - Filet dégradé de 6 px en haut, sur toute la largeur.
 - Surtitre en capitales espacées : « Module N · Titre du module ». Pour les formats particuliers : « Module N · Démonstration », « Module N · Atelier pratique », « Module N · Étude de cas », « Module N · Prise en main », « Module N · Quiz » (« Module N · Quiz · Correction »). Pour les slides 2 à 10 : « Introduction » (« Introduction · Lancement » pour la slide 10). Clôture : « Clôture ». Glossaire : « Annexe ».
 - Titre Playfair Display italique gras, 60 px, sur une ligne si possible, deux au maximum.
-- Pied de page : « VIV Formation · [titre court de la formation] » à gauche ; à droite « Introduction », « Jour N » ou « Annexe », puis le numéro de page.
+- Pied de page, sur une seule ligne, jamais plus, jamais de titre court : à gauche la ligne de référence du support, identique à celle de la couverture ; à droite « Introduction », « Jour N » ou « Annexe », puis le numéro de page.
 - La zone de contenu est centrée verticalement entre le titre et le pied de page : jamais de bloc calé en haut avec un vide en dessous, jamais d'éléments étirés pour remplir.
 - Marges : 104 px en haut, 120 px sur les côtés, 56 px en bas.
 
@@ -184,9 +185,9 @@ Si aucun gabarit ne convient, on compose à partir de leurs éléments (carte, e
 - Les notes des slides 6, 7 et 8 sont fixes, comme leur contenu : recopier celles du gabarit.
 - Durées : la somme des durées des slides d'un module (ouverture, contenus, quiz, démonstrations et ateliers pour leur durée réelle, À retenir) correspond à la durée du module dans le déroulé, à 15 % près. Les slides 1 à 10 tiennent dans la première demi-heure. L'exemple du gabarit est un extrait de module : ce contrôle ne s'applique qu'aux supports générés.
 
-## Données en attente de confirmation
+## Adresse de contact et d'inscription
 
-- **Adresse de contact et d'inscription** `formation@viv-formation.com` : **non confirmée**. Le gabarit ne l'affiche pas aujourd'hui. Si une génération l'ajoute (contact, inscription), le signaler à l'utilisateur avant livraison, jusqu'à confirmation. Une fois l'adresse confirmée ou remplacée, la mettre à jour dans les trois modèles (fiche programme, déroulé, support) et retirer cette mention.
+- `formation@viv-prod.com`. Le gabarit ne l'affiche pas aujourd'hui.
 
 ## Contrôle avant livraison
 
@@ -194,7 +195,7 @@ Si aucun gabarit ne convient, on compose à partir de leurs éléments (carte, e
 2. Chaque module a une ouverture et un À retenir, et les numéros concordent avec le déroulé.
 3. Toutes les sections ont un `data-speaker-notes` au format fixe (durée, message clé, script, question facultative, transition), et les durées de chaque module correspondent au déroulé à 15 % près.
 4. Aucun texte ne dépasse de son cadre, et aucun titre ne fait plus de deux lignes.
-5. Le titre du pied de page est identique sur toutes les slides.
+5. La ligne de référence du pied de page est identique sur toutes les slides et à celle de la couverture.
 6. Pastille, durée et objectifs de chaque ouverture de module concordent avec le déroulé.
 7. Les durées du déroulé s'additionnent correctement et correspondent à la couverture ; chaque objectif est servi par au moins un module.
 8. Chaque page porte son numéro, égal à son rang ; chaque jour contient au moins un quiz.

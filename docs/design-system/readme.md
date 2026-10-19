@@ -32,7 +32,9 @@ Comment la marque écrit, repris du brand book source et appliqué dans tous les
 - **Aucun emoji**, ni interface, ni supports, ni e-mails clients.
 - **Paragraphes courts** : 3 à 5 lignes en `body`, une idée par paragraphe. Mesure de 60 à 75 caractères.
 
-Ce que le système ne doit **jamais** laisser écrire, parce que ce n'est pas vrai aujourd'hui : **pas de CPF** (les financements sont la prise en charge OPCO et le plan de développement des compétences) ; **pas de session au calendrier** (même en inter-entreprises, les dates se conviennent avec les clients selon leurs besoins et disponibilités) — donc ni places restantes, ni compte à rebours, ni « S'inscrire », mais « Demander des dates » / « Demander un devis », et les statuts « Dates à convenir », « Session confirmée », « Session reportée » ; **présentiel uniquement, chez le client** (« dans vos locaux » ; jamais « nos locaux » ni « notre salle » ; seuls le cadrage préalable et le suivi sont téléphoniques, et cela se dit explicitement) ; **pas encore certifié Qualiopi** — ni mention, ni logo, ni « démarche qualité certifiée » tant que le certificat n'est pas obtenu.
+Ce que le système ne doit **jamais** laisser écrire, parce que ce n'est pas vrai aujourd'hui : **pas de CPF** (les financements sont la prise en charge OPCO et le plan de développement des compétences) ; **pas de session au calendrier** (même en inter-entreprises, les dates se conviennent avec les clients selon leurs besoins et disponibilités) — donc ni places restantes, ni compte à rebours, ni « S'inscrire », mais « Demander des dates » / « Demander un devis », et les statuts « Dates à convenir », « Session confirmée », « Session reportée » ; **présentiel uniquement** (quand un lieu doit être évoqué, on écrit « Présentiel » seul, sans autre mention de lieu ; seul le cadrage préalable est téléphonique, et cela se dit explicitement) ; **pas encore certifié Qualiopi** — ni mention, ni logo, ni « démarche qualité certifiée » tant que le certificat n'est pas obtenu.
+
+**Lieu de formation, information interne** : les formations ont lieu uniquement chez le client. L'information sert à qui produit les documents (l'adresse du lieu dans la convention, par exemple) ; elle ne s'écrit pas dans les textes.
 
 **Marques tierces** : citez Blender, Unreal Engine ou tout autre outil en texte. N'insérez pas le logo d'un éditeur dans une fiche programme, une carte de module ou une couverture, et ne reprenez pas sa palette pour habiller un module.
 
@@ -42,7 +44,7 @@ Ce que le système ne doit **jamais** laisser écrire, parce que ce n'est pas vr
 
 **Dégradé.** `--gradient-brand` : `linear-gradient(90deg, var(--brand-rose) 15%, var(--brand-gold) 76%)` — deux arrêts, horizontal, plateaux aux extrémités (le passage précipité par l'orange est ainsi évité). Filet de 4 px sous un en-tête, bandeau de couverture, jaquette de module, barre de progression, **et bande de section pleine largeur**. Il peut porter du texte : l'encre est alors `ink-on-pastel`, jamais `ink-muted` ni une couleur claire, et jamais un texte long — un titre, un chapô, un libellé de bouton. Il n'est plus limité à une occurrence par écran, mais il reste un accent : deux ou trois par page, pas un fond général. **Jamais en vertical ni en diagonale** — l'axe horizontal est celui du logo.
 
-**Typographie.** Deux familles. **Playfair Display Bold Italic** pour les titres et les noms de personnes (`display-xl` 56/58, `display-lg` 40/46, `display-md` 32/38, `identity` 20/28) ; jamais sous 20 px, jamais en texte courant ni en citation. **Noto Sans** pour tout le reste : sous-titres en **italique gras** (`heading-lg/md/sm` — c'est la règle de charte, y compris pour les titres de cartes), corps en Regular (`body-lg` 17/28, `body` 15/24, `body-sm` 13/20), citations en Italic (`quote` 20/32), annotations en Light (`caption` 12/18, portée en `ink-muted`). **Il n'existe pas de gras droit dans les fichiers fournis** : boutons, libellés, badges et sur-titres sont en Regular, la hiérarchie vient de la taille, de la couleur et de l'espacement — n'écrivez jamais `font-weight: 600` sur une face droite. Tout est aligné à gauche : pas de justification, pas de centrage au-delà de trois lignes.
+**Typographie.** Deux familles. **Playfair Display Bold Italic** pour les titres et les noms de personnes (`display-xl` 56/58, `display-lg` 40/46, `display-md` 32/38, `identity` 20/28) ; jamais sous 20 px, jamais en texte courant ni en citation. **Noto Sans** pour tout le reste : sous-titres en **italique gras** (`heading-lg/md/sm` — c'est la règle de charte, y compris pour les titres de cartes), corps en Regular (`body-lg` 17/28, `body` 15/24, `body-sm` 13/20), citations en Italic (`quote` 20/32), annotations en Light (`caption` 12/18, portée en `ink-muted`). **Il n'existe pas de gras droit dans les fichiers fournis** : boutons, libellés, badges et sur-titres sont en Regular, la hiérarchie vient de la taille, de la couleur et de l'espacement — n'écrivez jamais `font-weight: 600` sur une face droite. Tout est aligné à gauche : pas de justification, pas de centrage au-delà de trois lignes. Exception : dans les documents administratifs (gabarits A4 et présentation), les paragraphes de texte courant sont justifiés, avec coupure automatique des mots en français (`hyphens: auto`, `lang="fr"`) ; les titres, listes, tableaux, cartouche, encadré des mentions légales et pied de page y restent alignés à gauche.
 
 **Espacement.** Échelle de 4 px, `space-1` (4) à `space-16` (64). Padding de carte `space-5`, écart entre cartes `space-6`, entre sections `space-12`, respiration de haut de page `space-16`. Le motif de couverture travaille au pas de `space-8`.
 
@@ -60,7 +62,7 @@ Ce que le système ne doit **jamais** laisser écrire, parce que ce n'est pas vr
 
 **Images.** On ne photographie pas une session : ni la salle, ni les écrans, ni les participants, ni les maquettes ; l'interdiction vaut pour les captures d'écran et les fichiers ouverts en formation. Les captures viennent des **fichiers d'exercice de VIV Formation**, cadrées sur la zone utile, prises dans le thème sombre du logiciel (réglage par défaut de Blender comme d'Unreal Engine). Les portraits sont ceux de l'équipe, en lumière naturelle, gestes de travail réels, avec l'accord des personnes — pas de photo de banque mise en scène. Toute image passe par `Figure` : contour `border`, rayon `radius-lg`, légende en `caption` qui dit ce qu'il faut regarder ; ni ombre portée, ni perspective, ni biseau. La mention « Image générée avec &lt;outil&gt; » figure sur tout visuel produit ou retouché par une IA générative.
 
-**Affichage mobile.** Trois ruptures, pas plus : `--bp-sm` 600 px (téléphone), `--bp-md` 900 px (tablette et petit portable), `--bp-lg` 1180 px (largeur maximale du contenu). Les mises en page passent par les classes de `tokens/layout.css` — `.viv-wrap`, `.viv-section`, `.viv-split--hero|aside|even|form`, `.viv-grid-cards`, `.viv-grid-tiles`, `.viv-form-grid` — et non par des largeurs écrites à la main : elles portent déjà les ruptures.
+**Affichage mobile.** Trois ruptures, pas plus : `--bp-sm` 600 px (téléphone), `--bp-md` 900 px (tablette et petit portable), `--bp-lg` 1180 px (largeur maximale du contenu). Les mises en page passent par les classes de `components/bundle.css` — `.viv-wrap`, `.viv-section`, `.viv-split--hero|aside|even|form`, `.viv-grid-cards`, `.viv-grid-tiles`, `.viv-form-grid` — et non par des largeurs écrites à la main : elles portent déjà les ruptures.
 
 - **Typographie.** Sous 600 px, les titres se compriment sans s'écraser : `display-xl` 56 → 34, `display-lg` 40 → 28, `display-md` 32 → 24, `heading-lg` 24 → 20. **Le corps ne bouge pas** : 15 px est le plancher lisible, et comme il n'existe pas de gras droit, la hiérarchie tient à la taille — la comprimer davantage la ferait disparaître.
 - **Cible tactile.** `--touch-min` 44 px. Sous `pointer: coarse`, boutons et champs sont rehaussés automatiquement, quelle que soit la largeur. Un `Button size="sm"` mesure 34 px au repos : il ne porte jamais l'action principale d'un écran tactile.
@@ -94,14 +96,14 @@ Quinze composants, exactement l'inventaire du bundle source — aucun ajout, auc
 `components/base/` — **Button**, **Badge**, **Card**, **Field**, **Callout**, **Logo**, **Icon**, **Figure**.
 `components/formation/` — **ModuleCard**, **ObjectivesPanel**, **TrainerCard**, **ProgramSteps**, **SoftwareRequirements**, **Kbd**, **Progress**.
 
-Le source comptait deux entrées supplémentaires qui ne sont pas des composants et n'ont donc pas été portées comme tels : **Motion** (une page de documentation — ses valeurs sont dans `tokens/motion.css` et dans la carte « Mouvement ») et **Cover** (une planche de motif sans implémentation — reprise telle quelle dans la carte « Motif de couverture »).
+Le source comptait deux entrées supplémentaires qui ne sont pas des composants et n'ont donc pas été portées comme tels : **Motion** (une page de documentation — ses valeurs sont dans `tokens.json` et dans la carte « Mouvement ») et **Cover** (une planche de motif sans implémentation — reprise telle quelle dans la carte « Motif de couverture »).
 
 ### Ajouts volontaires
 
 - `--gradient-brand` : le dégradé de marque, jusque-là recopié à l'identique dans six règles du bundle source, est désormais un token. Même valeur, un seul endroit à lire.
 - `--glass-surface`, `--glass-border`, `--glass-blur` et la classe `.viv-glass` : le verre dépoli, absent du brand book source, ajouté à la demande de l'organisme. Voir « Verre dépoli » ci-dessus pour ses conditions d'emploi.
 - **`ModuleCard` avec visuel** : props `image` / `imagePlaceholder`, `mark` (repère d'outil sur l'angle du visuel) et `href` (carte entièrement cliquable vers la fiche programme), ajoutées à la demande de l'organisme. Sans ces props, la carte est exactement celle du bundle source.
-- **Fondations d'affichage mobile** (`tokens/layout.css`) : points de rupture, cible tactile de 44 px, classes de mise en page et tiroir de navigation — absents du brand book source, qui ne traitait que l'écran large.
+- **Fondations d'affichage mobile** (`tokens.json`, `components/bundle.css`) : points de rupture, cible tactile de 44 px, classes de mise en page et tiroir de navigation — absents du brand book source, qui ne traitait que l'écran large.
 - **Règles de dégradé assouplies** à la demande de l'organisme : il peut désormais porter du texte (en `ink-on-pastel`) et apparaître plusieurs fois sur une page. L'interdiction du dégradé vertical ou diagonal, elle, est maintenue.
 - `.viv-gradient-line` et les classes utilitaires de type (`display-xl`, `body`, `caption`…) sont reprises du source, sans changement de valeurs.
 
@@ -118,6 +120,13 @@ Le source comptait deux entrées supplémentaires qui ne sont pas des composants
 | `tokens/type-classes.css` | Classes utilitaires de la hiérarchie typographique, `.viv-gradient-line`, `.viv-glass`, échelle mobile. |
 | `tokens/layout.css` | Points de rupture, cible tactile, classes de mise en page adaptative, tiroir de navigation. |
 | `components/components.css` | Feuille de style des quinze composants (reprise de `bundle.css`). |
+| `tokens.json` | Les tokens, source des valeurs : couleurs en thèmes `clair` et `sombre`, typographie et fontes, espacement, rayons, ombres, mouvement, points de rupture, flou. |
+| `tokens.css` | Compilé depuis `tokens.json` : variables, classes de type, `@font-face`. |
+| `components/bundle.css` | Chargée après `tokens.css` : ce que `tokens.json` ne déclare pas — `--gradient-brand`, mouvement, classes de type complémentaires, mise en page, composants. `styles.css` charge les deux. |
+| `components/bundle.js` | Le bundle des composants, `window.VivFormationDesignSystem_81f768`. |
+| `components/index.d.ts` | Les contrats de props des quinze composants. |
+| `components/<Composant>/` | `README.md` (le `.prompt.md` du composant) et `preview.html` ; `components/Cover/preview.html` est la couverture, `components/MobileRuptures/` et `components/MobileTactile/` les cartes Mobile. |
+| `archived/` | L'ancien `styles.css`, mis de côté. |
 | `components/base/`, `components/formation/` | Les composants, leurs types, leurs prompts, leurs cartes. |
 | `guidelines/*.card.html` | 25 cartes de fondations : Colors (8), Type (5), Spacing (4), Mobile (2), Motion (1), Brand (5). |
 | `ui_kits/catalogue/` | Site public : catalogue filtrable, fiche programme, demande de dates. |
@@ -125,15 +134,19 @@ Le source comptait deux entrées supplémentaires qui ne sont pas des composants
 | `ui_kits/module-web/` | Module de formation en ligne : leçon, quiz corrigé, fin de module. |
 | `templates/fiche-programme/` | Fiche programme imprimable A4 portrait pour le catalogue PDF : gabarit `FicheProgramme.dc.html` et règles `REGLES.md` (bandeau de repères, programme détaillé, modalités en trois groupes, textes fixes). |
 | `templates/deroule-pedagogique/` | Déroulé pédagogique A4 paysage : gabarit `DeroulePedagogique.dc.html` et règles `REGLES.md` (fiche d'identité, synthèse, détail par séquence, concordance avec le support). |
+| `guidelines/documents-administratifs.md` | Règle commune des documents administratifs (A4 et présentations) : mentions légales VIV, codification `CODE.AAAA.N`, cartouche, écriture inclusive, procédure de rechartage avec journal. |
+| `guidelines/codes-documents.md` | Glossaire des codes de documents : familles, sujets, références attribuées et anciennes références. |
+| `templates/document-a4/` | Document administratif A4 portrait : gabarit `DocumentA4.dc.html` (exemple : fiche de poste formateur·rice), blocs `Blocs.dc.html`, documents rechartés `PSHLIA.2026.1.dc.html` et `PROVEI.2026.1-annexes.dc.html`, règles `REGLES.md`, journaux de rechartage dans `rechartage/`. |
+| `templates/presentation/` | Présentation administrative 16:9 : gabarit `Presentation.dc.html` (exemple : Procédures et veille, organigrammes), règles `REGLES.md`, journal dans `rechartage/`. |
 | `templates/support-formation/` | Support de formation en slides : gabarit `SupportFormation.dc.html` et règles de génération `REGLES.md` (structure obligatoire, slides fixes, notes du présentateur). |
 | `assets/logos/` | Les douze fichiers de marque (8 SVG, 4 PNG) et leur readme d'origine. |
 | `fonts/` | Les six fichiers de fonte (TTF) : cinq de la charte, plus Noto Sans Mono Regular. |
 | `thumbnail.html` | Vignette du système. |
-| `SKILL.md` | Enveloppe Agent Skills pour réutiliser ce dossier hors de cet outil. |
+| `assets/notes/SKILL.from-standalone.md` | Enveloppe Agent Skills pour réutiliser ce dossier hors de cet outil. |
 
 ## Réserves à lever
 
 - **Les fontes sont des TTF.** Le `tokens.css` source déclarait des `.woff2` que le dossier ne contenait pas ; seuls les cinq TTF étaient présents. Les `@font-face` pointent donc sur les TTF. Si vous avez les WOFF2, déposez-les dans `fonts/` et changez les cinq `src` : le poids de chargement en sera divisé par deux.
-- **Noto Sans Mono** est un ajout du système, absent de la charte. Le fichier Regular a été fourni depuis et il est servi par `tokens/fonts.css` ; il n'existe qu'en une graisse — les blocs `code` et `kbd` n'en demandent pas d'autre.
+- **Noto Sans Mono** est un ajout du système, absent de la charte. Le fichier Regular a été fourni depuis et il est servi par `tokens.css` ; il n'existe qu'en une graisse — les blocs `code` et `kbd` n'en demandent pas d'autre.
 - **Aucune image de marque n'a été fournie** : ni portrait de formateur, ni capture de fichier d'exercice, ni rendu. Les `Figure` des kits affichent des cadres vides légendés. Rien n'a été dessiné ni généré à la place.
 - **La planche de charte VIV Group** n'était pas dans le dossier ; ses mesures (pastille, zone de protection) sont reprises des commentaires du bundle source.

@@ -6,8 +6,8 @@ const cx = (...a) => a.filter(Boolean).join(' ');
 function base() {
   if (typeof document === 'undefined') return 'assets/logos/';
   if (window.VIV_ASSET_BASE) return window.VIV_ASSET_BASE;
-  const s = Array.from(document.querySelectorAll('script[src]')).find((x) => x.src.indexOf('_ds_bundle.js') !== -1);
-  return (s ? s.src.replace(/_ds_bundle\.js.*$/, '') : '') + 'assets/logos/';
+  const s = Array.from(document.querySelectorAll('script[src]')).find((x) => x.src.indexOf('components/bundle.js') !== -1);
+  return (s ? s.src.replace(/components\/bundle\.js.*$/, '') : '') + 'assets/logos/';
 }
 const FILES = {
   'complet-couleur': 'viv-formation-couleur.svg',

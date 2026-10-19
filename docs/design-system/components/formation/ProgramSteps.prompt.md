@@ -1,4 +1,4 @@
-Déroulé d'un parcours en étapes : audit de poste, journées de formation, suivi.
+Déroulé d'un parcours en étapes : audit de poste, journées de formation.
 
     <ProgramSteps steps={[
       { title: 'Cadrage préalable', meta: '1 heure — entretien téléphonique', state: 'done' },

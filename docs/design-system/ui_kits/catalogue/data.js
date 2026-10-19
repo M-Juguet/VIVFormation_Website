@@ -24,8 +24,7 @@ window.VIV_DATA = {
         { titre: 'Cadrage préalable', meta: '1 heure — entretien téléphonique', corps: "Nous relevons vos postes, vos versions installées et le type d'objet que vous produisez." },
         { titre: 'Journée 1 — modélisation', meta: '7 heures — présentiel', corps: 'Géométrie, modificateurs, contrôle de la topologie.' },
         { titre: 'Journée 2 — UV et texture', meta: '7 heures — présentiel', corps: 'Dépliage, couture des arêtes, matériaux PBR.' },
-        { titre: 'Journée 3 — éclairage et rendu', meta: '7 heures — présentiel', corps: 'Trois sources, exposition, réduction du bruit, export.' },
-        { titre: 'Suivi', meta: '1 heure — entretien téléphonique', corps: 'Deux semaines après la session, sur vos premiers fichiers de production.' }
+        { titre: 'Journée 3 — éclairage et rendu', meta: '7 heures — présentiel', corps: 'Trois sources, exposition, réduction du bruit, export.' }
       ],
       prerequis: [
         { label: 'Système', value: 'Windows 11 ou macOS 14' },

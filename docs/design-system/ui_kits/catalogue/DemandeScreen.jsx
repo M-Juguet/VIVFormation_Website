@@ -17,7 +17,7 @@ function DemandeScreen({ onBack }) {
           <Card overline="Ce que nous ne faisons pas" title="Pour éviter un malentendu" flat>
             <ul style={{ margin: 0, paddingLeft: '1.1em', display: 'flex', flexDirection: 'column', gap: 'var(--space-2)' }}>
               <li>Pas de session au calendrier : les dates se fixent avec vous.</li>
-              <li>Présentiel uniquement. Seuls le cadrage et le suivi sont téléphoniques.</li>
+              <li>Présentiel uniquement. Seul le cadrage est téléphonique.</li>
               <li>Pas de financement par le compte personnel de formation.</li>
             </ul>
           </Card>
@@ -48,7 +48,7 @@ function DemandeScreen({ onBack }) {
                 hint="Entre 3 et 6 pour ce module"
                 error={invalid ? 'Indiquez un nombre entre 3 et 6.' : undefined}
               />
-              <Field label="Lieu de la formation" hint="Adresse de vos locaux : la formation s'y tient." />
+              <Field label="Lieu de la formation" />
               <Field
                 label="Période envisagée et contraintes" multiline rows={4}
                 hint="Semaines possibles, versions installées, projets en cours"

@@ -15,10 +15,11 @@ Destinataires : le formateur (préparation et animation) et l'auditeur Qualiopi.
 - Filet dégradé de 6 px en haut.
 - En-tête : surtitre « Déroulé pédagogique · [titre court de la formation] » (capitales espacées, 13 px, `ink-muted`), titre de page en Playfair italique 28 px ; à droite, le logo couleur (34 px de haut) ; filet `border` dessous.
 - Page 1 : pas de titre de page (le titre de la formation suffit).
-- Pied de page : à gauche la ligne de référence documentaire, à droite « N / total ».
+- Pied de page, sur une seule ligne, jamais plus, jamais de titre court : à gauche la ligne de référence documentaire, à droite « N / total ».
 - Ligne de référence (séparateur « • », libellés suivis de « : ») :
-  `[Réf. formation]-DP • Révisé le : [date en toutes lettres] • Référent : [Prénom NOM] • Version : [AAvNN]`
+  `[Réf. formation]-DP • Révisé le : [jour mois année, mois en toutes lettres] • Référent : [Prénom NOM] • Version : [AAvNN]`
   Même référence formation, même date de révision et même version que le support (`-SU`), seul le suffixe change.
+  Tant qu'aucune révision n'a eu lieu, « Révisé le » reprend la date de la première version : le déroulé n'a pas de champ « Créé le ». La date de la première version est la date du jour de la première génération du déroulé, modifiable sur demande de l'utilisateur.
 
 ## Structure, dans cet ordre
 
@@ -30,7 +31,7 @@ Destinataires : le formateur (préparation et animation) et l'auditeur Qualiopi.
 
 ### Page 1 : fiche d'identité
 
-- Colonne gauche : titre (Playfair 34 px), sous-titre, pastilles durée (`brand-rose`), niveau (`brand-gold`) et modalité (« Présentiel, en entreprise », contour), 13 px, sur une seule ligne ; objectif général ; public visé et prérequis côte à côte ; puis, chacun sur toute la largeur, formateur (nom en Noto Sans gras, jamais en Playfair : les capitales du nom y rendent mal · fonction, depuis `templates/support-formation/formateurs.md`) et accessibilité (référent handicap : Mme Morgane CHAUFOURNAIS · m-chaufournais@viv-prod.com). En bas de la colonne gauche, séparée par un filet, la mention fixe en italique `ink-muted` : « Ce déroulé peut être ajusté en début de session selon le positionnement préalable et les attentes du groupe. »
+- Colonne gauche : titre (Playfair 34 px), sous-titre, pastilles durée (`brand-rose`), niveau (`brand-gold`) et modalité (« Présentiel », contour), 13 px, sur une seule ligne ; objectif général ; public visé et prérequis côte à côte ; puis, chacun sur toute la largeur, formateur (nom en Noto Sans gras, jamais en Playfair : les capitales du nom y rendent mal · fonction, depuis `templates/support-formation/formateurs.md`) et accessibilité (Référente handicap : Mme Morgane CHAUFOURNAIS · m-chaufournais@viv-prod.com). En bas de la colonne gauche, séparée par un filet, la mention fixe en italique `ink-muted` : « Ce déroulé peut être ajusté en début de session selon le positionnement préalable et les attentes du groupe. »
 - Colonne droite : libellé « Objectifs pédagogiques » (sans phrase d'amorce), objectifs numérotés dans un encadré `surface-accent` (verbe observable en italique gras, mêmes formulations et même ordre que le support) ; méthodes pédagogiques ; moyens techniques ; évaluation en trois temps (Avant / Pendant / À la fin).
 - Les textes repris du support (objectif général, public, prérequis, objectifs) sont identiques mot pour mot.
 
@@ -81,9 +82,9 @@ Une séquence peut combiner deux méthodes au plus.
 - Horaires au format « 9 h 00 – 10 h 30 », durées « 30 min » ou « 1 h 30 ».
 - Espace insécable à l'intérieur des guillemets « » et avant « : ; ? ! ».
 
-## Données en attente de confirmation
+## Adresse de contact et d'inscription
 
-- **Adresse de contact et d'inscription** `formation@viv-formation.com` : **non confirmée**. Le gabarit ne l'affiche pas aujourd'hui. Si une génération l'ajoute (contact, inscription), le signaler à l'utilisateur avant livraison, jusqu'à confirmation. Une fois l'adresse confirmée ou remplacée, la mettre à jour dans les trois modèles (fiche programme, déroulé, support) et retirer cette mention.
+- `formation@viv-prod.com`. Le gabarit ne l'affiche pas aujourd'hui.
 
 ## Contrôle avant livraison
 

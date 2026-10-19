@@ -17,7 +17,7 @@ La fiche programme est un **document imprimable**, destiné au catalogue PDF des
 - **Titres de section** (Objectifs pédagogiques, Compétences visées, Méthodes pédagogiques, Modalités d'animation, Sanction / validation, Modalités & délais d'accès, Accessibilité) : Noto Sans gras 12 pt, interligne 1,3, `accent-deep`, en minuscules. Ce sont eux que l'œil doit trouver d'abord.
 - Les libellés en capitales espacées 9 pt `ink-muted` sont réservés au bandeau de repères (Niveau, Pour qui, Prérequis, Durée, Tarifs, Équipement requis) et aux surtitres d'en-tête.
 
-- Le **gras** est réservé aux données sur lesquelles le lecteur agit ou qu'il doit retenir : nom et adresse du référent handicap, adresse d'inscription, délais (« 11 jours ouvrés », « 2 semaines »), sanction, valeurs du bandeau de repères (niveau, durée).
+- Le **gras** est réservé aux données sur lesquelles le lecteur agit ou qu'il doit retenir : nom et adresse de la référente handicap, adresse d'inscription, délais (« 11 jours ouvrés », « 2 semaines »), sanction, valeurs du bandeau de repères (niveau, durée).
 - Deux passages en gras au plus par bloc. Jamais une phrase entière.
 - Le verbe de chaque objectif pédagogique est en italique gras.
 
@@ -26,9 +26,10 @@ La fiche programme est un **document imprimable**, destiné au catalogue PDF des
 - Filet dégradé de 6 px en haut ; en-tête : surtitre en capitales espacées, logo couleur 34 px à droite, filet `border` dessous.
 - Page 1 : surtitre « Fiche programme · [Domaine] », pas de titre de page.
 - Pages suivantes : surtitre « Fiche programme · [titre court] » et titre de page Playfair 28 px.
-- Pied de page : à gauche la ligne de référence, à droite « N / total ».
-  `[Réf.]-PRO • Révisé le : [mois année en toutes lettres] • Version : [AAvNN] • Déclaration d'activité : 11923083592`
+- Pied de page, sur une seule ligne, jamais plus, jamais de titre court : à gauche la ligne de référence, à droite « N / total ».
+  `[Réf.]-PRO • Révisé le : [jour mois année, mois en toutes lettres] • Version : [AAvNN] • Déclaration d'activité : 11923083592`
   Même référence et même version que le déroulé (`-DP`) et le support (`-SU`). Le numéro de déclaration d'activité figure ici et nulle part ailleurs.
+  Tant qu'aucune révision n'a eu lieu, « Révisé le » reprend la date de la première version : la fiche n'a pas de champ « Créé le ». La date de la première version est la date du jour de la première génération de la fiche, modifiable sur demande de l'utilisateur.
 
 ## Structure
 
@@ -54,8 +55,8 @@ La fiche programme est un **document imprimable**, destiné au catalogue PDF des
 
 Chaque groupe s'ouvre sur un titre Playfair 20 px souligné d'un filet `ink` de 2 px.
 
-1. **Pédagogie** : méthodes pédagogiques, puis modalités d'animation en dessous, pleine largeur. Les méthodes couvrent aussi les moyens fournis par VIV (supports projetés, supports téléchargeables) ; les moyens déjà cités en évaluation (quiz) n'y sont pas répétés. Modalités d'animation : format synchrone et présentiel, lieu, rythme. Pas de bloc « Moyens techniques » : l'équipement de l'apprenant est dans le bandeau.
-2. **Évaluation** : frise en trois temps, cartes discrètes (filet `border` 1 px, rayon 8 px, sans fond) reliées par des flèches « → » en `accent-deep` : Avant / Pendant (mentionne les quiz) / À la fin, avec 8 px d'air au-dessus et 10 px au-dessous en plus de l'écart du groupe. Puis sanction / validation, pleine largeur. Pas de bloc « Indicateurs de résultats » sur la fiche : ils sont publiés sur le site de l'organisme (indicateur 2 de Qualiopi), jamais inventés ni recopiés ici.
+1. **Pédagogie** : méthodes pédagogiques, puis modalités d'animation en dessous, pleine largeur. Les méthodes couvrent aussi les moyens fournis par VIV (supports projetés, supports téléchargeables) ; les moyens déjà cités en évaluation (quiz) n'y sont pas répétés. Modalités d'animation : format synchrone et présentiel, rythme. Pas de bloc « Moyens techniques » : l'équipement de l'apprenant est dans le bandeau.
+2. **Évaluation** : frise en trois temps, cartes discrètes (filet `border` 1 px, rayon 8 px, sans fond) reliées par des flèches « → » en `accent-deep` : Avant / Pendant / À la fin, avec les textes fixes de la frise (voir « Textes fixes »), avec 8 px d'air au-dessus et 10 px au-dessous en plus de l'écart du groupe. Puis sanction / validation, pleine largeur. Pas de bloc « Indicateurs de résultats » sur la fiche : ils sont publiés sur le site de l'organisme (indicateur 2 de Qualiopi), jamais inventés ni recopiés ici.
 3. **Accès** : « Modalités & délais d'accès » en bloc classique (libellé + texte, sans encadré) ; puis accessibilité, pleine largeur. Pas de bloc Financement ni Contact (l'adresse d'inscription figure dans les délais d'accès).
 
 Formateur : bloc **optionnel**, dans le groupe Pédagogie, après les modalités d'animation. Deux lignes, recopiées de `templates/support-formation/formateurs.md`, sans reformulation :
@@ -80,7 +81,7 @@ Le montant est toujours exprimé « HT/pers. » (hors taxes, par personne). « [
 
 **Modalités & délais d'accès**
 > La formation peut être mise en place à tout moment, pour un maximum de 8 apprenants par session, à compter d'un délai minimal de 11 jours ouvrés suivant la date de demande.
-> La demande d'informations ou d'inscription s'effectue par mail (formation@viv-formation.com).
+> La demande d'informations ou d'inscription s'effectue par mail (formation@viv-prod.com).
 > Le démarrage de la formation ne pourra avoir lieu qu'au minimum 2 semaines après réception de la convention signée.
 
 (Effectif maximum dans la première phrase, sans gras. Il vaut toujours 8 : c'est un texte fixe, pas une donnée par formation.)
@@ -88,29 +89,33 @@ Le montant est toujours exprimé « HT/pers. » (hors taxes, par personne). « [
 **Accessibilité aux personnes handicapées**
 > Nous sommes sensibles aux enjeux de l'inclusion et investis sur la thématique du handicap.
 > Merci de nous contacter afin de pouvoir vous accompagner dans les meilleures conditions.
-> Responsable handicap : Mme Morgane CHAUFOURNAIS (m-chaufournais@viv-prod.com).
+> Référente handicap : Mme Morgane CHAUFOURNAIS (m-chaufournais@viv-prod.com).
 
 C'est la seule adresse de contact handicap, à utiliser partout sans variante.
 
+**Évaluation** (frise, un texte par carte)
+> Avant : Évaluation adressée à chaque apprenant ; questionnaire dédié si prérequis
+> Pendant : Exercices pratiques de mise en situation et quiz de fin de section
+> À la fin : QCM de vérification des compétences acquises et questionnaire de satisfaction
+
+(Avant : évaluation avant l'entrée en formation, adressée à chaque apprenant, complétée d'un questionnaire dédié quand la formation a des prérequis.)
+
 **Sanction / validation**
 > Un certificat de réalisation est remis à chaque apprenant en fin de formation.
+> Action de formation non certifiante : elle n'ouvre droit à aucune suite de parcours.
 
-(« certificat de réalisation » en gras ; une ligne.)
+(« certificat de réalisation » en gras ; deux lignes.)
 
-**Lieu** : les formations se tiennent **uniquement chez le client**. La fiche s'adresse au client, d'où « dans vos locaux », sans gras.
+**Lieu** : les formations se tiennent **uniquement chez le client**. C'est une information interne, pour qui produit les documents (l'adresse du lieu dans la convention, par exemple) : la fiche ne l'écrit pas. Quand un lieu doit être évoqué, on écrit « Présentiel » seul.
 
 **Modalités d'animation** (un seul paragraphe)
-> Nous sommes conscients des impératifs liés au monde de la production. La formation est réalisée en salle de façon synchrone, en présentiel, dans vos locaux, et nous proposons un rythme d'apprentissage flexible : la répartition et l'intensité des sessions peuvent être adaptées pour s'ajuster au mieux aux besoins et aux disponibilités de vos équipes.
+> Nous sommes conscients des impératifs liés au monde de la production. La formation est réalisée en salle de façon synchrone, en présentiel, et nous proposons un rythme d'apprentissage flexible : la répartition et l'intensité des sessions peuvent être adaptées pour s'ajuster au mieux aux besoins et aux disponibilités de vos équipes.
 
- Jamais « nos locaux », « notre salle » ni adresse de VIV comme lieu de formation.
+ Jamais d'autre mention de lieu, ni d'adresse de VIV comme lieu de formation.
 
 ## QR code
 
 Pas de QR code pour le moment. S'il est réintroduit : un seul, vers l'adresse stable de la fiche web de la formation, fourni par l'organisme, jamais fabriqué.
-
-## Données en attente de confirmation
-
-- **Adresse de contact et d'inscription** `formation@viv-formation.com` : **non confirmée**. Elle reste dans la fiche et dans les textes fixes en attendant, mais toute fiche générée le signale à l'utilisateur avant livraison, jusqu'à confirmation. Une fois l'adresse confirmée ou remplacée, la mettre à jour partout (textes fixes, délais d'accès, et règles du déroulé et du support) et retirer cette mention.
 
 ## Champs à compléter
 
@@ -143,3 +148,4 @@ Un champ sans donnée affiche `[à renseigner]` en `ink-subtle`, en italique, sa
 4. Seuls les champs autorisés portent `[à renseigner]`.
 5. Gras : deux passages au plus par bloc, jamais une phrase entière.
 6. Aucune page ne déborde, aucune n'est remplie à moins de la moitié ; « N / total » exact.
+7. Sanction / validation : les deux lignes fixes sont présentes, dont « Action de formation non certifiante : elle n'ouvre droit à aucune suite de parcours. »

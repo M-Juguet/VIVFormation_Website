@@ -16,7 +16,7 @@ function Hero() {
     <section className="viv-section" data-theme="sombre" style={{ background: 'var(--surface-brand)', color: 'var(--ink)' }}>
       <div className="viv-wrap viv-split viv-split--hero">
         <div>
-          <Badge tone="gold" icon={<Icon name="map-pin" size={16} />}>Présentiel, dans vos locaux ou sur votre site</Badge>
+          <Badge tone="gold" icon={<Icon name="map-pin" size={16} />}>Présentiel</Badge>
           <h1 className="display-xl" style={{ margin: 'var(--space-5) 0 var(--space-5)' }}>
             Des formations techniques qui tiennent au poste de travail
           </h1>

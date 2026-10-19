@@ -25,7 +25,7 @@ function FicheScreen({ id, onBack, onDemande }) {
                   { icon: 'clock', label: f.duree },
                   { icon: 'niveau', label: 'Niveau : ' + f.niveau },
                   { icon: 'users', label: f.groupe },
-                  { icon: 'map-pin', label: 'Présentiel, dans vos locaux' },
+                  { icon: 'map-pin', label: 'Présentiel' },
                   { icon: 'target', label: 'Évaluation : quiz de fin de formation' }
                 ].map((r) => (
                   <li key={r.icon} style={{ display: 'flex', gap: 'var(--space-3)', alignItems: 'flex-start' }}>
@@ -88,7 +88,7 @@ function FicheScreen({ id, onBack, onDemande }) {
               <p style={{ margin: 'var(--space-2) 0 0' }}>Sur devis.</p>
             </Card>
             <Card overline="Calendrier" title="Mise en place sur demande">
-              <p style={{ margin: 0 }}>Contacter <a href="mailto:formation@pci-partner.com">formation@pci-partner.com</a>.</p>
+              <p style={{ margin: 0 }}>Contacter <a href="mailto:formation@viv-prod.com">formation@viv-prod.com</a>.</p>
             </Card>
             <Card overline="Modalités" title="Ce qui est convenu avant la session">
               <p style={{ margin: 0 }}>Un cadrage téléphonique d'une heure relève vos postes, vos versions installées et ce que vous produisez. Le déroulé s'ajuste là-dessus.</p>

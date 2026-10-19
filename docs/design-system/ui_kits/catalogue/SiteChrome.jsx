@@ -49,13 +49,13 @@ function SiteFooter() {
         <div>
           <Logo mark="monogramme" variant="blanc" height={40} />
           <p className="body-sm" style={{ color: 'var(--ink-muted)', margin: 'var(--space-3) 0 0', maxWidth: 300 }}>
-            Formations professionnelles à l'image 2D et 3D et à l'IA générative appliquée au travail quotidien. Présentiel, dans nos locaux ou sur votre site.
+            Formations professionnelles à l'image 2D et 3D et à l'IA générative appliquée au travail quotidien. Présentiel.
           </p>
         </div>
         {[
           { t: 'Formations', l: ['Catalogue complet', 'Parcours pipeline', 'Sensibilisations'] },
           { t: 'Financement', l: ['Prise en charge OPCO', 'Plan de développement des compétences'] },
-          { t: 'Contact', l: ['contact@viv-formation.com', 'Colombes (92)'] }
+          { t: 'Contact', l: ['formation@viv-prod.com', 'Colombes (92)'] }
         ].map((col) => (
           <div key={col.t}>
             <p className="overline" style={{ color: 'var(--ink-muted)', margin: '0 0 var(--space-3)' }}>{col.t}</p>

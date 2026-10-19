@@ -46,7 +46,7 @@ function HomeFooter() {
         {[
           { t: 'Formations', l: ['Catalogue complet', 'Parcours pipeline', 'Sensibilisations'] },
           { t: 'Financement', l: ['Prise en charge OPCO', 'Plan de développement des compétences'] },
-          { t: 'Contact', l: ['contact@viv-formation.com', 'Colombes (92)'] }
+          { t: 'Contact', l: ['formation@viv-prod.com', 'Colombes (92)'] }
         ].map((col) => (
           <div key={col.t}>
             <p className="overline" style={{ color: 'var(--ink-muted)', margin: '0 0 var(--space-3)' }}>{col.t}</p>

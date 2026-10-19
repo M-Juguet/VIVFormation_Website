@@ -38,7 +38,7 @@ window.VIV_HOME = {
     }
   ],
   solutions: [
-    { titre: 'Dans vos locaux', icone: 'map-pin', texte: 'La session se tient sur vos postes, avec vos versions installées et vos fichiers de travail. Présentiel, toujours.' },
+    { titre: 'Présentiel', icone: 'map-pin', texte: 'La session se tient sur vos postes, avec vos versions installées et vos fichiers de travail. Présentiel, toujours.' },
     { titre: 'Ajustée après cadrage', icone: 'target', texte: 'Un entretien d’une heure avant la session : vos postes, ce que vous produisez, ce qui doit être opérationnel après. Le déroulé s’ajuste là-dessus.' }
   ]
 };

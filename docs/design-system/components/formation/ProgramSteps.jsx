@@ -2,7 +2,7 @@ import React from 'react';
 import { Icon } from '../base/Icon.jsx';
 const cx = (...a) => a.filter(Boolean).join(' ');
 
-/* Déroulé d'un parcours en étapes : audit de poste, journées de formation, suivi.
+/* Déroulé d'un parcours en étapes : audit de poste, journées de formation.
    `current` au plus une fois. */
 export function ProgramSteps({ steps = [], className, ...rest }) {
   return (

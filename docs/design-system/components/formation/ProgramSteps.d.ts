@@ -9,7 +9,7 @@ export interface ProgramStep {
   state?: 'done' | 'current';
 }
 
-/** Déroulé d'un parcours en étapes : audit de poste, journées de formation, suivi. */
+/** Déroulé d'un parcours en étapes : audit de poste, journées de formation. */
 export interface ProgramStepsProps {
   steps: ProgramStep[];
   className?: string;
