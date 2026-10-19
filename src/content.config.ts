@@ -183,8 +183,7 @@ const formations = defineCollection({
               titre: z.string().min(1).max(55, 'titre de partie : 55 caractères au plus'),
               points: z
                 .array(z.string().min(1).max(180, 'point : 180 caractères au plus'))
-                .min(3, 'points : 3 à 6 par partie')
-                .max(6, 'points : 3 à 6 par partie'),
+                .min(2, 'points : 2 au moins par partie'),
             }),
           )
           .min(1),

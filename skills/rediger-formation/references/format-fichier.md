@@ -62,9 +62,9 @@ Les limites ci-dessous sont celles que le site contrôle ; au-delà, la publicat
 
 ### Programme détaillé
 
-| Champ       | Règle                                                                                                                                                                                                                |
-| ----------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `programme` | Une partie par module, **sans durée ni jour**. Chaque partie : `titre` (**55 caractères au plus**) et `points` (**3 à 6**, **180 caractères au plus** chacun). Les parties sont numérotées dans l'ordre par le site. |
+| Champ       | Règle                                                                                                                                                                                                                                   |
+| ----------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `programme` | Une partie par module, **sans durée ni jour**. Chaque partie : `titre` (**55 caractères au plus**) et `points` (**2 au moins**, sans maximum, **180 caractères au plus** chacun). Les parties sont numérotées dans l'ordre par le site. |
 
 ### Modalités propres à la formation
 

@@ -45,7 +45,7 @@ competences: # 3 à 6, avec les numéros des objectifs qui y mènent
 # Programme détaillé : une partie par module du déroulé, sans durée
 programme:
   - titre: Titre de la partie # 55 caractères au plus
-    points: # 3 à 6, 180 caractères au plus
+    points: # 2 au moins, 180 caractères au plus chacun
       - Premier point
       - Deuxième point
       - Troisième point

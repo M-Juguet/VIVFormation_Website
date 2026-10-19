@@ -409,8 +409,8 @@ def verifier(chemin):
         if DUREE.search(p["titre"]):
             err(champ, "pas de durée ni de jour dans le titre (la durée est dans le bandeau et le déroulé)")
         pts = p.get("points") or []
-        if not 3 <= len(pts) <= 6:
-            err(champ, f"{len(pts)} point(s), 3 à 6 attendus")
+        if len(pts) < 2:
+            err(champ, f"{len(pts)} point(s), 2 au moins attendus")
         for j, pt in enumerate(pts, 1):
             if not isinstance(pt, str):
                 err(f"{champ}, point {j}", "texte attendu")

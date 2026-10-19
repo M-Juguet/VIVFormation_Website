@@ -81,10 +81,9 @@ Une phrase complète, 180 caractères et 30 mots au plus, avec son point : tourn
 
 - Une partie par module ou séquence de la source, dans l'ordre.
 - Titre de partie : 55 caractères au plus, sans « Module 1 », « Jour 2 », « (3 h) ».
-- 3 à 6 points par partie, 180 caractères au plus. Quand une partie sort des bornes, propose dans cet ordre :
-  1. déplacer des points entiers vers la partie voisine, texte inchangé (par exemple des exercices) ;
-  2. scinder une partie trop longue en deux, ou fusionner deux parties courtes si le total reste ≤ 6 ;
-  3. regrouper deux points très proches en un seul.
+- 2 points au moins par partie, sans maximum, 180 caractères au plus chacun. Quand une partie n'a qu'un point, propose dans cet ordre :
+  1. déplacer un point entier depuis la partie voisine, texte inchangé (par exemple un exercice) ;
+  2. fusionner la partie avec sa voisine.
 
   N'invente jamais de point pour atteindre le minimum.
 
@@ -132,7 +131,7 @@ Tu peux livrer un **brouillon** en attendant (fichier nommé `_<slug>.md`, ignor
 2. Tous les champs obligatoires sont présents ; les identifiants existent dans `donnees-site.json`.
 3. `reference` commence par le code du domaine, n'est pas déjà attribuée ; `version` en `AAvNN` cohérente avec l'année de `revision` ; `revision` à la date du jour de la génération de la version, sauf demande de l'utilisateur.
 4. `titreCourt` ≤ 40 caractères ; `sousTitre` une phrase avec point, ≤ 180 caractères et ≤ 30 mots.
-5. Bornes : public, prérequis, équipement 1 à 4 ; objectifs 3 à 8 ; compétences 3 à 6 ; programme ≥ 1 partie, 3 à 6 points chacune.
+5. Bornes : public, prérequis, équipement 1 à 4 ; objectifs 3 à 8 ; compétences 3 à 6 ; programme ≥ 1 partie, 2 points au moins chacune.
 6. Longueurs : objectifs, compétences et points ≤ 180 caractères ; titres de partie ≤ 55.
 7. Chaque objectif commence par un verbe à l'infinitif non refusé ; chaque compétence cite au moins un numéro d'objectif existant.
 8. Aucune durée dans le programme ; aucun texte fixe du site dans le fichier.
