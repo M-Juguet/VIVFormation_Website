@@ -83,7 +83,7 @@ export const ETAPES_ORGANISATION = [
 export const SECTEURS = [
   { nom: 'Design automobile', detail: 'Revue de design, rendu, temps réel' },
   { nom: 'Ferroviaire', detail: 'Préparation de données CAO' },
-  { nom: 'Aéronautique', detail: 'Visualisation et configurateurs' },
+  { nom: 'Aéronautique', detail: 'Visualisation temps réel' },
   { nom: 'Nautique', detail: 'Modélisation et rendu produit' },
   { nom: 'Services et bureaux d’études', detail: 'IA générative au quotidien' },
 ] as const;
