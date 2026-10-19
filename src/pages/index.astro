@@ -30,8 +30,8 @@ const enAvant = formations.filter((f) => f.formation.data.enAvant).slice(0, 3);
 /* Visuel du bandeau, posé comme celui de l'en-tête d'une fiche formation : fond de la bande
    sombre, fondu horizontal vers le texte, et image de partage de la page. Rendu ou capture d'un
    fichier d'exercice VIV Formation, ou portrait de l'équipe ; 16:9, 1920 × 1080 px au moins.
-   Jamais une photo de session, un logo d'éditeur ni un élément de projet client (charte,
-   « Images »). Fichier dans src/assets/accueil/, importé ci-dessus ; credit et ai (outil d'IA
+   Jamais une photo de session ni un élément de projet client (charte, « Images ») ; le logo d'un
+   éditeur est permis si besoin. Fichier dans src/assets/accueil/, importé ci-dessus ; credit et ai (outil d'IA
    générative) s'affichent dans la pastille de mention. Sans src, la bande reste unie.
    Provisoire : photo reprise de l'ancien site, en attendant un visuel conforme à la charte. */
 const visuelBandeau: { src?: ImageMetadata; alt: string; credit?: string; ai?: string } = {

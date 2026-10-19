@@ -192,7 +192,8 @@ const formations = defineCollection({
 
         /* Visuel de couverture : cartes du catalogue, en-tête de la page, image de partage, couverture
            du support. 16:9, 1920 × 1080 px au moins ; rendu ou capture d'un fichier d'exercice VIV
-           Formation, jamais une photo de session, un logo d'éditeur ni un élément de projet client. */
+           Formation, jamais une photo de session ni un élément de projet client ; le logo d'un éditeur
+           est permis si besoin. */
         visuel: image().optional(),
         /** Texte alternatif, obligatoire avec un visuel : ce que l'image montre. */
         visuelAlt: z.string().min(1).optional(),

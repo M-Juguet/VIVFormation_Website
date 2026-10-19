@@ -359,8 +359,6 @@ def verifier(chemin):
         if not re.match(rf"^\./visuels/{re.escape(slug)}\.(jpg|jpeg|png|webp)$", str(f["visuel"])):
             err("visuel", f"chemin attendu : ./visuels/{slug}.jpg (ou .png, .webp), même nom que le fichier")
         voir("visuel", "l’image doit être déposée dans src/content/formations/visuels/ sous ce nom exact, sinon le site refuse le fichier")
-        if re.search(r"\blogo", str(f.get("visuelAlt") or ""), re.I):
-            voir("visuel", "l’image montre un logo : la charte exclut les logos d’éditeur de logiciel (à faire confirmer par l’utilisateur)")
 
     # Objectifs et compétences
     objectifs = f.get("objectifs") if isinstance(f.get("objectifs"), list) else []

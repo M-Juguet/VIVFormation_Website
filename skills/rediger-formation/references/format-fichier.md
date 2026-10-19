@@ -77,7 +77,7 @@ Les limites ci-dessous sont celles que le site contrôle ; au-delà, la publicat
 Les champs du visuel ne se remplissent qu'**avec l'image sous les yeux** : l'utilisateur la joint à la conversation, tu la regardes pour écrire `visuelAlt` et vérifier les règles ci-dessous. Tant qu'elle n'est pas jointe, les lignes restent en commentaire comme dans le modèle : un fichier qui cite une image absente est refusé par le site, et un texte alternatif écrit sans voir l'image serait faux. Quand l'image arrive, le fichier est mis à jour sans changer de version (le visuel n'est pas un contenu du programme). L'image se dépose avec le fichier, sous le nom exact `<slug>.<extension>` dans `src/content/formations/visuels/` du site.
 
 - rendu ou capture d'un fichier d'exercice VIV Formation, ou visuel produit hors session ;
-- jamais une photo de session, un logo d'éditeur de logiciel (logo Unreal Engine, Blender…) ni un élément de projet client ;
+- jamais une photo de session ni un élément de projet client ; le logo d'un éditeur de logiciel (Unreal Engine, Blender…) est permis si besoin ;
 - format 16:9, 1920 × 1080 px au moins ; `.jpg` de préférence (plus léger), `.png` ou `.webp` acceptés.
 
 Si l'image enfreint une règle, signale-le avant de l'inscrire dans le fichier.
