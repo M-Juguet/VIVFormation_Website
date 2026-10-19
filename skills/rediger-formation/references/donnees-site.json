@@ -1,5 +1,5 @@
 {
-  "exporteLe": "2026-10-05",
+  "exporteLe": "2026-10-19",
   "declarationActivite": "11923083592",
   "domaines": [
     {
@@ -87,6 +87,30 @@
   ],
   "formations": [
     {
+      "slug": "blender-imagerie-cao",
+      "reference": "DPP01",
+      "version": "26v01",
+      "titre": "Optimiser son travail avec Blender pour l’imagerie CAO"
+    },
+    {
+      "slug": "concevoir-motifs-industrialisables-illustrator",
+      "reference": "GPH01",
+      "version": "26v01",
+      "titre": "Concevoir des motifs industrialisables avec Illustrator"
+    },
+    {
+      "slug": "initiation-blender-interface-rendu",
+      "reference": "PRC01",
+      "version": "26v01",
+      "titre": "Initiation à Blender : de l’interface au rendu"
+    },
+    {
+      "slug": "design-visualisation-temps-reel-blender",
+      "reference": "PRC02",
+      "version": "26v01",
+      "titre": "Design & visualisation temps réel avec Blender"
+    },
+    {
       "slug": "materiaux-rendu-blender-fondamentaux",
       "reference": "PRC04",
       "version": "26v01",
@@ -97,6 +121,12 @@
       "reference": "TRL01",
       "version": "26v01",
       "titre": "Initiation à Unreal Engine pour l’imagerie"
+    },
+    {
+      "slug": "fondamentaux-integration-temps-reel-unity",
+      "reference": "TRL02",
+      "version": "26v01",
+      "titre": "Les fondamentaux de l’intégration temps réel avec Unity"
     }
   ],
   "verbesRefuses": [
