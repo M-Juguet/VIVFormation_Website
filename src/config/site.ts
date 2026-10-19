@@ -77,12 +77,6 @@ export const ETAPES_ORGANISATION = [
     texte:
       'En petits groupes, sur vos postes : apports théoriques, exercices de mise en situation et quiz, puis un QCM final sur les compétences acquises.',
   },
-  {
-    titre: 'Suivi',
-    meta: 'Après la mise en application',
-    texte:
-      'Une fois vos équipes en pratique, nous assurons un suivi en production ou des séances de questions-réponses, à un moment fixé avec vous selon vos besoins et vos disponibilités.',
-  },
 ] as const;
 
 /** Section « Pour qui » de l'accueil. */
