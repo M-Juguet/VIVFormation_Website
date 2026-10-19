@@ -20,7 +20,7 @@ export const SITE = {
   // la page n'existe pas.
   linkedin: null as string | null,
   declarationActivite: '11923083592',
-  /** Référent handicap, seul contact accessibilité, sans variante (fiche programme, déroulé, support). */
+  /** Référente handicap, seul contact accessibilité, sans variante (fiche programme, déroulé, support). */
   referentHandicap: { nom: 'Mme Morgane CHAUFOURNAIS', email: 'm-chaufournais@viv-prod.com' },
   // Compte du widget d'accessibilité UserWay (identifiant public, visible dans le HTML).
   userwayAccount: 'g7kYGRubh4',
