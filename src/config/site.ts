@@ -127,17 +127,19 @@ export const ENGAGEMENTS_QUALITE: ({ titre: string; texte: string } & Repere)[] 
  * Section « Indicateurs qualité » de l'accueil : indicateurs de résultats, toutes formations
  * confondues (indicateur 2 du référentiel Qualiopi), tirés du questionnaire de satisfaction de fin
  * de session. Valeurs relevées, jamais estimées ni arrondies à la hausse : `null` affiche « Mesure en
- * cours ». À mettre à jour chaque année, avec la date du relevé (`releve`, AAAA-MM-JJ).
+ * cours ». À mettre à jour chaque année, avec l'année ou la période couverte (`periode`).
+ * Satisfaction : valeur exacte, deux décimales au plus (une note sur 10 se divise par 2, sans arrondi).
  * Pas de nombre de participants : il n'est pas significatif à ce stade.
  */
 export const INDICATEURS_QUALITE: {
-  releve: string | null;
+  /** Année ou période couverte, affichée « Résultats <periode>. » sous le texte (action 15). */
+  periode: string | null;
   /** Note moyenne sur 5 donnée à la formation. */
   satisfaction: number | null;
   /** Part, en %, des participants qui répondent « oui » à « Recommanderiez-vous cette formation ? ». */
   recommandation: number | null;
 } = {
-  releve: null,
-  satisfaction: 4.9,
+  periode: '2026',
+  satisfaction: 4.65,
   recommandation: 100,
 };
