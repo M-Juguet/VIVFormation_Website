@@ -4,7 +4,7 @@ Site vitrine statique (Astro + Markdown + Tailwind v4) pour l'organisme de forma
 
 ## Design system — à respecter
 
-- La charte fait foi : `docs/design-system/readme.md` (skill projet `viv-formation-design`). La lire avant tout travail visuel ou rédactionnel.
+- La charte fait foi : l'artefact « VIV Formation » (design system de Claude Design). `docs/design-system/` en est la copie dans le dépôt (`docs/design-system/readme.md`, skill projet `viv-formation-design`), à resynchroniser après chaque modification de l'artefact. La lire avant tout travail visuel ou rédactionnel.
 - `src/design-system/` est une copie non modifiée du design system : ne pas l'éditer ; les ajustements propres au site vont dans `src/styles/global.css`.
 - Typographie par les classes du design system (`display-lg`, `heading-md`, `body`, `overline`, `caption`…). Pas de tailles ni de graisses Tailwind (retirées du thème) ; jamais de gras droit.
 - Thème Tailwind restreint au design system : ni palette ni ombres (`shadow-*`) par défaut ; ruptures `sm` 600 / `md` 900 / `lg` 1180 px. Une classe absente du thème ne produit rien, sans erreur.
@@ -16,13 +16,13 @@ Site vitrine statique (Astro + Markdown + Tailwind v4) pour l'organisme de forma
 ## Contenu
 
 - Contenu et interface en **français**, vouvoiement, casse phrase.
-- Jamais : CPF, sessions au calendrier / « S'inscrire », distanciel, Qualiopi, « notre salle » (formations chez le client uniquement : « dans vos locaux »). Tarifs : « 1 900 € HT/pers. » ; toute mention du tarif inter-entreprises s'accompagne du tarif intra-entreprise (« sur devis »). Pas de tarif sur les cartes du catalogue ni dans la barre collante de la fiche.
+- Jamais : CPF, sessions au calendrier / « S'inscrire », distanciel, Qualiopi, « notre salle », aucune mention de lieu (« Présentiel » seul ; « en salle » toléré). Tarifs : « 1 900 € HT/pers. » ; toute mention du tarif inter-entreprises s'accompagne du tarif intra-entreprise (« sur devis »). Pas de tarif sur les cartes du catalogue ni dans la barre collante de la fiche.
 - Formations : un fichier `src/content/formations/<slug>.md` par formation, source unique de la page du site et de la fiche programme, base du déroulé et du support. Lire `docs/format-formation.md` avant d'en créer ou d'en modifier une ; modèle `_modele.md` ; corps vide. Gabarits et règles des documents : `docs/design-system/templates/*/REGLES.md`.
-- Classements et formateurs : `src/data/*.yaml`. Schémas : `src/content.config.ts`. Contrôles croisés et mise en forme : `src/lib/formations.ts`. Page de formation : `src/pages/formations/[id].astro` et les composants `src/components/*Formation.astro` ; textes fixes dans `ModalitesFormation`, `EvaluationFormation` et `OrganiserFormation`.
+- Classements et formateurs : `src/data/*.yaml` ; un domaine, un outil ou un type sans formation publiée est masqué automatiquement (`getTaxonomiesUtilisees`). Schémas : `src/content.config.ts`. Contrôles croisés et mise en forme : `src/lib/formations.ts`. Page de formation : `src/pages/formations/[id].astro` et les composants `src/components/*Formation.astro` ; textes fixes dans `ModalitesFormation`, `EvaluationFormation` et `OrganiserFormation`.
 - Les formations `provisoire: true` sont des exemples à remplacer.
-- Fiche programme PDF d'une formation : `public/programmes/<slug>.pdf` ; sans fichier, pas de bouton « Télécharger le programme ».
-- Indicateurs qualité de l'accueil (`INDICATEURS_QUALITE`, `src/config/site.ts`) : satisfaction sur 5 et taux de recommandation réels, fournis par l'organisme, jamais estimés ; `null` = « Mesure en cours ». Pas de nombre d'apprenants.
-- `SITE.linkedin` vaut `null` tant que l'organisme n'a pas de page LinkedIn : le bouton de l'en-tête est alors masqué ; renseigner l'adresse réelle le rétablit. Coordonnées de l'organisme (`SITE`) : 14-30 rue de Mantes, 92700 Colombes ; `formation@viv-prod.com`. Le siège social des mentions légales et des CGV (« 14 rue de Mantes ») reste inchangé en attendant la confirmation de la direction : ne pas l'aligner. Domaine de production : `https://formation.viv-prod.com` (`site`, `astro.config.mjs`).
+- Fiche programme PDF d'une formation : `public/programmes/<slug>.pdf` ; sans fichier, pas de bouton « Télécharger le programme ». Catalogue PDF : `public/catalogue/viv-formation-catalogue-AAAA.pdf`, le plus récent est proposé ; sans fichier, ni bouton ni lien.
+- Indicateurs qualité de l'accueil (`INDICATEURS_QUALITE`, `src/config/site.ts`) : satisfaction sur 5 et taux de recommandation réels, fournis par l'organisme, jamais estimés ni arrondis (valeur exacte, deux décimales au plus) ; `null` = « Mesure en cours » ; `periode` = année ou période affichée (« Résultats 2026. »). Pas de nombre d'apprenants.
+- `SITE.linkedin` vaut `null` tant que l'organisme n'a pas de page LinkedIn : le bouton de l'en-tête est alors masqué ; renseigner l'adresse réelle le rétablit. Coordonnées de l'organisme (`SITE`) : 14-30 rue de Mantes, 92700 Colombes ; `formation@viv-prod.com`. Les mentions légales, les CGV et les CGU écrivent « 14 rue de Mantes » ; le pied de page garde « 14-30 rue de Mantes » (décision du 19 octobre 2026). Domaine de production : `https://formation.viv-prod.com` (`site`, `astro.config.mjs`).
 
 ## Technique
 

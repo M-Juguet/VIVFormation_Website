@@ -58,7 +58,7 @@ src/
 
 ## Design system
 
-La référence est `docs/design-system/readme.md` (charte complète : couleurs, typographie, règles d'écriture, logo, mobile). À lire avant toute évolution visuelle ou éditoriale.
+La charte fait foi dans l'artefact « VIV Formation » (design system de Claude Design) ; `docs/design-system/` en est la copie, à resynchroniser après chaque modification. La référence dans le dépôt est `docs/design-system/readme.md` (charte complète : couleurs, typographie, règles d'écriture, logo, mobile). À lire avant toute évolution visuelle ou éditoriale.
 
 **Intégration dans Astro + Tailwind**
 
@@ -122,7 +122,7 @@ Le visuel du bandeau de l'accueil se règle dans `visuelBandeau` (`src/pages/ind
 
 ### Règles d'écriture (extrait de la charte)
 
-Vouvoiement ; casse phrase ; versions exactes ; durées écrites en toutes lettres ; aucun emoji. **Jamais** : CPF, sessions au calendrier ou « S'inscrire » (on écrit « Demander des dates » / « Demander un devis »), distanciel, « notre salle » (les formations se tiennent uniquement chez le client : « dans vos locaux »), mention Qualiopi. Tarifs au format « 1 900 € HT/pers. ».
+Vouvoiement ; casse phrase ; versions exactes ; durées écrites en toutes lettres ; aucun emoji. **Jamais** : CPF, sessions au calendrier ou « S'inscrire » (on écrit « Demander des dates » / « Demander un devis »), distanciel, « notre salle », aucune mention de lieu (« Présentiel » seul ; « en salle » toléré), mention Qualiopi. Tarifs au format « 1 900 € HT/pers. ».
 
 ## Formulaire de contact / n8n
 
