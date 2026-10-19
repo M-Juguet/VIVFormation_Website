@@ -2,9 +2,10 @@
 /* Page type : fiche d'une formation. Mêmes informations que la fiche programme imprimable
    (docs/design-system/templates/fiche-programme/), organisées pour le web comme un parcours de
    décision : est-ce pour nous, que saurons-nous faire, que contient la formation, comment est-elle
-   validée, comment se déroule-t-elle, comment l'organiser. Une barre collante porte la navigation,
-   le tarif et l'action ; tout ce qui sert à organiser (tarifs, délais, équipement, demande) est
-   regroupé dans la bande sombre finale. */
+   validée, comment se déroule-t-elle, comment l'organiser. Le bouton de l'en-tête du site mène au
+   formulaire de la fiche ; une barre collante porte la navigation et, sous 900 px, l'action. Tout
+   ce qui sert à organiser (tarifs, délais, équipement, demande) est regroupé dans la bande sombre
+   finale. */
 import { existsSync } from 'node:fs';
 import { join } from 'node:path';
 import type { GetStaticPaths } from 'astro';
@@ -88,7 +89,13 @@ const chiffresProgramme = [
 const reference = `Référence ${f.reference} · version ${f.version} · programme révisé le ${formatDate(f.revision)}.`;
 ---
 
-<BaseLayout title={f.titre} description={f.sousTitre} image={f.visuel} imageAlt={f.visuelAlt}>
+<BaseLayout
+  title={f.titre}
+  description={f.sousTitre}
+  image={f.visuel}
+  imageAlt={f.visuelAlt}
+  contact={{ href: '#demande', label: 'Demander des dates' }}
+>
   <BarreFormation
     titreCourt={f.titreCourt}
     sections={sections}

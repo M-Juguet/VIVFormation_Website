@@ -1,18 +1,23 @@
 ---
 /* En-tête collant, en thème sombre, avec filet de dégradé. Sous 900 px, la navigation passe dans
-   un tiroir plein écran ouvert depuis le haut (.viv-drawer). */
+   un tiroir plein écran ouvert depuis le haut (.viv-drawer). Bouton d'action : « Contactez-nous »
+   vers la page Contact, ou celui que passe la page (fiche formation : son propre formulaire). */
 import Button from './ds/Button.astro';
 import Icon from './ds/Icon.astro';
 import Logo from './ds/Logo.astro';
 import { NAV, SITE } from '../config/site';
 
+interface Props {
+  contact?: { href: string; label: string };
+}
+
+const { contact = { href: '/contact/', label: 'Contactez-nous' } } = Astro.props;
 const path = Astro.url.pathname;
 const isActive = (href: string) => {
   if (href.includes('#')) return false;
   if (href === '/') return path === '/';
   return path.startsWith(href) || (href === '/catalogue/' && path.startsWith('/formations/'));
 };
-const contact = '/contact/';
 // Lettres « in » pleines du logo LinkedIn (Simple Icons, CC0), sans le carré : c'est le bouton qui
 // sert de cadre. Hors de ICON_PATHS, puisque c'est une marque et non une icône Lucide.
 const linkedin =
@@ -38,8 +43,8 @@ const linkedin =
           {label}
         </a>
       ))}
-      <Button size="sm" href={contact} icon="calendar">
-        Contactez-nous
+      <Button size="sm" href={contact.href} icon="calendar">
+        {contact.label}
       </Button>
       {SITE.linkedin && (
         <Button
@@ -81,8 +86,8 @@ const linkedin =
         <a href={href}>{label}</a>
       ))}
     </nav>
-    <Button href={contact} icon="calendar">
-      Contactez-nous
+    <Button href={contact.href} icon="calendar">
+      {contact.label}
     </Button>
     {SITE.linkedin && (
       <Button

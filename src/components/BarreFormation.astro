@@ -2,9 +2,10 @@
 /* Barre de fiche : apparaît sous l'en-tête du site dès que l'en-tête de la formation sort de
    l'écran, disparaît quand arrive la zone qui porte les tarifs et le formulaire (un seul bouton
    principal visible à la fois). Pas de tarif : il est dans l'en-tête et dans la zone tarifs.
-   Grand écran : titre court, onglets des sections avec suivi de lecture, action. Écran moyen :
-   onglets et action. Mobile : titre court et action. Verre dépoli, puisque la page défile dessous ;
-   repli surface-raised sous 600 px, comme le veut la charte. */
+   Grand écran : titre court et onglets des sections, alignés à droite, avec suivi de lecture.
+   Écran moyen : onglets. À partir de 900 px, l'action est le bouton de l'en-tête du site ; dessous,
+   l'en-tête n'a que « Menu » : la barre montre le titre court et l'action. Verre dépoli, puisque
+   la page défile dessous ; repli surface-raised sous 600 px, comme le veut la charte. */
 import Button from './ds/Button.astro';
 
 interface Props {
@@ -31,7 +32,7 @@ const { titreCourt, sections, apres, avant } = Astro.props;
       {titreCourt}
     </p>
     <nav aria-label="Sections de la formation" class="hidden min-w-0 flex-1 md:block">
-      <ul class="body-sm flex gap-4">
+      <ul class="body-sm flex justify-end gap-4">
         {sections.map((s) => (
           <li>
             <a
@@ -45,7 +46,7 @@ const { titreCourt, sections, apres, avant } = Astro.props;
         ))}
       </ul>
     </nav>
-    <Button size="sm" href="#demande" icon="calendar">
+    <Button size="sm" href="#demande" icon="calendar" class="md:hidden">
       Demander des dates
     </Button>
   </div>

@@ -12,9 +12,11 @@ interface Props {
   /** Image de partage (Open Graph), avec son texte alternatif. */
   image?: ImageMetadata;
   imageAlt?: string;
+  /** Bouton d'action de l'en-tête, si la page en veut un autre que « Contactez-nous » (fiches). */
+  contact?: { href: string; label: string };
 }
 
-const { title, description = SITE.description, image, imageAlt } = Astro.props;
+const { title, description = SITE.description, image, imageAlt, contact } = Astro.props;
 const pageTitle = title
   ? `${title} — ${SITE.name}`
   : `${SITE.name} — formations 3D, graphisme 2D et IA générative`;
@@ -69,7 +71,7 @@ const partage = image
     >
       Aller au contenu
     </a>
-    <SiteHeader />
+    <SiteHeader contact={contact} />
     <main id="contenu" class="flex-1">
       <slot />
     </main>
