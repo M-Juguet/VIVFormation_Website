@@ -5,7 +5,7 @@
 import Button from './ds/Button.astro';
 import Callout from './ds/Callout.astro';
 import Field from './ds/Field.astro';
-import { CONTACT_SUBJECTS, type ContactSubject } from '../config/site';
+import { CONTACT_SUBJECTS, SITE, type ContactSubject } from '../config/site';
 
 interface Props {
   /** Préfixe des identifiants de champs (unique dans la page). */
@@ -106,7 +106,8 @@ const hints = Object.fromEntries(CONTACT_SUBJECTS.map((s) => [s.value, s.hint]))
   </Callout>
   <Callout tone="danger" title="Envoi impossible" data-state="error" class="mt-5" hidden>
     <p data-error-text>
-      Une erreur est survenue. Réessayez dans un instant ou écrivez-nous directement par courriel.
+      Une erreur est survenue. Réessayez dans un instant ou écrivez-nous à
+      <a href={`mailto:${SITE.email}`}>{SITE.email}</a>.
     </p>
   </Callout>
 </div>
