@@ -1,15 +1,15 @@
 /**
  * Informations globales et textes partagés du site.
  * Rappels de la charte (docs/design-system/readme.md) : pas de CPF, pas de session au calendrier
- * (« Demander des dates », jamais « S'inscrire »), présentiel uniquement et chez le client (« dans vos
- * locaux », jamais « notre salle »), pas de mention Qualiopi.
+ * (« Demander des dates », jamais « S'inscrire »), présentiel uniquement, sans mention de lieu
+ * (« Présentiel » seul), pas de mention Qualiopi.
  */
 import type { IconName } from '../components/ds/icons';
 
 export const SITE = {
   name: 'VIV Formation',
   description:
-    'Formations professionnelles à la conception 3D, au graphisme 2D et à l’IA générative : Blender, Unreal Engine, VRED, Unity, Illustrator. En présentiel, dans vos locaux.',
+    'Formations professionnelles à la conception 3D, au graphisme 2D et à l’IA générative : Blender, Unreal Engine, VRED, Unity, Illustrator. En présentiel.',
   locale: 'fr-FR',
   lang: 'fr',
   // Adresse de contact et d'inscription (pied de page, contact, délais d'accès). En cas de
@@ -41,7 +41,7 @@ export const CONTACT_SUBJECTS = [
   {
     value: 'devis',
     label: 'Demander un devis',
-    hint: 'Formation visée, nombre de participants, adresse de vos locaux.',
+    hint: 'Formation visée, nombre de participants, lieu de la formation.',
   },
   {
     value: 'information',
@@ -73,7 +73,7 @@ export const ETAPES_ORGANISATION = [
   },
   {
     titre: 'Sessions',
-    meta: 'Présentiel, dans vos locaux',
+    meta: 'Présentiel',
     texte:
       'En petits groupes, sur vos postes : apports théoriques, exercices de mise en situation et quiz, puis un QCM final sur les compétences acquises.',
   },
