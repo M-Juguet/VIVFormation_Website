@@ -36,7 +36,7 @@ export const CONTACT_SUBJECTS = [
   {
     value: 'dates',
     label: 'Demander des dates',
-    hint: 'Semaines possibles, nombre de participants, versions installées.',
+    hint: 'Nous vous rappelons pour un cadrage d’une heure, puis nous fixons les dates avec vous.',
   },
   {
     value: 'devis',

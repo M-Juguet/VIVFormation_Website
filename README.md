@@ -138,7 +138,7 @@ Vouvoiement ; casse phrase ; versions exactes ; durées écrites en toutes lettr
 }
 ```
 
-`sujet` ∈ `dates` | `devis` | `information` | `dysfonctionnement`. Les paramètres d'URL `?sujet=` et `?formation=` pré-remplissent le formulaire. Le webhook doit autoriser l'origine du site (CORS) et répondre en 2xx.
+`sujet` ∈ `dates` | `devis` | `information` | `dysfonctionnement`. `entreprise` est facultatif : chaîne vide quand le champ n'est pas rempli. Les paramètres d'URL `?sujet=` et `?formation=` pré-remplissent le formulaire. Le webhook doit autoriser l'origine du site (CORS) et répondre en 2xx.
 
 ## Déploiement
 
