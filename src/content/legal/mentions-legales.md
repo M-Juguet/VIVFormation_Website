@@ -5,20 +5,19 @@ description: Éditeur, hébergeur et conditions d’utilisation du site VIV Form
 
 ## Le site est édité par
 
-- Dénomination sociale : VIV
-- Société à responsabilité limitée au capital de 100 000 €
-- Registre du commerce : Nanterre RCS 811 694 215
-- N° TVA : FR12814256509
-- Siège social : 14 rue de Mantes – Immeuble Le Charlebourg – 92700 Colombes – France
-- Numéro de téléphone : [+33 (0)7 84 44 76 00](tel:+33784447600)
-- Directeur de la publication : Jonathan Lupter
+- VIV, société par actions simplifiée (SAS) au capital de 100 000 €, qui exerce son activité de formation sous le nom VIV Formation
+- Siège social : 14 rue de Mantes, Immeuble Le Charlebourg, 92700 Colombes, France
+- RCS Nanterre 811 694 215 · SIRET 811 694 215 00021 · code NAF 7410Z
+- Numéro de TVA intracommunautaire : FR89811694215
+- Téléphone : [+33 (0)1 42 42 46 93](tel:+33142424693) · courriel : <formation@viv-prod.com>
+- Déclaration d’activité enregistrée sous le numéro 11923083592 auprès du préfet de région d’Île-de-France. Cet enregistrement ne vaut pas agrément de l’État.
+- Directeur de la publication : Jonathan Lupter
 
 ## Le site est hébergé par
 
-- Dénomination sociale : OVH
-- Forme juridique : Société par actions simplifiée avec un capital de 10 174 560,00 €
-- Adresse : 2 rue Kellermann – BP 80157 – 59100 Roubaix CEDEX 1 – France
-- Registre du commerce : Lille Métropole RCS 424 761 419 00045
+- OVH, SAS immatriculée au RCS de Lille sous le numéro 424 761 419
+- Siège social : 2 rue Kellermann, 59100 Roubaix
+- Téléphone : [+33 (0)9 72 10 10 07](tel:+33972101007)
 
 ## Absence de garantie expresse ou implicite
 
