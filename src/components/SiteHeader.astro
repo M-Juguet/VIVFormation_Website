@@ -41,17 +41,19 @@ const linkedin =
       <Button size="sm" href={contact} icon="calendar">
         Contactez-nous
       </Button>
-      <Button
-        size="sm"
-        variant="secondary"
-        href={SITE.linkedin}
-        target="_blank"
-        rel="noopener noreferrer"
-        class="size-9 p-0 pointer-coarse:size-11"
-      >
-        <Icon path={linkedin} size={20} />
-        <span class="sr-only">LinkedIn (nouvel onglet)</span>
-      </Button>
+      {SITE.linkedin && (
+        <Button
+          size="sm"
+          variant="secondary"
+          href={SITE.linkedin}
+          target="_blank"
+          rel="noopener noreferrer"
+          class="size-9 p-0 pointer-coarse:size-11"
+        >
+          <Icon path={linkedin} size={20} />
+          <span class="sr-only">LinkedIn (nouvel onglet)</span>
+        </Button>
+      )}
     </nav>
     <Button
       variant="ghost"
@@ -82,16 +84,18 @@ const linkedin =
     <Button href={contact} icon="calendar">
       Contactez-nous
     </Button>
-    <Button
-      variant="secondary"
-      href={SITE.linkedin}
-      target="_blank"
-      rel="noopener noreferrer"
-      class="size-11 self-start p-0"
-    >
-      <Icon path={linkedin} size={24} />
-      <span class="sr-only">LinkedIn (nouvel onglet)</span>
-    </Button>
+    {SITE.linkedin && (
+      <Button
+        variant="secondary"
+        href={SITE.linkedin}
+        target="_blank"
+        rel="noopener noreferrer"
+        class="size-11 self-start p-0"
+      >
+        <Icon path={linkedin} size={24} />
+        <span class="sr-only">LinkedIn (nouvel onglet)</span>
+      </Button>
+    )}
   </div>
 </header>
 

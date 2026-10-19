@@ -16,8 +16,9 @@ export const SITE = {
   // changement, la reporter aussi dans les CGV (annulation) et dans le design system (fiches).
   email: 'formation@viv-prod.com',
   adresse: { rue: '14-30 rue de Mantes', codePostal: '92700', ville: 'Colombes' },
-  // TODO : adresse réelle de la page LinkedIn de l'organisme.
-  linkedin: '#',
+  // Adresse de la page LinkedIn de l'organisme ; `null` masque le bouton de l'en-tête tant que
+  // la page n'existe pas.
+  linkedin: null as string | null,
   declarationActivite: '11923083592',
   /** Référent handicap, seul contact accessibilité, sans variante (fiche programme, déroulé, support). */
   referentHandicap: { nom: 'Mme Morgane CHAUFOURNAIS', email: 'm-chaufournais@viv-prod.com' },
