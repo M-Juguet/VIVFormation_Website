@@ -59,6 +59,26 @@ export async function getTaxonomies() {
   };
 }
 
+/**
+ * Classements qui ont au moins une formation publiée, triés : seuls ceux-là s'affichent (cartes de
+ * l'accueil, filtres du catalogue, pied de page). Un domaine, un outil ou un type réapparaît avec sa
+ * première formation ; les fichiers de src/data/ ne changent pas.
+ */
+export async function getTaxonomiesUtilisees() {
+  const [{ domaines, outils, types }, formations] = await Promise.all([
+    getTaxonomies(),
+    getFormations(),
+  ]);
+  const dom = new Set(formations.map((f) => f.data.domaine.id));
+  const out = new Set(formations.flatMap((f) => f.data.outils.map((o) => o.id)));
+  const typ = new Set(formations.map((f) => f.data.type.id));
+  return {
+    domaines: domaines.filter((d) => dom.has(d.id)),
+    outils: outils.filter((o) => out.has(o.id)),
+    types: types.filter((t) => typ.has(t.id)),
+  };
+}
+
 export const formationUrl = (f: Formation) => `/formations/${f.id}/`;
 
 /* ---------- Mise en forme (règles d'écriture de la charte) ---------- */

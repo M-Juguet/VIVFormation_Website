@@ -4,12 +4,13 @@ import FormationCard from '../../components/FormationCard.astro';
 import Button from '../../components/ds/Button.astro';
 import Callout from '../../components/ds/Callout.astro';
 import Field from '../../components/ds/Field.astro';
-import { getFormations, getTaxonomies, resolveFormation } from '../../lib/formations';
+import { getFormations, getTaxonomiesUtilisees, resolveFormation } from '../../lib/formations';
 
 const formations = await Promise.all((await getFormations()).map(resolveFormation));
-const { domaines, outils, types } = await getTaxonomies();
+const { domaines, outils, types } = await getTaxonomiesUtilisees();
 
-/* Lignes de filtres. */
+/* Lignes de filtres : seuls les classements qui ont une formation ; une ligne qui n'offre qu'un
+   choix est masquée (elle revient avec un deuxième classement). */
 type Row = {
   key: string;
   label: string;
@@ -20,7 +21,7 @@ const rows: Row[] = [
   { key: 'domaine', label: 'Domaine', options: domaines.map(opt) },
   { key: 'outil', label: 'Outil', options: outils.map(opt) },
   { key: 'type', label: 'Type', options: types.map(opt) },
-];
+].filter((row) => row.options.length > 1);
 
 const texteRecherche = (f: (typeof formations)[number]) =>
   [

@@ -1,9 +1,9 @@
 ---
 import Logo from './ds/Logo.astro';
 import { SITE } from '../config/site';
-import { getTaxonomies } from '../lib/formations';
+import { getTaxonomiesUtilisees } from '../lib/formations';
 
-const { domaines } = await getTaxonomies();
+const { domaines } = await getTaxonomiesUtilisees();
 const lien = 'text-ink-muted no-underline hover:text-ink';
 const aPropos = [
   { href: '/mentions-legales/', label: 'Mentions légales' },

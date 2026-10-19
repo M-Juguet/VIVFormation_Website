@@ -15,10 +15,10 @@ import {
   SECTEURS,
   SITE,
 } from '../config/site';
-import { getFormations, getTaxonomies, resolveFormation } from '../lib/formations';
+import { getFormations, getTaxonomiesUtilisees, resolveFormation } from '../lib/formations';
 
 const formations = await Promise.all((await getFormations()).map(resolveFormation));
-const { domaines } = await getTaxonomies();
+const { domaines } = await getTaxonomiesUtilisees();
 const compte = (n: number) => `${n} formation${n > 1 ? 's' : ''}`;
 
 // Section « Formations souvent demandées » masquée à la demande de l'organisme (octobre 2026) :
