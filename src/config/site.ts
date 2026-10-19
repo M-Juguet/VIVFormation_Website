@@ -138,6 +138,6 @@ export const INDICATEURS_QUALITE: {
   recommandation: number | null;
 } = {
   releve: null,
-  satisfaction: null,
-  recommandation: null,
+  satisfaction: 4.9,
+  recommandation: 100,
 };
