@@ -41,7 +41,7 @@ Avant d'écrire, envoie **un seul message** qui regroupe les questions, chacune 
 - nom du fichier (slug), pour une création : il devient l'adresse de la page et ne change plus ;
 - domaine, type et outils (identifiants de `donnees-site.json`) ;
 - référence, pour une création : la suivante du domaine (`python scripts/verifier_formation.py --prochaine-reference <id-domaine>`), à confirmer puisque la liste date de l'export ;
-- version et date de révision ;
+- version ; la date de révision, elle, ne se demande pas : c'est la date du jour, sauf demande de l'utilisateur ;
 - tarif inter-entreprises (absent = sur devis) ;
 - équipement à prévoir par le client, ou matériel fourni par VIV : versions exactes et caractéristiques matérielles mesurables, **demandées et jamais devinées** ;
 - formateur ;

@@ -93,7 +93,7 @@ Une phrase complète, 180 caractères et 30 mots au plus, avec son point : tourn
 ## Version et date de révision
 
 - **Version** (`AAvNN`) : toute modification d'un texte ou d'une valeur affichés, même un titre raccourci, donne la version suivante (`26v01` → `26v02`, ou `27v01` si l'année change). Un fichier identique au fichier publié garde sa version.
-- **Révision** (`AAAA-MM-JJ`) : la date de validation du programme. Si la source ne donne que le mois (« juillet 2026 »), demande le jour ; à défaut de réponse, propose la date du jour pour une nouvelle version, ou garde celle du fichier publié s'il ne change pas.
+- **Révision** (`AAAA-MM-JJ`) : la date du jour de la génération de la version. Tant qu'aucune révision n'a eu lieu, c'est la date de création (première version) ; un fichier qui ne change pas de version garde sa date. Elle reste modifiable sur demande de l'utilisateur, mais ne se demande pas, et ne reprend jamais la date d'un programme source. Sur la fiche, elle s'écrit en entier : jour, mois en toutes lettres, année (« 25 septembre 2026 » ; « 1er » pour le premier du mois).
 - Les trois documents d'une formation (fiche `-PRO`, déroulé `-DP`, support `-SU`) partagent référence et version : signale que la fiche PDF est à régénérer quand la version change.
 
 ## Interdits (charte VIV Formation)
@@ -101,12 +101,15 @@ Une phrase complète, 180 caractères et 30 mots au plus, avec son point : tourn
 Si la source en contient, ne les recopie pas : signale-les et propose une formulation conforme. Une mention interdite qui figure dans un sujet géré par les textes fixes (lieu, financement, inscription) n'entre de toute façon pas dans le fichier : signale-la simplement, sans bloquer la livraison.
 
 - **CPF** ou compte personnel de formation (les financements sont la prise en charge OPCO et le plan de développement des compétences).
-- **Distanciel**, à distance, visioconférence, e-learning : les formations sont en présentiel, dans les locaux du client.
+- **Distanciel**, à distance, visioconférence, e-learning : les formations sont en présentiel.
 - **Qualiopi**, certification qualité : aucune mention tant que le certificat n'est pas obtenu.
 - **Sessions au calendrier**, dates, places restantes, « S’inscrire » : les dates se conviennent avec le client.
-- **« Nos locaux », « notre salle »** : les formations se tiennent chez le client.
+- **Mentions de lieu** (« dans vos locaux », « nos locaux », « notre salle », « sur votre site », « en entreprise », « chez le client ») : aucune dans les textes. Quand un lieu doit être évoqué, on écrit « Présentiel » seul. Que les formations aient lieu uniquement chez le client reste une information interne : elle ne s'écrit pas.
 - **« Dernière version »** : toujours la version exacte.
 - **Vocabulaire d’annonce** (révolution, game changer, incontournable) : rester factuel, surtout sur l'IA générative.
+- **Formation certifiante ou diplômante**, RNCP, répertoire spécifique, « suite de parcours » : toutes les formations sont des actions de formation non certifiantes, qui n'ouvrent droit à aucune suite de parcours.
+- **Suivi après la formation** (« suivi après », « post-formation », « J+30 »…) : jamais annoncé ; seul le cadrage préalable est téléphonique.
+- **Adresse e-mail** : aucune dans le fichier. La seule adresse d'inscription, formation@viv-prod.com, fait partie des textes fixes.
 
 ## Cas où il faut s'arrêter
 
@@ -127,7 +130,7 @@ Tu peux livrer un **brouillon** en attendant (fichier nommé `_<slug>.md`, ignor
 
 1. Le fichier commence par `---`, se termine par `---`, sans rien après ; aucun champ hors du modèle.
 2. Tous les champs obligatoires sont présents ; les identifiants existent dans `donnees-site.json`.
-3. `reference` commence par le code du domaine, n'est pas déjà attribuée ; `version` en `AAvNN` cohérente avec l'année de `revision`.
+3. `reference` commence par le code du domaine, n'est pas déjà attribuée ; `version` en `AAvNN` cohérente avec l'année de `revision` ; `revision` à la date du jour de la génération de la version, sauf demande de l'utilisateur.
 4. `titreCourt` ≤ 40 caractères ; `sousTitre` une phrase avec point, ≤ 180 caractères et ≤ 30 mots.
 5. Bornes : public, prérequis, équipement 1 à 4 ; objectifs 3 à 8 ; compétences 3 à 6 ; programme ≥ 1 partie, 3 à 6 points chacune.
 6. Longueurs : objectifs, compétences et points ≤ 180 caractères ; titres de partie ≤ 55.
@@ -136,4 +139,4 @@ Tu peux livrer un **brouillon** en attendant (fichier nommé `_<slug>.md`, ignor
 9. Apostrophes `’`, guillemets « », espaces avant `: ; ! ?`, pas de ponctuation finale dans les listes, casse phrase, versions exactes et matériel mesurable.
 10. Textes contenant « : » entre apostrophes droites ; `tarif` et `duree` en nombres ; mise en forme YAML de `format-fichier.md` (pas de guillemets doubles, espaces des accolades et crochets, pas d'espace en fin de ligne, un seul saut de ligne final).
 11. Commentaires « fiche : » présents et exacts sur `reference`, `type`, `domaine`, `outils`, `duree`, `tarif` et `formateur` (avec les lignes de parcours).
-12. Aucune mention interdite, aucun emoji.
+12. Aucune mention interdite (lieu compris), aucun emoji.

@@ -100,8 +100,9 @@ def commentaires_attendus(f):
     fin = {}
     try:
         rev = en_date(f["revision"])
+        jour = "1er" if rev.day == 1 else str(rev.day)
         fin["reference"] = (
-            f"fiche : {f['reference']}-PRO • Révisé le : {MOIS[rev.month - 1]} {rev.year} • "
+            f"fiche : {f['reference']}-PRO • Révisé le : {jour} {MOIS[rev.month - 1]} {rev.year} • "
             f"Version : {f['version']} • Déclaration d'activité : {DONNEES['declarationActivite']}"
         )
     except (KeyError, ValueError, TypeError):
@@ -191,12 +192,25 @@ OBLIGATOIRES = ["reference", "version", "revision", "titre", "titreCourt", "sous
                 "domaine", "niveau", "duree", "public", "prerequis", "objectifs", "competences", "programme"]
 INTERDITS = [
     (r"\bCPF\b|compte personnel de formation", "CPF : jamais (financement OPCO et plan de développement des compétences)"),
-    (r"distanciel|à distance|\bvisio|e-learning|classe virtuelle", "distanciel : les formations sont en présentiel, dans les locaux du client"),
+    (r"distanciel|à distance|\bvisio|e-learning|classe virtuelle", "distanciel : les formations sont en présentiel"),
     (r"qualiopi", "Qualiopi : aucune mention tant que le certificat n’est pas obtenu"),
     (r"s['’]inscrire|inscrivez|places? restantes?", "inscription ou places : pas de session au calendrier"),
-    (r"notre salle|nos locaux", "lieu : les formations se tiennent dans les locaux du client"),
+    (r"\b(?:vos|nos|les|leurs) locaux\b|notre salle|sur votre site\b(?!\s+(?:web|internet))|chez (?:le|les|vos|un|des) clients?\b",
+     "lieu : aucune mention de lieu, « Présentiel » seul si besoin"),
     (r"derni[èe]re version|version r[ée]cente", "version : demander la version exacte"),
     (r"r[ée]volution|game[- ]?changer|incontournable", "vocabulaire d’annonce : rester factuel"),
+    (r"\bcertifiante?s?\b|\bdipl[ôo]mante?s?\b|\bRNCP\b|r[ée]pertoire sp[ée]cifique|suites? de parcours",
+     "action de formation non certifiante : elle n’ouvre droit à aucune suite de parcours"),
+    (r"suivi (?:après|post)|post-formation|apr[èe]s la formation|\bJ\s?\+\s?\d+",
+     "suivi après la formation : jamais annoncé"),
+    (r"[\w.+-]+@[\w-]+(?:\.[\w-]+)+", "adresse e-mail : aucune dans le fichier (l’inscription passe par formation@viv-prod.com, texte fixe)"),
+]
+# Mots qui peuvent avoir un autre sens : « À VÉRIFIER » seulement, avec le message de l'interdit
+# correspondant (ignoré si cet interdit est déjà relevé dans le même texte).
+A_VERIFIER = [
+    (r"\ben entreprise\b", "lieu : aucune mention de lieu, « Présentiel » seul si besoin"),
+    (r"\bcertification\b", "action de formation non certifiante : elle n’ouvre droit à aucune suite de parcours"),
+    (r"\bsuivie?s?\b", "suivi après la formation : jamais annoncé"),
 ]
 VAGUE = re.compile(r"\b(?:r[ée]cente?s?|puissante?s?|performante?s?|suffisante?s?)\b|bonne configuration", re.I)
 EMOJI = re.compile("[\U0001F000-\U0001FAFF☀-➿️]")
@@ -436,9 +450,14 @@ def verifier(chemin):
             err(champ, "majuscule initiale attendue")
         if liste.match(champ) and re.search(r"[.;]$", t):
             err(champ, "pas de ponctuation finale dans une liste")
+        releves = set()
         for motif, msg in INTERDITS:
             if re.search(motif, t, re.I):
                 err(champ, msg)
+                releves.add(msg)
+        for motif, msg in A_VERIFIER:
+            if msg not in releves and re.search(motif, t, re.I):
+                voir(champ, msg)
         if EMOJI.search(t):
             err(champ, "emoji : aucun")
 

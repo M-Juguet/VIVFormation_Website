@@ -1,6 +1,6 @@
 ---
 # Identité documentaire, commune à la fiche (-PRO), au déroulé (-DP) et au support (-SU)
-reference: TRL01 # fiche : TRL01-PRO • Révisé le : septembre 2026 • Version : 26v01 • Déclaration d'activité : 11923083592
+reference: TRL01 # fiche : TRL01-PRO • Révisé le : 25 septembre 2026 • Version : 26v01 • Déclaration d'activité : 11923083592
 version: 26v01
 revision: 2026-09-25
 

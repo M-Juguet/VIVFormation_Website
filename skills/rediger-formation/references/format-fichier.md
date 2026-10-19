@@ -19,19 +19,19 @@ Les limites ci-dessous sont celles que le site contrôle ; au-delà, la publicat
 
 ### Identité documentaire
 
-| Champ       | Règle                                                                                                                                                                                                                                                  |
-| ----------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| `reference` | Code du domaine (`code` dans `donnees-site.json`) + numéro sur deux chiffres : `TRL01`. Unique. Nouvelle formation : la suivante du domaine. Mise à jour : inchangée. Même référence pour la fiche (`-PRO`), le déroulé (`-DP`) et le support (`-SU`). |
-| `version`   | `AAvNN` : année de la révision sur deux chiffres, `v`, numéro sur deux chiffres. Nouvelle formation : `26v01` (pour 2026). Mise à jour du contenu : numéro suivant (`26v02`), ou `27v01` si l'année a changé.                                          |
-| `revision`  | Date de révision du programme, `AAAA-MM-JJ`. Celle du programme validé si la source la donne, sinon la date du jour, à confirmer.                                                                                                                      |
+| Champ       | Règle                                                                                                                                                                                                                                                                                                            |
+| ----------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `reference` | Code du domaine (`code` dans `donnees-site.json`) + numéro sur deux chiffres : `TRL01`. Unique. Nouvelle formation : la suivante du domaine. Mise à jour : inchangée. Même référence pour la fiche (`-PRO`), le déroulé (`-DP`) et le support (`-SU`).                                                           |
+| `version`   | `AAvNN` : année de la révision sur deux chiffres, `v`, numéro sur deux chiffres. Nouvelle formation : `26v01` (pour 2026). Mise à jour du contenu : numéro suivant (`26v02`), ou `27v01` si l'année a changé.                                                                                                    |
+| `revision`  | Date de révision, `AAAA-MM-JJ` : la date du jour de la génération de la version (pour une première version, c'est sa date de création) ; un fichier qui ne change pas de version garde sa date. Modifiable sur demande de l'utilisateur ; ne se demande pas, et ne reprend jamais la date d'un programme source. |
 
 ### Présentation
 
-| Champ        | Règle                                                                                                                                                                                                            |
-| ------------ | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `titre`      | Titre de la formation, tel que dans la source, en casse phrase.                                                                                                                                                  |
-| `titreCourt` | **40 caractères au plus** (« : » permis, texte alors entre apostrophes droites). Surtitre des pages de la fiche, pied de page du support. Souvent le titre sans son complément : « Initiation à Unreal Engine ». |
-| `sousTitre`  | **Une phrase complète avec son point, 180 caractères et 30 mots au plus.** Sous-titre de la page et de la fiche, résumé de la carte. Tiré de l'objectif général de la source, raccourci si besoin et validé.     |
+| Champ        | Règle                                                                                                                                                                                                           |
+| ------------ | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `titre`      | Titre de la formation, tel que dans la source, en casse phrase.                                                                                                                                                 |
+| `titreCourt` | **40 caractères au plus** (« : » permis, texte alors entre apostrophes droites). Surtitre des pages de la fiche, jamais en pied de page. Souvent le titre sans son complément : « Initiation à Unreal Engine ». |
+| `sousTitre`  | **Une phrase complète avec son point, 180 caractères et 30 mots au plus.** Sous-titre de la page et de la fiche, résumé de la carte. Tiré de l'objectif général de la source, raccourci si besoin et validé.    |
 
 ### Classement (site)
 
@@ -121,7 +121,7 @@ Le fichier désigne le domaine, le type, les outils et le formateur par des iden
 Ils sont écrits par `python scripts/verifier_formation.py --annoter <slug>.md`, à relancer après toute modification ; le contrôle signale tout commentaire absent ou périmé. Sans exécution de code, reproduis exactement ce format (voir aussi `exemple.md`) :
 
 ```yaml
-reference: TRL01 # fiche : TRL01-PRO • Révisé le : septembre 2026 • Version : 26v01 • Déclaration d'activité : 11923083592
+reference: TRL01 # fiche : TRL01-PRO • Révisé le : 25 septembre 2026 • Version : 26v01 • Déclaration d'activité : 11923083592
 type: module # fiche : Module
 domaine: 3d-temps-reel # fiche : 3D temps réel (surtitre de la page 1 : « Fiche programme · 3D temps réel »)
 outils: [unreal-engine] # fiche : Unreal Engine
@@ -133,7 +133,7 @@ formateur: matthieu-juguet # fiche : Matthieu JUGUET · Infographiste 3D, artist
 # fiche, parcours du formateur : Certification de formateur pour adultes (Cegos, 2023) · Master en gestion de projets multimédia
 ```
 
-- Mois de révision en toutes lettres ; numéro de déclaration d'activité : `declarationActivite` de `donnees-site.json`.
+- Date de révision complète : jour, mois en toutes lettres, année ; « 1er » pour le premier du mois ; numéro de déclaration d'activité : `declarationActivite` de `donnees-site.json`.
 - Libellés, nom, fonction et parcours : recopiés de `donnees-site.json`, sans reformulation.
 - Montant avec espaces insécables (`1 900 €`) ; sans `tarif`, pas de commentaire (la fiche affiche « [à renseigner] »).
 - Sans outil : `outils: [] # fiche : sans outil imposé`. Sans formateur : ni champ ni commentaire.
