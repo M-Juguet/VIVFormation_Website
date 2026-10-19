@@ -144,6 +144,14 @@ Vouvoiement ; casse phrase ; versions exactes ; durées écrites en toutes lettr
 
 `sujet` ∈ `dates` | `devis` | `information` | `dysfonctionnement`. `entreprise` est facultatif : chaîne vide quand le champ n'est pas rempli. Les paramètres d'URL `?sujet=` et `?formation=` pré-remplissent le formulaire. Le webhook doit autoriser l'origine du site (CORS) et répondre en 2xx.
 
+Côté n8n, le workflow « VIV Formation - Formulaire du site » (en service depuis le 19 octobre 2026) :
+
+- contrôle chaque demande (motif connu, champs obligatoires, longueurs, pot de miel `website`) et répond `400 { ok: false, erreurs }` si elle est invalide ;
+- l'enregistre dans la table n8n `VIVFormation_Demandes` (statut « Nouvelle »), puis répond `200 { ok: true, reference }` ;
+- envoie la notification à formation@viv-prod.com (objet « [Site] » ou « [Réclamation] », réponse directe à l'internaute), puis un accusé de réception à texte fixe, sans reprise de ce que l'internaute a saisi.
+
+La constante `PHASE` du nœud « Valider la demande » distingue la phase de test (un seul demandeur et destinataire, objets « [TEST] ») de la production. Le workflow « VIV Formation - Purge des demandes » supprime chaque mois les demandes de plus de trois ans (article 8 des CGU) ; les échecs sont signalés par le workflow d'erreur « VIV Formation - Alerte d'erreur ». Un champ ajouté ou renommé, ou une nouvelle valeur de `sujet`, impose de mettre à jour « Valider la demande ».
+
 ## Déploiement
 
 Production : **https://formation.viv-prod.com**, servi par nginx sur le VPS (Debian). Le VPS n'a ni Node ni le code source : GitHub Actions construit le site et envoie le dossier `dist/` par rsync + SSH.
