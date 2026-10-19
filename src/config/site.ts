@@ -63,7 +63,7 @@ export const ETAPES_ORGANISATION = [
     titre: 'Besoin et faisabilité',
     meta: '1 heure — entretien téléphonique',
     texte:
-      'Nous identifions avec vous ce que vos équipes doivent savoir faire après la formation, et vérifions sa faisabilité : niveau des participants, matériel, versions installées, délais.',
+      'Nous recueillons vos besoins, définissons avec vous les objectifs et les adaptations nécessaires, et vérifions la faisabilité : matériel, versions installées, délais.',
   },
   {
     titre: 'Programme ajusté',
