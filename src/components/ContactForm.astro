@@ -99,7 +99,7 @@ const hints = Object.fromEntries(CONTACT_SUBJECTS.map((s) => [s.value, s.hint]))
         Envoyer la demande
       </Button>
       <p class="caption mt-3 text-ink-muted">
-        Vos données sont traitées par VIV pour répondre à votre demande. Détail et droits&nbsp;:
+        Vos données sont traitées par VIV pour répondre à votre demande. Détail et droits&nbsp;:{' '}
         <a href="/conditions-generales-d-utilisation/#8-données-personnelles">
           conditions générales d’utilisation, article 8
         </a>
@@ -113,7 +113,7 @@ const hints = Object.fromEntries(CONTACT_SUBJECTS.map((s) => [s.value, s.hint]))
   </Callout>
   <Callout tone="danger" title="Envoi impossible" data-state="error" class="mt-5" hidden>
     <p data-error-text>
-      Une erreur est survenue. Réessayez dans un instant ou écrivez-nous à
+      Une erreur est survenue. Réessayez dans un instant ou écrivez-nous à{' '}
       <a href={`mailto:${SITE.email}`}>{SITE.email}</a>.
     </p>
   </Callout>
