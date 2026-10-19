@@ -33,3 +33,6 @@ Thumbs.db
 
 # Python
 __pycache__/
+
+# Travail Qualiopi (rapports, captures, journal) : gardé en local, jamais poussé.
+qualiopi/
