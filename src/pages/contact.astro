@@ -34,6 +34,17 @@ import { SITE } from '../config/site';
             ne proposons pas de financement par le compte personnel de formation.
           </p>
         </Callout>
+        <Callout tone="info" title="Accessibilité">
+          <p>
+            Un besoin d’adaptation lié à un handicap ? Précisez-le dans votre demande : notre
+            référente handicap, {SITE.referentHandicap.nom}, l’étudie avec vous avant la session.
+          </p>
+          <p class="mt-2">
+            <a href={`mailto:${SITE.referentHandicap.email}`}>
+              <span class="whitespace-nowrap">{SITE.referentHandicap.email}</span>
+            </a>
+          </p>
+        </Callout>
         <p class="body text-ink-muted">
           Vous pouvez aussi nous écrire à <a href={`mailto:${SITE.email}`}>{SITE.email}</a>.
         </p>

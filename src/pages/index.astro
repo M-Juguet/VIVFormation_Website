@@ -3,17 +3,14 @@ import type { ImageMetadata } from 'astro';
 import { Image } from 'astro:assets';
 import equipeReunion from '../assets/accueil/equipe-reunion.jpg';
 import BaseLayout from '../layouts/BaseLayout.astro';
-import ContactForm from '../components/ContactForm.astro';
 import FormationCard from '../components/FormationCard.astro';
 import Button from '../components/ds/Button.astro';
-import Callout from '../components/ds/Callout.astro';
 import Icon from '../components/ds/Icon.astro';
 import {
   ENGAGEMENTS_QUALITE,
   ETAPES_ORGANISATION,
   INDICATEURS_QUALITE,
   SECTEURS,
-  SITE,
 } from '../config/site';
 import { getFormations, getTaxonomiesUtilisees, resolveFormation } from '../lib/formations';
 
@@ -107,7 +104,7 @@ const indicateurs = [
           <Button href="/catalogue/" icon="arrow-right">
             Voir le catalogue
           </Button>
-          <Button href="#contact" variant="secondary" icon="calendar">
+          <Button href="/contact/?sujet=devis" variant="secondary" icon="calendar">
             Demander un devis
           </Button>
         </div>
@@ -288,39 +285,24 @@ const indicateurs = [
     </div>
   </section>
 
-  <!-- Contact : bande sombre -->
+  <!-- Contact : bande sombre courte ; le formulaire est sur la page Contact, motif présélectionné. -->
   <section id="contact" class="viv-section bg-surface text-ink" data-theme="sombre">
-    <div class="viv-wrap viv-split viv-split--form">
-      <div class="flex flex-col gap-8">
-        <div>
-          <p class="overline text-ink-muted">Contact</p>
-          <h2 class="display-md mt-2 mb-4">Demander des dates ou un devis</h2>
-          <p class="body-lg text-ink-muted">
-            Nous vous rappelons pour un cadrage d’une heure : vos postes, vos versions installées,
-            ce que vous produisez. Les dates se fixent ensuite avec vous.
-          </p>
-        </div>
-        <div class="flex flex-col gap-4">
-          <Callout tone="info" title="Financement">
-            <p>
-              Prise en charge OPCO et plan de développement des compétences de votre entreprise.
-              Nous ne proposons pas de financement par le compte personnel de formation.
-            </p>
-          </Callout>
-          <Callout tone="info" title="Accessibilité">
-            <p>
-              Un besoin d’adaptation lié à un handicap ? Précisez-le dans votre demande : notre
-              référente handicap, {SITE.referentHandicap.nom}, l’étudie avec vous avant la session.
-            </p>
-            <p class="mt-2">
-              <a href={`mailto:${SITE.referentHandicap.email}`}>
-                <span class="whitespace-nowrap">{SITE.referentHandicap.email}</span>
-              </a>
-            </p>
-          </Callout>
-        </div>
+    <div class="viv-wrap flex flex-col items-start gap-8 md:flex-row md:items-end md:justify-between">
+      <div class="max-w-[640px]">
+        <p class="overline text-ink-muted">Contact</p>
+        <h2 class="display-md mt-2 mb-4">Demander des dates ou un devis</h2>
+        <p class="body-lg text-ink-muted">
+          Nous vous rappelons pour un cadrage d’une heure, puis nous fixons les dates avec vous.
+        </p>
       </div>
-      <ContactForm id="accueil" sujet="devis" />
+      <div class="flex flex-wrap gap-4">
+        <Button href="/contact/?sujet=dates" icon="calendar">
+          Demander des dates
+        </Button>
+        <Button href="/contact/?sujet=devis" variant="secondary" icon="file-text">
+          Demander un devis
+        </Button>
+      </div>
     </div>
   </section>
 </BaseLayout>

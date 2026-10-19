@@ -126,7 +126,7 @@ Vouvoiement ; casse phrase ; versions exactes ; durées écrites en toutes lettr
 
 ## Formulaire de contact / n8n
 
-`ContactForm` (accueil, page contact, fiche formation) envoie un `POST` JSON vers `PUBLIC_N8N_CONTACT_WEBHOOK_URL` :
+`ContactForm` (page Contact, fiche formation) envoie un `POST` JSON vers `PUBLIC_N8N_CONTACT_WEBHOOK_URL` :
 
 ```json
 {
