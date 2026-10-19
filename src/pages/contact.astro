@@ -20,10 +20,12 @@ import { SITE } from '../config/site';
             heure, puis nous fixons les dates avec vous.
           </p>
         </div>
-        <Callout tone="warning" title="Un problème pendant une session ?">
+        <Callout tone="warning" title="Réclamation ou problème en session" id="reclamation">
           <p>
-            Choisissez le motif « Signaler un problème en session » et précisez la formation, la
-            date et le lieu : nous revenons vers vous rapidement.
+            Une réclamation, un problème pendant une session ? Choisissez le motif « Réclamation ou
+            problème en session » ou écrivez à <a href={`mailto:${SITE.email}`}>{SITE.email}</a>, en
+            précisant la formation, la date et le lieu. Nous vous répondons dans les meilleurs
+            délais.
           </p>
         </Callout>
         <Callout tone="info" title="Financement">

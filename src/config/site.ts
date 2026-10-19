@@ -50,7 +50,7 @@ export const CONTACT_SUBJECTS = [
   },
   {
     value: 'dysfonctionnement',
-    label: 'Signaler un problème en session',
+    label: 'Réclamation ou problème en session',
     hint: 'Formation, date, lieu et description du problème rencontré.',
   },
 ] as const;
