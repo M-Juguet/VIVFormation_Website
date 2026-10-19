@@ -7,21 +7,21 @@
   code: DPP
   icone: domaine-dataprep
   description: Importer une donnée CAO, la nettoyer et l’alléger pour l’exploiter en rendu comme en temps réel.
-  outilsTexte: Blender, Unreal Engine, VRED
+  outilsTexte: Blender
   ordre: 1
 - id: 3d-precalculee
   label: 3D précalculée
   code: PRC
   icone: domaine-precalcule
   description: Modéliser, texturer, éclairer et calculer une image ou une animation de qualité finale.
-  outilsTexte: Blender, Unreal Engine, VRED
+  outilsTexte: Blender
   ordre: 2
 - id: 3d-temps-reel
   label: 3D temps réel
   code: TRL
   icone: domaine-temps-reel
   description: Rendre une scène interactive, de la revue de design au configurateur produit.
-  outilsTexte: Unreal Engine, Unity, VRED
+  outilsTexte: Unreal Engine, Unity
   ordre: 3
 - id: graphisme-2d
   label: Graphisme 2D

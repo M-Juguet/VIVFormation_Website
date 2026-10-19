@@ -9,7 +9,7 @@ import type { IconName } from '../components/ds/icons';
 export const SITE = {
   name: 'VIV Formation',
   description:
-    'Formations professionnelles à la conception 3D, au graphisme 2D et à l’IA générative : Blender, Unreal Engine, VRED, Unity, Illustrator. En présentiel.',
+    'Formations professionnelles à la conception 3D, au graphisme 2D et à l’IA générative : Blender, Unreal Engine, Unity, Illustrator. En présentiel.',
   locale: 'fr-FR',
   lang: 'fr',
   // Adresse de contact et d'inscription (pied de page, contact, délais d'accès). En cas de
