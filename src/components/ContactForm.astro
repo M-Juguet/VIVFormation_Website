@@ -121,10 +121,7 @@ const hints = Object.fromEntries(CONTACT_SUBJECTS.map((s) => [s.value, s.hint]))
 
 <script>
   const SUCCESS: Record<string, [string, string]> = {
-    dysfonctionnement: [
-      'Signalement transmis',
-      'Merci. Nous vous répondons dans les meilleurs délais.',
-    ],
+    dysfonctionnement: ['Signalement transmis', 'Merci. Nous vous répondons sous 48 heures.'],
     information: ['Demande enregistrée', 'Nous vous répondons sous deux jours ouvrés.'],
     default: [
       'Demande enregistrée',
