@@ -3,7 +3,7 @@ titre: Règlement intérieur
 description: Règlement intérieur applicable aux stagiaires de VIV Formation — santé, sécurité, discipline, égalité de traitement et représentation des stagiaires.
 ---
 
-Référence REGINT.2026.1 · créé le 16 octobre 2026 · révisé le 19 octobre 2026
+Référence REGINT.2026.1
 
 ## 1. Objet et champ d’application
 
