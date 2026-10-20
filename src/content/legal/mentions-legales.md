@@ -11,7 +11,7 @@ description: Éditeur, hébergeur et conditions d’utilisation du site VIV Form
 - Numéro de TVA intracommunautaire : FR89811694215
 - Téléphone : [+33 (0)1 42 42 46 93](tel:+33142424693) · courriel : <formation@viv-prod.com>
 - Déclaration d’activité enregistrée sous le numéro 11923083592 auprès du préfet de région d’Île-de-France. Cet enregistrement ne vaut pas agrément de l’État.
-- Directeur de la publication : Jonathan Lupter
+- Directeur de la publication : Jonathan LUPTER
 
 ## Le site est hébergé par
 
