@@ -1,5 +1,5 @@
 {
-  "exporteLe": "2026-10-19",
+  "exporteLe": "2026-10-20",
   "declarationActivite": "11923083592",
   "domaines": [
     {
@@ -97,6 +97,12 @@
       "reference": "GPH01",
       "version": "26v01",
       "titre": "Concevoir des motifs industrialisables avec Illustrator"
+    },
+    {
+      "slug": "etat-art-enjeux-intelligence-artificielle",
+      "reference": "IAG01",
+      "version": "26v01",
+      "titre": "État de l’art et enjeux de l’intelligence artificielle"
     },
     {
       "slug": "initiation-blender-interface-rendu",
